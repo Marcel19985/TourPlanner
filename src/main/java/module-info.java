@@ -1,6 +1,7 @@
 module org.example.tourplanner {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
     opens org.example.tourplanner to javafx.fxml;
     exports org.example.tourplanner;
