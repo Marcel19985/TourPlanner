@@ -1,5 +1,5 @@
-drop TABLE if exists tour
-drop TABLE if exists tour_log
+DROP TABLE IF EXISTS tour;
+DROP TABLE IF EXISTS tour_log;
 
 CREATE TABLE tour (
                       tour_id SERIAL PRIMARY KEY,

@@ -3,14 +3,45 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.ui.viewmodels.MainViewModel">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.tourplanner.ui.controllers.MainViewController">
 
-    <Label fx:id="welcomeText" />
-    <Button onAction="#onHelloButtonClick" text="hallöchdsafds" />
-    <Button onAction="#onSeasButtonClick" text="HAWEDERE" />
-</VBox>
+    <top>
+        <Label text="Tour Planner" style="-fx-font-size: 24px; -fx-padding: 10px;"/>
+    </top>
+
+    <!-- Hauptbereich: Links Liste, Rechts Tour-Details -->
+    <center>
+        <SplitPane dividerPositions="0.25">
+            <!-- Linke Seite: Tour-Liste -->
+            <AnchorPane>
+                <ListView fx:id="tourListView" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+                          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+            </AnchorPane>
+
+            <!-- Rechte Seite: Tour-Details -->
+            <AnchorPane fx:id="tourDetailsContainer"/>
+        </SplitPane>
+    </center>
+
+    <!-- Buttons für Aktionen -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="10" bottom="10"/>
+            </padding>
+            <Button fx:id="createButton" text="Create" onAction="#onCreateTour"/>
+            <Button fx:id="editButton" text="Edit" onAction="#onEditTour"/>
+            <Button fx:id="deleteButton" text="Delete" onAction="#onDeleteTour"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

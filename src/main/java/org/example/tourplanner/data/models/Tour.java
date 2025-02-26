@@ -7,6 +7,16 @@ public class Tour {
     private double estimatedTime;
     // Weitere Felder wie Transportmittel, Route (Map), etc.
 
+    public Tour(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+    @Override
+    public String toString() {
+        return name + " " + description;
+    }
+
+
     // Getter und Setter
     public String getName() {
         return name;
