@@ -23,10 +23,10 @@ public class TourCreationController {
 
     @FXML
     private void onCreateButtonClick() {
-        String name = tourNameField.getText();
-        String description = tourDescriptionField.getText();
+        if (TourValidatorController.validateTourInputs(tourNameField, tourDescriptionField)) {
+            String name = tourNameField.getText();
+            String description = tourDescriptionField.getText();
 
-        if (!name.isEmpty() && !description.isEmpty()) {
             Tour newTour = new Tour(name, description);
             if (onTourCreatedCallback != null) {
                 onTourCreatedCallback.accept(newTour);
