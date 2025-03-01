@@ -35,10 +35,10 @@ public class MainViewController {
     @FXML
         private void initialize() { //wird automatisch durch FXML loader in start() aufgerufen
             tourListView.setItems(viewModel.getTours());
-            tourListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            tourListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); //Mehrfachauswahl der Listenelemente
 
-            // Nur den Namen anzeigen
-            tourListView.setCellFactory(param -> new javafx.scene.control.ListCell<>() {
+            //Nur den Namen anzeigen (mit AI generiert):
+            tourListView.setCellFactory(param -> new javafx.scene.control.ListCell<>() { //mithilfe von setCellFactory kann ListView benutzerdefiniert dargestellt werden
                 @Override
                 protected void updateItem(Tour tour, boolean empty) {
                     super.updateItem(tour, empty);
@@ -46,8 +46,8 @@ public class MainViewController {
                 }
             });
 
-            // Button-Mediator initialisieren
-        ButtonSelectionMediator buttonMediator = new ButtonSelectionMediator(editButton, deleteButton, tourListView);
+            // Button-Mediator initialisieren: zum "ausgrauen" von Buttons
+            ButtonSelectionMediator buttonMediator = new ButtonSelectionMediator(editButton, deleteButton, tourListView);
 
             // Lade die Tour-Detail-Ansicht
             loadTourDetailView();
@@ -76,7 +76,7 @@ public class MainViewController {
                 Parent root = loader.load();
 
                 TourCreationController controller = loader.getController();
-                controller.setOnTourCreatedCallback(tour -> viewModel.getTours().add(tour));
+                controller.setOnTourCreatedCallback(tour -> viewModel.getTours().add(tour)); //mit AI generiert
 
                 Stage stage = new Stage();
                 stage.setTitle("Create new Tour");

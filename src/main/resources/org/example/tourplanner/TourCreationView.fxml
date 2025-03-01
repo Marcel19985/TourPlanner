@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ComboBox?>
 <VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.example.tourplanner.ui.controllers.TourCreationController">
     <padding>
@@ -19,6 +20,16 @@
 
     <Label text="Description:" />
     <TextField fx:id="tourDescriptionField" />
+
+    <Label text="Start:"/>
+    <TextField fx:id="startField"/>
+
+    <Label text="Destination:"/>
+    <TextField fx:id="destinationField"/>
+
+    <Label text="Transportation Mode:"/>
+    <ComboBox fx:id="transportTypeBox"/>
+
 
     <Button text="Create" onAction="#onCreateButtonClick" />
     <Button text="Cancel" onAction="#onCancelButtonClick" />

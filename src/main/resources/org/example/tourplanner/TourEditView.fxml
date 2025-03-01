@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 
+<?import javafx.scene.control.ComboBox?>
 <GridPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.ui.controllers.TourEditController" hgap="10" vgap="10">
 
     <padding>
@@ -21,8 +22,18 @@
     <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
     <TextField fx:id="descriptionField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
+    <Label text="Start:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextField fx:id="startField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Label text="Destination:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <TextField fx:id="destinationField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <Label text="Transport Mode:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="transportTypeBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+
     <!-- Buttons -->
-    <HBox spacing="10" GridPane.rowIndex="2" GridPane.columnSpan="2">
+    <HBox spacing="10" GridPane.rowIndex="5" GridPane.columnSpan="2">
         <Button text="Save" onAction="#onSave"/>
         <Button text="Cancel" onAction="#onCancel"/>
     </HBox>

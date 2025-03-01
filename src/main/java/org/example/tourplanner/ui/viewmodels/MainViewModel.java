@@ -15,8 +15,8 @@ public class MainViewModel {
         return tours;
     }
 
-    public void addTour(String name, String description) {
-        tours.add(new Tour(name, description));
+    public void addTour(String name, String description, String start, String destination, String transportType) {
+        tours.add(new Tour(name, description, start, destination, transportType));
     }
 
 

@@ -3,50 +3,37 @@ package org.example.tourplanner.data.models;
 public class Tour {
     private String name;
     private String description;
-    private double distance;
-    private double estimatedTime;
-    // Weitere Felder wie Transportmittel, Route (Map), etc.
+    private String start;
+    private String destination;
+    private String transportType;
 
-    public Tour(String name, String description) {
+    public Tour(String name, String description, String start, String destination, String transportType) {
         this.name = name;
         this.description = description;
+        this.start = start;
+        this.destination = destination;
+        this.transportType = transportType;
     }
+
     @Override
     public String toString() {
-        return name + " " + description;
+        return name + " - " + start + " → " + destination + " (" + transportType + ")";
     }
 
+    // Getter & Setter
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    // Getter und Setter
-    public String getName() {
-        return name;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getStart() { return start; }
+    public void setStart(String start) { this.start = start; }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getDestination() { return destination; }
+    public void setDestination(String destination) { this.destination = destination; }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
-    public double getEstimatedTime() {
-        return estimatedTime;
-    }
-
-    public void setEstimatedTime(double estimatedTime) {
-        this.estimatedTime = estimatedTime;
-    }
+    public String getTransportType() { return transportType; }
+    public void setTransportType(String transportType) { this.transportType = transportType; }
 }
+
