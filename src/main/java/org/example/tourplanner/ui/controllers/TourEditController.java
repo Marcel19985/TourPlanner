@@ -23,19 +23,20 @@ public class TourEditController {
 
     @FXML
     private void initialize() {
-        transportTypeBox.getItems().addAll("Zu Fuß", "Auto", "Fahrrad");
+        transportTypeBox.getItems().addAll("Walk", "Car", "Bike");
     }
 
     public void setTour(Tour tour) {
         this.tourViewModel = new TourViewModel(tour);
 
+        //bearbeitbare Felder:
         nameField.textProperty().bindBidirectional(tourViewModel.nameProperty());
         descriptionField.textProperty().bindBidirectional(tourViewModel.descriptionProperty());
         startField.textProperty().bindBidirectional(tourViewModel.startProperty());
         destinationField.textProperty().bindBidirectional(tourViewModel.destinationProperty());
         transportTypeBox.valueProperty().bindBidirectional(tourViewModel.transportTypeProperty());
 
-        // Distanz und geschätzte Zeit setzen (nicht bearbeitbar)
+        //Distanz und geschätzte Zeit setzen (nicht bearbeitbar):
         distanceField.setText(String.format("%.2f km", tour.getDistance()));
         estimatedTimeField.setText(String.format("%.2f min", tour.getEstimatedTime()));
     }
