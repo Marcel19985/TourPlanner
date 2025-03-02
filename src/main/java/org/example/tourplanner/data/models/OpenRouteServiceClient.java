@@ -33,9 +33,9 @@ public class OpenRouteServiceClient {
         String destCoords = getCoordinates(destination);
 
         String orsMode = switch (transportType.toLowerCase()) { //Transportmittel bestimmen: kann man eleganter machen
-            case "auto", "car" -> "driving-car";
-            case "fahrrad", "bicycle", "bike" -> "cycling-regular";
-            case "zu fuß", "walking", "fußgänger", "walk" -> "foot-walking";
+            case "car" -> "driving-car";
+            case "bike" -> "cycling-regular";
+            case "walk" -> "foot-walking";
             default -> throw new IllegalArgumentException("Ungültiges Transportmittel: " + transportType);
         };
 

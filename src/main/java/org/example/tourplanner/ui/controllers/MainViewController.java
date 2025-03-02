@@ -109,7 +109,17 @@ public class MainViewController {
 
             TourEditController controller = loader.getController();
             controller.setTour(selectedTour);
-            controller.setOnTourUpdatedCallback(() -> tourListView.refresh());
+
+            controller.setOnTourUpdatedCallback(() -> {
+                //Aktualisiere die ListView, um die Änderungen anzuzeigen:
+                tourListView.refresh();
+                //Hole die (aktualisierte) Tour aus der Auswahl:
+                Tour updatedTour = tourListView.getSelectionModel().getSelectedItem();
+                //Aktualisiere die Detailansicht (TourView) mit den neuen Daten:
+                if (updatedTour != null) {
+                    tourViewController.setTour(updatedTour);
+                }
+            });
 
             Stage stage = new Stage();
             stage.setTitle("Edit Tour");
