@@ -31,9 +31,14 @@
     <Label text="Transport Mode:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
     <ComboBox fx:id="transportTypeBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
+    <Label text="Distanz (km):" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+    <TextField fx:id="distanceField" editable="false" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+    <Label text="Geschätzte Zeit (min):" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+    <TextField fx:id="estimatedTimeField" editable="false" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
     <!-- Buttons -->
-    <HBox spacing="10" GridPane.rowIndex="5" GridPane.columnSpan="2">
+    <HBox spacing="10" GridPane.rowIndex="7" GridPane.columnSpan="2">
         <Button text="Save" onAction="#onSave"/>
         <Button text="Cancel" onAction="#onCancel"/>
     </HBox>

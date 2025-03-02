@@ -18,118 +18,124 @@ import java.util.Optional;
 
 public class MainViewController {
 
-        @FXML
-        private Button deleteButton;
-
-        @FXML
-        private Button editButton;
-
-        @FXML
-        private ListView<Tour> tourListView;
-
-        @FXML
-        private AnchorPane tourDetailsContainer;
-
-        private final MainViewModel viewModel = new MainViewModel();
+    @FXML
+    private Button deleteButton;
 
     @FXML
-        private void initialize() { //wird automatisch durch FXML loader in start() aufgerufen
-            tourListView.setItems(viewModel.getTours());
-            tourListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); //Mehrfachauswahl der Listenelemente
+    private Button editButton;
 
-            //Nur den Namen anzeigen (mit AI generiert):
-            tourListView.setCellFactory(param -> new javafx.scene.control.ListCell<>() { //mithilfe von setCellFactory kann ListView benutzerdefiniert dargestellt werden
-                @Override
-                protected void updateItem(Tour tour, boolean empty) {
-                    super.updateItem(tour, empty);
-                    setText(empty || tour == null ? null : tour.getName());
-                }
-            });
+    @FXML
+    private ListView<Tour> tourListView; //Liste aller Tournamen
 
-            // Button-Mediator initialisieren: zum "ausgrauen" von Buttons
-            ButtonSelectionMediator buttonMediator = new ButtonSelectionMediator(editButton, deleteButton, tourListView);
+    @FXML //Detailansicht von ausgewählter Tour
+    private AnchorPane tourDetailsContainer;
 
-            // Lade die Tour-Detail-Ansicht
-            loadTourDetailView();
+    private final MainViewModel viewModel = new MainViewModel();
+
+    //Referenz auf den TourViewController
+    private TourViewController tourViewController;
+
+    @FXML
+    private void initialize() { //automatisch vom FXML loader aufgerufen
+        tourListView.setItems(viewModel.getTours()); //Touren laden
+        tourListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); //Mehrfachauswahl in der Liste erlaubt
+
+        //Definiert, dass ListView nur den Namen der Tour anzeigt:
+        tourListView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Tour tour, boolean empty) {
+                super.updateItem(tour, empty);
+                setText(empty || tour == null ? null : tour.getName());
+            }
+        });
+
+        //Button-Mediator zum Aktivieren/Deaktivieren der Buttons:
+        new ButtonSelectionMediator(editButton, deleteButton, tourListView);
+
+        //Lade die Tour-Detail-Ansicht und speichere den Controller:
+        loadTourDetailView();
+
+        //Wenn eine Tour ausgewählt wird, sollen die Details in der TourView angezeigt werden:
+        tourListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTour, newTour) -> {
+            if (tourViewController != null) {
+                tourViewController.setTour(newTour);
+            }
+        });
+    }
+
+    private void loadTourDetailView() { //Beim Klicken auf eine Tour
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourView.fxml"));
+            Parent tourView = loader.load(); //Root der FXML laden
+            tourViewController = loader.getController();
+            tourDetailsContainer.getChildren().add(tourView); //Fügt TourView als child hinzu
+            AnchorPane.setTopAnchor(tourView, 0.0);
+            AnchorPane.setBottomAnchor(tourView, 0.0);
+            AnchorPane.setLeftAnchor(tourView, 0.0);
+            AnchorPane.setRightAnchor(tourView, 0.0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onCreateTour() { //Beim Klicken von Create
+        try { //FXML von tourCreation laden
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourCreationView.fxml"));
+            Parent root = loader.load();
+
+            TourCreationController controller = loader.getController();
+            controller.setOnTourCreatedCallback(tour -> viewModel.getTours().add(tour));
+
+            Stage stage = new Stage();
+            stage.setTitle("Create new Tour");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void onEditTour() { //Beim Klicken von Edit
+        Tour selectedTour = tourListView.getSelectionModel().getSelectedItem(); //holt ausgewählte tour aus der Liste
+        if (selectedTour == null) {
+            return;
         }
 
-        private void loadTourDetailView() {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourView.fxml"));
-                Parent tourView = loader.load();
+        try { //FXML für TourEditController laden
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourEditView.fxml"));
+            Parent root = loader.load();
 
-                // TourView in das UI einfügen
-                tourDetailsContainer.getChildren().add(tourView);
-                AnchorPane.setTopAnchor(tourView, 0.0);
-                AnchorPane.setBottomAnchor(tourView, 0.0);
-                AnchorPane.setLeftAnchor(tourView, 0.0);
-                AnchorPane.setRightAnchor(tourView, 0.0);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            TourEditController controller = loader.getController();
+            controller.setTour(selectedTour);
+            controller.setOnTourUpdatedCallback(() -> tourListView.refresh());
+
+            Stage stage = new Stage();
+            stage.setTitle("Edit Tour");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void onDeleteTour() { //Klicken auf Delete
+        var selectedTours = tourListView.getSelectionModel().getSelectedItems(); //holt alle ausgewählten Touren aus der ListView
+        if (selectedTours.isEmpty()) {
+            return;
         }
 
-        @FXML
-        private void onCreateTour() {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourCreationView.fxml"));
-                Parent root = loader.load();
+        //Erstellt einen Bestätigungs-Dialog, um versehentliches Löschen zu vermeiden:
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Tours");
+        alert.setHeaderText("Are you sure?");
+        alert.setContentText("This action cannot be undone!");
 
-                TourCreationController controller = loader.getController();
-                controller.setOnTourCreatedCallback(tour -> viewModel.getTours().add(tour)); //mit AI generiert
-
-                Stage stage = new Stage();
-                stage.setTitle("Create new Tour");
-                stage.setScene(new Scene(root));
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) { //nur falls bestätigt, werden die ausgewählten Touren gelöscht
+            viewModel.getTours().removeAll(selectedTours);
         }
-
-        @FXML
-        public void onEditTour() {
-            Tour selectedTour = tourListView.getSelectionModel().getSelectedItem();
-            if (selectedTour == null) {
-                return;
-            }
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourEditView.fxml"));
-                Parent root = loader.load();
-
-                TourEditController controller = loader.getController();
-                controller.setTour(selectedTour);
-
-                controller.setOnTourUpdatedCallback(() -> {
-                    tourListView.refresh();
-                });
-
-                Stage stage = new Stage();
-                stage.setTitle("Edit Tour");
-                stage.setScene(new Scene(root));
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @FXML
-        public void onDeleteTour() {
-            var selectedTours = tourListView.getSelectionModel().getSelectedItems();
-
-            if (selectedTours.isEmpty()) {
-                return;
-            }
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Delete Tours");
-            alert.setHeaderText("Are you sure?");
-            alert.setContentText("This action cannot be undone!");
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                viewModel.getTours().removeAll(selectedTours);
-            }
-        }
+    }
 }

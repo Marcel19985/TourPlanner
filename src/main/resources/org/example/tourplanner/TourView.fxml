@@ -1,21 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.GridPane?>
-
-<GridPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:id="tourDetailsPane" fx:controller="org.example.tourplanner.ui.controllers.TourViewController" hgap="10" vgap="10" visible="false">
-
+<GridPane xmlns="http://javafx.com/javafx/23.0.1"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:id="tourDetailsPane"
+          fx:controller="org.example.tourplanner.ui.controllers.TourViewController"
+          hgap="10" vgap="10" visible="false">
     <padding>
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
 
-    <!-- Name -->
+    <!-- Zeile 0: Name -->
     <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
     <Label fx:id="nameLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-    <!-- Beschreibung -->
-    <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <!-- Zeile 1: Beschreibung -->
+    <Label text="Beschreibung:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
     <Label fx:id="descriptionLabel" wrapText="true" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
+    <!-- Zeile 2: Start -->
+    <Label text="Start:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <Label fx:id="startLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <!-- Zeile 3: Ziel -->
+    <Label text="Ziel:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <Label fx:id="destinationLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <!-- Zeile 4: Transportmittel -->
+    <Label text="Transport:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <Label fx:id="transportTypeLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+    <!-- Zeile 5: Distanz -->
+    <Label text="Distanz:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+    <Label fx:id="distanceLabel" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+    <!-- Zeile 6: Geschätzte Zeit -->
+    <Label text="Geschätzte Zeit:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+    <Label fx:id="estimatedTimeLabel" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 </GridPane>

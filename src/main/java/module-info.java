@@ -3,6 +3,8 @@ module org.example.tourplanner {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
+    requires json;
+    requires org.json;
 
     opens org.example.tourplanner to javafx.fxml;
     exports org.example.tourplanner;

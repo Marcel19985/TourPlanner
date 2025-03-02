@@ -5,7 +5,9 @@ public class Tour {
     private String description;
     private String start;
     private String destination;
-    private String transportType;
+    private String transportType; //eventuell enum verwenden
+    private double distance;
+    private double estimatedTime;
 
     public Tour(String name, String description, String start, String destination, String transportType) {
         this.name = name;
@@ -13,6 +15,16 @@ public class Tour {
         this.start = start;
         this.destination = destination;
         this.transportType = transportType;
+    }
+
+    public Tour(String name, String description, String start, String destination, String transportType, double distance, double estimatedTime) {
+        this.name = name;
+        this.description = description;
+        this.start = start;
+        this.destination = destination;
+        this.transportType = transportType;
+        this.distance = distance;
+        this.estimatedTime = estimatedTime;
     }
 
     @Override
@@ -35,5 +47,9 @@ public class Tour {
 
     public String getTransportType() { return transportType; }
     public void setTransportType(String transportType) { this.transportType = transportType; }
+
+    public double getDistance() { return distance; }
+    public double getEstimatedTime() { return estimatedTime; }
+
 }
 

@@ -8,7 +8,7 @@ import org.example.tourplanner.data.models.Tour;
 public class TourViewController {
 
     @FXML
-    private GridPane tourDetailsPane; // Referenz zum GridPane
+    private GridPane tourDetailsPane;
 
     @FXML
     private Label nameLabel;
@@ -17,8 +17,23 @@ public class TourViewController {
     private Label descriptionLabel;
 
     @FXML
+    private Label startLabel;
+
+    @FXML
+    private Label destinationLabel;
+
+    @FXML
+    private Label transportTypeLabel;
+
+    @FXML
+    private Label distanceLabel;
+
+    @FXML
+    private Label estimatedTimeLabel;
+
+    @FXML
     public void initialize() {
-        // Startet unsichtbar, bis eine Tour ausgewählt wird
+        // Standardmäßig ist das Detail-Pane unsichtbar, bis eine Tour gesetzt wird.
         tourDetailsPane.setVisible(false);
     }
 
@@ -26,11 +41,14 @@ public class TourViewController {
         if (tour != null) {
             nameLabel.setText(tour.getName());
             descriptionLabel.setText(tour.getDescription());
+            startLabel.setText(tour.getStart());
+            destinationLabel.setText(tour.getDestination());
+            transportTypeLabel.setText(tour.getTransportType());
+            distanceLabel.setText(String.format("%.2f km", tour.getDistance()));
+            estimatedTimeLabel.setText(String.format("%.2f min", tour.getEstimatedTime()));
 
-            // Zeige das GridPane an
             tourDetailsPane.setVisible(true);
         } else {
-            // Verstecke das GridPane, wenn keine Tour ausgewählt ist
             tourDetailsPane.setVisible(false);
         }
     }

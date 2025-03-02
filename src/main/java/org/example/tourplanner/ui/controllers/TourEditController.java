@@ -15,6 +15,8 @@ public class TourEditController {
     @FXML private TextField startField;
     @FXML private TextField destinationField;
     @FXML private ComboBox<String> transportTypeBox;
+    @FXML private TextField distanceField;
+    @FXML private TextField estimatedTimeField;
 
     private TourViewModel tourViewModel;
     private Runnable onTourUpdatedCallback;
@@ -32,7 +34,12 @@ public class TourEditController {
         startField.textProperty().bindBidirectional(tourViewModel.startProperty());
         destinationField.textProperty().bindBidirectional(tourViewModel.destinationProperty());
         transportTypeBox.valueProperty().bindBidirectional(tourViewModel.transportTypeProperty());
+
+        // Distanz und geschätzte Zeit setzen (nicht bearbeitbar)
+        distanceField.setText(String.format("%.2f km", tour.getDistance()));
+        estimatedTimeField.setText(String.format("%.2f min", tour.getEstimatedTime()));
     }
+
 
     public void setOnTourUpdatedCallback(Runnable callback) {
         this.onTourUpdatedCallback = callback;
