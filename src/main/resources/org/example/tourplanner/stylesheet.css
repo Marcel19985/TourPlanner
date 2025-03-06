@@ -1,0 +1,60 @@
+/* Allgemeine Stile für das Fenster */
+.root {
+    -fx-background-color: #f4f4f4;
+}
+
+/* Stil für den Titel */
+.label {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* Liste für Touren */
+.list-view {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* SplitPane Trennlinie */
+.split-pane *.split-pane-divider {
+    -fx-padding: 1px;
+    -fx-background-color: #7f8c8d;
+}
+
+/* Container für Tourdetails */
+.anchor-pane {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+}
+
+/* Stil für die Buttons */
+.button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 2, 2);
+}
+
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.button:pressed {
+    -fx-background-color: #1f618d;
+}
+
+/* Stil für den unteren Bereich */
+.hbox {
+    -fx-background-color: #ecf0f1;
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
