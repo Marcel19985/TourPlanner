@@ -7,11 +7,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.tourplanner.data.models.Tour;
+import org.example.tourplanner.data.models.TourLog;
 import org.example.tourplanner.mediators.ButtonSelectionMediator;
 import org.example.tourplanner.ui.viewmodels.MainViewModel;
+import org.example.tourplanner.ui.viewmodels.TourLogViewModel;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -25,23 +28,36 @@ public class MainViewController {
     private Button editButton;
 
     @FXML
+    private Label labelTours;
+
+    @FXML
+    private Label labelTourLogs;
+
+    @FXML
     private ListView<Tour> tourListView; //Liste aller Tournamen
+
+    @FXML
+    private ListView<TourLog> tourLogListView; //Liste der Tourlogs
 
     @FXML //Detailansicht von ausgewählter Tour
     private AnchorPane tourDetailsContainer;
 
-    private final MainViewModel viewModel = new MainViewModel();
 
-    //Referenz auf den TourViewController
-    private TourViewController tourViewController;
+    private MainViewModel viewModel = new MainViewModel();
+
+    //Referenz auf den TourViewController (Detailansicht)
+    private TourViewController tourViewController = new TourViewController();
+
+
 
     @FXML
-    private void initialize() { //automatisch vom FXML loader aufgerufen
-        tourListView.setItems(viewModel.getTours()); //Touren laden
-        tourListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); //Mehrfachauswahl in der Liste erlaubt
+    private void initialize() {
+        // Tour-Liste initialisieren
+        tourListView.setItems(viewModel.getTours()); // Touren laden
+        tourListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); // Mehrfachauswahl erlauben
 
-        //Definiert, dass ListView nur den Namen der Tour anzeigt:
-        tourListView.setCellFactory(param -> new ListCell<>() {
+        // Definiert, dass ListView nur den Namen der Tour anzeigt
+        tourListView.setCellFactory(param -> new ListCell<Tour>() {
             @Override
             protected void updateItem(Tour tour, boolean empty) {
                 super.updateItem(tour, empty);
@@ -49,25 +65,57 @@ public class MainViewController {
             }
         });
 
-        //Button-Mediator zum Aktivieren/Deaktivieren der Buttons:
+        // TourLogs initialisieren
+        tourLogListView.setItems(viewModel.getTourLogs());
+        tourLogListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        TourLog defaultTourLog = new TourLog("TEST", null, null, null, 0, 0, 0); // Leeres TourLog-Objekt
+        viewModel.getTourLogs().add(defaultTourLog); // Füge es der Liste hinzu
+
+        // Definiere das Layout der TourLog-Liste
+        tourLogListView.setCellFactory(param -> new ListCell<TourLog>() {
+            @Override
+            protected void updateItem(TourLog tourLog, boolean empty) {
+                super.updateItem(tourLog, empty);
+                if (tourLog != null) {
+                    setText(tourLog.getName());
+                } else {
+                    setText(null);
+                }
+            }
+        });
+
+        // Button-Mediator zum Aktivieren/Deaktivieren der Buttons
         new ButtonSelectionMediator(editButton, deleteButton, tourListView);
 
-        //Lade die Tour-Detail-Ansicht und speichere den Controller:
+        // Lade die Tour-Detail-Ansicht
         loadTourDetailView();
 
-        //Wenn eine Tour ausgewählt wird, sollen die Details in der TourView angezeigt werden:
+        // Wenn eine Tour ausgewählt wird, sollen die Details in der TourView angezeigt werden
         tourListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTour, newTour) -> {
             if (tourViewController != null) {
                 tourViewController.setTour(newTour);
             }
         });
+
+        // Listener für TourLog-Auswahl hinzufügen
+        tourLogListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTourLog, newTourLog) -> {
+            if (tourViewController != null && newTourLog != null) {
+                tourViewController.setTourLog(newTourLog); // TourLog anzeigen
+            }
+        });
     }
+
+
+
+
 
     private void loadTourDetailView() { //Beim Klicken auf eine Tour
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourView.fxml"));
             Parent tourView = loader.load(); //Root der FXML laden
             tourViewController = loader.getController();
+            tourViewController.setViewModel(viewModel);
+
             tourDetailsContainer.getChildren().add(tourView); //Fügt TourView als child hinzu
             AnchorPane.setTopAnchor(tourView, 0.0);
             AnchorPane.setBottomAnchor(tourView, 0.0);
@@ -77,6 +125,8 @@ public class MainViewController {
             e.printStackTrace();
         }
     }
+
+
 
     @FXML
     private void onCreateTour() { //Beim Klicken von Create
@@ -148,4 +198,33 @@ public class MainViewController {
             viewModel.getTours().removeAll(selectedTours);
         }
     }
+
+    @FXML
+    public void onSelectTours() {
+        setActiveView(true);
+    }
+    @FXML
+    public void onSelectTourLogs() {
+        setActiveView(false);
+    }
+
+    public void addTourLogToList(TourLog tourLog) {
+        tourLogListView.getItems().add(tourLog);
+    }
+
+
+    private void setActiveView(boolean showTours) {
+        // Sichtbarkeit der Listen anpassen
+        tourListView.setVisible(showTours);
+        tourLogListView.setVisible(!showTours);
+
+        // Aktualisieren der Label-Stile, damit das aktive Label unterstrichen wird
+        labelTours.setStyle(showTours
+                ? "-fx-font-weight: bold; -fx-font-size: 16px; -fx-underline: true;"
+                : "-fx-font-size: 16px; -fx-underline: false;");
+        labelTourLogs.setStyle(!showTours
+                ? "-fx-font-weight: bold; -fx-font-size: 16px; -fx-underline: true;"
+                : "-fx-font-size: 16px; -fx-underline: false;");
+    }
+
 }

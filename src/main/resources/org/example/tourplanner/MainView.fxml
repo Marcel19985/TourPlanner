@@ -9,13 +9,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ToggleGroup?>
 
+<?import javafx.scene.control.RadioButton?>
 <BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.ui.controllers.MainViewController" stylesheets="@stylesheet.css">
 
-    <top>
-        <Label text="Tour Planner" style="-fx-font-size: 24px; -fx-padding: 10px;"/>
-    </top>
 
+    <top>
+        <VBox alignment="CENTER">
+            <Label  text="Tour Planner" style="-fx-font-size: 24px;"/>
+            <!-- Umschaltung zwischen Tours und Tour Logs -->
+            <HBox alignment="BASELINE_LEFT" spacing="20" style="-fx-padding: 10px;" >
+                <Label fx:id="labelTours" text="Tours" style="-fx-underline: true;"  onMouseClicked="#onSelectTours"/>
+                <Label fx:id="labelTourLogs" text="Tour Logs" onMouseClicked="#onSelectTourLogs"/>
+            </HBox>
+
+        </VBox>
+    </top>
     <!-- Hauptbereich: Links Liste, Rechts Tour-Details -->
     <center>
         <SplitPane dividerPositions="0.25">
@@ -23,16 +33,20 @@
             <AnchorPane>
                 <ListView fx:id="tourListView" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
                           AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+                <ListView fx:id="tourLogListView" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+                          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" visible="false" />
+
             </AnchorPane>
 
             <!-- Rechte Seite: Tour-Details -->
             <AnchorPane fx:id="tourDetailsContainer"/>
+
         </SplitPane>
     </center>
 
     <!-- Buttons für Aktionen -->
     <bottom>
-        <HBox alignment="CENTER" spacing="10">
+        <HBox alignment="BASELINE_LEFT" spacing="20" style="-fx-padding: 10px;">
             <padding>
                 <Insets top="10" bottom="10"/>
             </padding>

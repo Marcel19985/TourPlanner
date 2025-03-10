@@ -6,7 +6,7 @@
 /* Stil für den Titel */
 .label {
     -fx-text-fill: #2c3e50;
-    -fx-font-size: 24px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
 
