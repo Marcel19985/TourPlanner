@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<SplitPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="org.example.tourplanner.ui.controllers.TourLogViewController" orientation="HORIZONTAL">
+<SplitPane dividerPositions="0.5" orientation="HORIZONTAL" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.ui.controllers.TourLogViewController">
     <items>
         <!-- Left side: List of Tour Logs -->
         <AnchorPane minWidth="150.0" prefWidth="200.0">
-            <ListView fx:id="tourLogListView" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-                      AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+            <ListView fx:id="tourLogListView" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" />
         </AnchorPane>
         <!-- Right side: Details of the selected Tour Log -->
         <AnchorPane fx:id="logDetailPane">
-            <Label text="Name:" layoutX="10" layoutY="10"/>
-            <Label fx:id="nameLabel" layoutX="80" layoutY="10"/>
+            <Label layoutX="10" layoutY="10" text="Name:" />
+            <Label fx:id="nameLabel" layoutX="90.0" layoutY="10.0" prefHeight="18.0" prefWidth="0.0" />
 
-            <Label text="Date:" layoutX="10" layoutY="40"/>
-            <Label fx:id="dateLabel" layoutX="80" layoutY="40"/>
+            <Label layoutX="10" layoutY="40" text="Date:" />
+            <Label fx:id="dateLabel" layoutX="90.0" layoutY="40" />
 
-            <Label text="Comment:" layoutX="10" layoutY="70"/>
-            <Label fx:id="commentLabel" layoutX="80" layoutY="70" wrapText="true" maxWidth="300"/>
+            <Label layoutX="10" layoutY="70" text="Comment:" />
+            <Label fx:id="commentLabel" layoutX="90.0" layoutY="70" maxWidth="300" wrapText="true" />
             <!-- Add additional labels for other details as needed -->
         </AnchorPane>
     </items>
