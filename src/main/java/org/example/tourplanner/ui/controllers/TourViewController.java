@@ -58,6 +58,7 @@ public class TourViewController {
 
         tourDetailsPane.setVisible(false);
     }
+
     public void setViewModel(MainViewModel viewModel) {
         this.viewModel = viewModel;
     }
@@ -79,41 +80,6 @@ public class TourViewController {
             this.currentTour = null;
         }
     }
-
-    @FXML
-    private void onCreateTourLog() {
-        try {
-            // Laden des FXML für das TourLog-Erstellungsfenster
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourLogCreationView.fxml"));
-            Parent root = loader.load();
-
-            // Erstellen einer neuen Szene
-            Scene scene = new Scene(root);
-
-            // Erstellen eines neuen Stages (Fensters)
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Create Tour Log");
-
-            // Abrufen des Controllers des neuen Fensters
-            TourLogCreationController controller = loader.getController();
-            controller.setCurrentTour(currentTour);
-            // Setzen von Callback und ViewModel, falls erforderlich
-            controller.setOnTourLogCreatedCallback(tourLog -> viewModel.getTourLogs().add(tourLog));
-
-            // Fenster anzeigen
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Fehler beim Laden des Fensters für das TourLog.");
-        }
-    }
-
-    public void setTourLog(TourLog newTourLog) {
-        nameLabel.setText(newTourLog.getComment());
-    }
 }
-
-
 
 

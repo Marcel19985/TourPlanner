@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="org.example.tourplanner.ui.controllers.TourLogViewController" orientation="HORIZONTAL">
+    <items>
+        <!-- Left side: List of Tour Logs -->
+        <AnchorPane minWidth="150.0" prefWidth="200.0">
+            <ListView fx:id="tourLogListView" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+                      AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+        </AnchorPane>
+        <!-- Right side: Details of the selected Tour Log -->
+        <AnchorPane fx:id="logDetailPane">
+            <Label text="Name:" layoutX="10" layoutY="10"/>
+            <Label fx:id="nameLabel" layoutX="80" layoutY="10"/>
+
+            <Label text="Date:" layoutX="10" layoutY="40"/>
+            <Label fx:id="dateLabel" layoutX="80" layoutY="40"/>
+
+            <Label text="Comment:" layoutX="10" layoutY="70"/>
+            <Label fx:id="commentLabel" layoutX="80" layoutY="70" wrapText="true" maxWidth="300"/>
+            <!-- Add additional labels for other details as needed -->
+        </AnchorPane>
+    </items>
+</SplitPane>

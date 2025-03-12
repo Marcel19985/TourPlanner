@@ -47,8 +47,4 @@
     <!-- Zeile 7: Bild für die Tour (platzhalter für das spätere Bild) -->
     <ImageView fx:id="tourImageView" fitWidth="200" fitHeight="200" preserveRatio="true"
                GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
-
-    <!-- Button zum Erstellen eines Tour Logs -->
-    <Button fx:id="createTourLogButton" text="Create Tour Log" onAction="#onCreateTourLog"
-            GridPane.rowIndex="8" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 </GridPane>

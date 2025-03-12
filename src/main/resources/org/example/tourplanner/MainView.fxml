@@ -12,44 +12,47 @@
 <?import javafx.scene.control.ToggleGroup?>
 
 <?import javafx.scene.control.RadioButton?>
-<BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.ui.controllers.MainViewController" stylesheets="@stylesheet.css">
-
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.tourplanner.ui.controllers.MainViewController" stylesheets="@stylesheet.css">
 
     <top>
         <VBox alignment="CENTER">
-            <Label  text="Tour Planner" style="-fx-font-size: 24px;"/>
-            <!-- Umschaltung zwischen Tours und Tour Logs -->
-            <HBox alignment="BASELINE_LEFT" spacing="20" style="-fx-padding: 10px;" >
-                <Label fx:id="labelTours" text="Tours" style="-fx-underline: true;"  onMouseClicked="#onSelectTours"/>
-                <Label fx:id="labelTourLogs" text="Tour Logs" onMouseClicked="#onSelectTourLogs"/>
-            </HBox>
+            <Label text="Tour Planner" style="-fx-font-size: 24px;"/>
         </VBox>
     </top>
-    <!-- Hauptbereich: Links Liste, Rechts Tour-Details -->
+
     <center>
         <SplitPane dividerPositions="0.3">
-            <!-- Linke Seite: Tour-Liste -->
-            <AnchorPane fx:id="list">
-                <ListView fx:id="tourListView" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-                          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
-                <ListView fx:id="tourLogListView" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-                          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" visible="false" />
-
+            <!-- Left side: List of Tours -->
+            <AnchorPane>
+                <ListView fx:id="tourListView" AnchorPane.topAnchor="0"
+                          AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+                          AnchorPane.rightAnchor="0"/>
             </AnchorPane>
 
-            <!-- Rechte Seite: Tour-Details -->
-            <AnchorPane fx:id="tourDetailsContainer"/>
+            <!-- Right side: TabPane for detail views -->
+            <AnchorPane>
+                <TabPane fx:id="detailTabPane" AnchorPane.topAnchor="0"
+                         AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+                         AnchorPane.rightAnchor="0">
+                    <Tab text="Tour Details" closable="false">
+                        <AnchorPane fx:id="tourDetailsContainer" />
+                    </Tab>
+                    <Tab text="Tour Logs" closable="false">
+                        <AnchorPane fx:id="tourLogDetailsContainer" />
+                    </Tab>
+                </TabPane>
+            </AnchorPane>
         </SplitPane>
     </center>
 
-    <!-- Buttons für Aktionen -->
     <bottom>
         <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 10px;">
-            <Button fx:id="createButton" text="Create Tour" onAction="#onCreateTour"/>
-            <Button fx:id="editButton" text="Edit" onAction="#onEditTour"/>
-            <Button fx:id="deleteButton" text="Delete" onAction="#onDeleteTour"/>
+            <Button fx:id="createButton" text="Create" onAction="#onCreate"/>
+            <Button fx:id="editButton" text="Edit" onAction="#onEdit"/>
+            <Button fx:id="deleteButton" text="Delete" onAction="#onDelete"/>
         </HBox>
     </bottom>
-
-
 </BorderPane>

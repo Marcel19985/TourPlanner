@@ -14,6 +14,14 @@ public class Tour {
 
     private final ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
 
+    public ObservableList<TourLog> getTourLogs() {
+        return tourLogs;
+    }
+
+    public void addTourLog(TourLog tourLog) {
+        tourLogs.add(tourLog);
+    }
+
     public Tour(String name, String description, String start, String destination, String transportType) {
         this.name = name;
         this.description = description;
@@ -30,13 +38,6 @@ public class Tour {
         this.transportType = transportType;
         this.distance = distance;
         this.estimatedTime = estimatedTime;
-    }
-
-    public ObservableList<TourLog> getTourLogs() {
-        return tourLogs;
-    }
-    public void addTourLog(TourLog tourLog) {
-        tourLogs.add(tourLog);
     }
 
     @Override
