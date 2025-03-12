@@ -12,7 +12,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 
 <?import javafx.scene.control.RadioButton?>
-<BorderPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.ui.controllers.MainViewController" stylesheets="@stylesheet.css">
+<BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.ui.controllers.MainViewController" stylesheets="@stylesheet.css">
 
 
     <top>
@@ -23,14 +23,13 @@
                 <Label fx:id="labelTours" text="Tours" style="-fx-underline: true;"  onMouseClicked="#onSelectTours"/>
                 <Label fx:id="labelTourLogs" text="Tour Logs" onMouseClicked="#onSelectTourLogs"/>
             </HBox>
-
         </VBox>
     </top>
     <!-- Hauptbereich: Links Liste, Rechts Tour-Details -->
     <center>
-        <SplitPane dividerPositions="0.25">
+        <SplitPane dividerPositions="0.3">
             <!-- Linke Seite: Tour-Liste -->
-            <AnchorPane>
+            <AnchorPane fx:id="list">
                 <ListView fx:id="tourListView" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
                           AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
                 <ListView fx:id="tourLogListView" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
@@ -40,20 +39,17 @@
 
             <!-- Rechte Seite: Tour-Details -->
             <AnchorPane fx:id="tourDetailsContainer"/>
-
         </SplitPane>
     </center>
 
     <!-- Buttons für Aktionen -->
     <bottom>
-        <HBox alignment="BASELINE_LEFT" spacing="20" style="-fx-padding: 10px;">
-            <padding>
-                <Insets top="10" bottom="10"/>
-            </padding>
-            <Button fx:id="createButton" text="Create" onAction="#onCreateTour"/>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 10px;">
+            <Button fx:id="createButton" text="Create Tour" onAction="#onCreateTour"/>
             <Button fx:id="editButton" text="Edit" onAction="#onEditTour"/>
             <Button fx:id="deleteButton" text="Delete" onAction="#onDeleteTour"/>
         </HBox>
     </bottom>
+
 
 </BorderPane>

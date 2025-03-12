@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class TourLog {
 
     private String name;
+    private String tourName;
     private LocalDate date;
     private String comment;
     private String difficulty;
@@ -13,8 +14,9 @@ public class TourLog {
     private int rating;
 
     // Konstruktor
-    public TourLog(String name, LocalDate date, String comment, String difficulty, double totalDistance, double totalTime, int rating) {
+    public TourLog(String name, String tourName, LocalDate date, String comment, String difficulty, double totalDistance, double totalTime, int rating) {
         this.name = name;
+        this.tourName = tourName;
         this.date = date;
         this.comment = comment;
         this.difficulty = difficulty;
@@ -30,8 +32,15 @@ public class TourLog {
     public void setName(String name) {
         this.name = name;
     }
+    public String getTourName() {
+        return tourName;
+    }
     public LocalDate getDate() {
         return date;
+    }
+
+    public void setTourName(String tourName) {
+        this.tourName = tourName;
     }
 
     public void setDate(LocalDate date) {

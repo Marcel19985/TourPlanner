@@ -9,7 +9,7 @@ public class ButtonSelectionMediator {
     private final Button editButton;
     private final Button deleteButton;
     private final ListView<Tour> tourListView;
-
+// todo: mediator auch für tourlogs hinzufügen
     public ButtonSelectionMediator(Button editButton, Button deleteButton, ListView<Tour> tourListView) {
         this.editButton = editButton;
         this.deleteButton = deleteButton;

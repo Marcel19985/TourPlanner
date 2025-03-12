@@ -38,6 +38,7 @@
 
         <Label text="Comment:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
         <TextArea fx:id="commentField" GridPane.rowIndex="6" GridPane.columnIndex="1" wrapText="true"/>
+
     </GridPane>
 
     <HBox spacing="10" alignment="center">

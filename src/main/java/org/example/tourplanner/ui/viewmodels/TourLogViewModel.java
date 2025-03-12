@@ -12,6 +12,7 @@ public class TourLogViewModel {
     private final ObjectProperty<LocalDate> date = new SimpleObjectProperty<>();
     private final StringProperty comment = new SimpleStringProperty();
     private final StringProperty name = new SimpleStringProperty();
+    private final StringProperty tourName = new SimpleStringProperty();
     private final StringProperty difficulty = new SimpleStringProperty();
     private final DoubleProperty totalDistance = new SimpleDoubleProperty();
     private final DoubleProperty totalTime = new SimpleDoubleProperty();
@@ -24,6 +25,8 @@ public class TourLogViewModel {
     public TourLogViewModel(TourLog tourLog) {
         this.tourLog = tourLog;
         this.date.set(tourLog.getDate());
+        this.name.set(tourLog.getName());
+        this.tourName.set(tourLog.getTourName());
         this.comment.set(tourLog.getComment());
         this.difficulty.set(tourLog.getDifficulty());
         this.totalDistance.set(tourLog.getTotalDistance());
@@ -44,6 +47,9 @@ public class TourLogViewModel {
     }
     public StringProperty nameProperty() {
         return name;
+    }
+    public StringProperty tourNameProperty() {
+        return tourName;
     }
 
     public StringProperty difficultyProperty() {
@@ -76,6 +82,7 @@ public class TourLogViewModel {
     // Methode zum Aktualisieren des TourLogs
     public void updateTourLog() {
         tourLog.setName(name.get());
+        tourLog.setTourName(tourName.get());
         tourLog.setDate(date.get());
         tourLog.setComment(comment.get());
         tourLog.setDifficulty(difficulty.get());
@@ -87,6 +94,6 @@ public class TourLogViewModel {
 
     // Optional: Methode zum Erstellen eines neuen TourLogs aus den aktuellen Werten
     public TourLog createTourLog() {
-        return new TourLog(name.get(), date.get(), comment.get(), difficulty.get(), totalDistance.get(), totalTime.get(), rating.get());
+        return new TourLog(name.get(), tourName.get(), date.get(), comment.get(), difficulty.get(), totalDistance.get(), totalTime.get(), rating.get());
     }
 }

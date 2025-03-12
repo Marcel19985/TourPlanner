@@ -51,10 +51,7 @@ public class TourViewController {
     @FXML
     private Label estimatedTimeLabel;
 
-    @FXML
-    private ListView<TourLog> tourLogListView;
-
-    private TourLogViewModel tourLogViewModel;
+    private Tour currentTour;
 
     @FXML
     public void initialize() {
@@ -67,6 +64,7 @@ public class TourViewController {
 
     public void setTour(Tour tour) {
         if (tour != null) {
+            this.currentTour = tour;
             nameLabel.setText(tour.getName());
             descriptionLabel.setText(tour.getDescription());
             startLabel.setText(tour.getStart());
@@ -74,10 +72,11 @@ public class TourViewController {
             transportTypeLabel.setText(tour.getTransportType());
             distanceLabel.setText(String.format("%.2f km", tour.getDistance()));
             estimatedTimeLabel.setText(String.format("%.2f min", tour.getEstimatedTime()));
-
+            this.currentTour = tour;
             tourDetailsPane.setVisible(true);
         } else {
             tourDetailsPane.setVisible(false);
+            this.currentTour = null;
         }
     }
 
@@ -98,7 +97,7 @@ public class TourViewController {
 
             // Abrufen des Controllers des neuen Fensters
             TourLogCreationController controller = loader.getController();
-
+            controller.setCurrentTour(currentTour);
             // Setzen von Callback und ViewModel, falls erforderlich
             controller.setOnTourLogCreatedCallback(tourLog -> viewModel.getTourLogs().add(tourLog));
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane xmlns="http://javafx.com/javafx/17.0.6"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:id="tourDetailsPane"
+          fx:controller="org.example.tourplanner.ui.controllers.TourLogViewController"
+          hgap="10" vgap="10" visible="false">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <!-- Zeile 0: Tour-Name -->
+    <Label text="Tour Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <Label fx:id="tourNameLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <!-- Zeile 1: Datum -->
+    <Label text="Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <Label fx:id="dateLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <!-- Zeile 2: Kommentar -->
+    <Label text="Comment:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <Label fx:id="commentLabel" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <!-- Zeile 3: Schwierigkeit -->
+    <Label text="Difficulty:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <Label fx:id="difficultyLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <!-- Zeile 4: Gesamtzeit -->
+    <Label text="Total Time:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <Label fx:id="totalTimeLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+    <!-- Zeile 5: Gesamtdistanz -->
+    <Label text="Total Distance:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+    <Label fx:id="totalDistanceLabel" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+    <!-- Zeile 6: Bewertung -->
+    <Label text="Rating:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+    <Label fx:id="ratingLabel" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+    <!-- Zeile 7: Tourname -->
+    <Label text="Tour: " GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+    <Label fx:id="tourNameInLog" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+
+</GridPane>

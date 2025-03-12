@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.data.models.TourLog;
@@ -21,6 +22,8 @@ import java.util.Optional;
 
 public class MainViewController {
 
+    @FXML
+    public BorderPane mainPane;
     @FXML
     private Button deleteButton;
 
@@ -47,11 +50,21 @@ public class MainViewController {
 
     //Referenz auf den TourViewController (Detailansicht)
     private TourViewController tourViewController = new TourViewController();
+    private TourLogViewController tourLogViewController = new TourLogViewController();
 
-
-
+//todo: bei edit und delete unterscheiden ob gerade eine tour oder ein tourlog ausgewählt ist
     @FXML
     private void initialize() {
+        mainPane.setOnMouseClicked(event -> {
+            Node clickedNode = event.getPickResult().getIntersectedNode();
+
+            // Prüfen, ob NICHT in die ListViews geklickt wurde
+            if (clickedNode != null && !tourListView.equals(clickedNode) && !tourLogListView.equals(clickedNode)) {
+                tourListView.getSelectionModel().clearSelection();
+                tourLogListView.getSelectionModel().clearSelection();
+            }
+        });
+
         // Tour-Liste initialisieren
         tourListView.setItems(viewModel.getTours()); // Touren laden
         tourListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); // Mehrfachauswahl erlauben
@@ -68,7 +81,7 @@ public class MainViewController {
         // TourLogs initialisieren
         tourLogListView.setItems(viewModel.getTourLogs());
         tourLogListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        TourLog defaultTourLog = new TourLog("TEST", null, null, null, 0, 0, 0); // Leeres TourLog-Objekt
+        TourLog defaultTourLog = new TourLog("TEST", "Wien-Graz", null, null, null, 0, 0, 0); // Leeres TourLog-Objekt
         viewModel.getTourLogs().add(defaultTourLog); // Füge es der Liste hinzu
 
         // Definiere das Layout der TourLog-Liste
@@ -89,25 +102,43 @@ public class MainViewController {
 
         // Lade die Tour-Detail-Ansicht
         loadTourDetailView();
-
+        loadLogTourDetailView();
         // Wenn eine Tour ausgewählt wird, sollen die Details in der TourView angezeigt werden
         tourListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTour, newTour) -> {
             if (tourViewController != null) {
+                tourLogViewController.setTourLog(null);
                 tourViewController.setTour(newTour);
             }
         });
 
         // Listener für TourLog-Auswahl hinzufügen
         tourLogListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTourLog, newTourLog) -> {
-            if (tourViewController != null && newTourLog != null) {
-                tourViewController.setTourLog(newTourLog); // TourLog anzeigen
+            if (tourLogViewController != null) {
+                tourViewController.setTour(null);
+                tourLogViewController.setTourLog(newTourLog);
             }
         });
+
     }
 
 
 
+    private void loadLogTourDetailView() { //Beim Klicken auf eine Tourlog
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourLogView.fxml"));
+            Parent tourView = loader.load(); //Root der FXML laden
+            tourLogViewController = loader.getController();
 
+
+            tourDetailsContainer.getChildren().add(tourView); //Fügt TourView als child hinzu
+            AnchorPane.setTopAnchor(tourView, 0.0);
+            AnchorPane.setBottomAnchor(tourView, 0.0);
+            AnchorPane.setLeftAnchor(tourView, 0.0);
+            AnchorPane.setRightAnchor(tourView, 0.0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void loadTourDetailView() { //Beim Klicken auf eine Tour
         try {
