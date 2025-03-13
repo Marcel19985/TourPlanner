@@ -31,10 +31,10 @@
     <Label text="Transport Mode:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
     <ComboBox fx:id="transportTypeBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-    <Label text="Distanz (km):" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+    <Label text="Distance (km):" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
     <TextField fx:id="distanceField" editable="false" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-    <Label text="Geschätzte Zeit (min):" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+    <Label text="Estimated time (min):" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
     <TextField fx:id="estimatedTimeField" editable="false" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
     <!-- Buttons -->

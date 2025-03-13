@@ -2,35 +2,49 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 
-<?import javafx.scene.control.ComboBox?>
-<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.tourplanner.ui.controllers.TourCreationController">
+<GridPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="org.example.tourplanner.ui.controllers.TourCreationController"
+          hgap="10" vgap="10">
+
+    <!-- Padding hinzufügen -->
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="Create Tour" />
+    <!-- Titel über gesamte Breite -->
+    <Label text="Create Tour" style="-fx-font-size: 16px; -fx-font-weight: bold;"
+           GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" />
 
-    <Label text="Name:" />
-    <TextField fx:id="tourNameField" />
+    <!-- Name -->
+    <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <TextField fx:id="tourNameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-    <Label text="Description:" />
-    <TextField fx:id="tourDescriptionField" />
+    <!-- Description -->
+    <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <TextField fx:id="tourDescriptionField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-    <Label text="Start:"/>
-    <TextField fx:id="startField"/>
+    <!-- Start -->
+    <Label text="Start:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <TextField fx:id="startField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-    <Label text="Destination:"/>
-    <TextField fx:id="destinationField"/>
+    <!-- Destination -->
+    <Label text="Destination:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+    <TextField fx:id="destinationField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
-    <Label text="Transportation Mode:"/>
-    <ComboBox fx:id="transportTypeBox"/>
+    <!-- Transport Mode -->
+    <Label text="Transportation Mode:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <ComboBox fx:id="transportTypeBox" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
+    <!-- Buttons in einer HBox für bessere Anordnung -->
+    <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2">
+        <Button text="Create" onAction="#onCreateButtonClick"/>
+        <Button text="Cancel" onAction="#onCancelButtonClick"/>
+    </HBox>
 
-    <Button text="Create" onAction="#onCreateButtonClick" />
-    <Button text="Cancel" onAction="#onCancelButtonClick" />
-</VBox>
+</GridPane>
