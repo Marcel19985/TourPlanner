@@ -5,32 +5,41 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import org.example.tourplanner.data.models.Tour;
 
-public class ButtonSelectionMediator {
-    private final Button editButton;
-    private final Button deleteButton;
-    private final ListView<Tour> tourListView;
 // todo: mediator auch für tourlogs hinzufügen
 // todo: delete von mehreren tours möglich machen
 // todo: edit und delete für tourlogs
-    public ButtonSelectionMediator(Button editButton, Button deleteButton, ListView<Tour> tourListView) {
+
+public class ButtonSelectionMediator<T> {
+    private final Button editButton;
+    private final Button deleteButton;
+    private final ListView<T> listView;
+    private final ListChangeListener<T> listener;
+
+    public ButtonSelectionMediator(Button editButton, Button deleteButton, ListView<T> listView) {
         this.editButton = editButton;
         this.deleteButton = deleteButton;
-        this.tourListView = tourListView;
-
-        //Listener auf Änderungen in der ListView-Selektion: aufgerufen sobale eine Liste ausgewählt oder de-ausgewählt wird
-        this.tourListView.getSelectionModel().getSelectedItems().addListener((ListChangeListener<Tour>) change -> updateButtonState());
-
-        //Initial setzen:
+        this.listView = listView;
+        this.listener = change -> updateButtonState();
+        listView.getSelectionModel().getSelectedItems().addListener(listener);
         updateButtonState();
     }
 
-    private void updateButtonState() {
-        int selectedCount = tourListView.getSelectionModel().getSelectedItems().size();
-
-        //Bearbeiten nur möglich, wenn genau eine Tour ausgewählt ist:
+    public void updateButtonState() {
+        int selectedCount = listView.getSelectionModel().getSelectedItems().size();
+        // Edit ist nur aktiv, wenn genau ein Item ausgewählt ist.
         editButton.setDisable(selectedCount != 1);
-
-        //Löschen ist deaktiviert, wenn nichts ausgewählt ist:
+        // Delete ist deaktiviert, wenn gar nichts ausgewählt ist.
         deleteButton.setDisable(selectedCount == 0);
+    }
+
+    // Aktiviert diesen Mediator, indem der Listener wieder hinzugefügt wird.
+    public void enable() {
+        listView.getSelectionModel().getSelectedItems().addListener(listener);
+        updateButtonState();
+    }
+
+    // Deaktiviert diesen Mediator, indem der Listener entfernt wird.
+    public void disable() {
+        listView.getSelectionModel().getSelectedItems().removeListener(listener);
     }
 }

@@ -12,7 +12,7 @@ public class Tour {
     private double distance;
     private double estimatedTime;
 
-    private final ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
+    private final ObservableList<TourLog> tourLogs = FXCollections.observableArrayList(); //man kann Listener definieren, die direkt bei einer Änderung einer observable list benachrichtigt werden
 
     public ObservableList<TourLog> getTourLogs() {
         return tourLogs;

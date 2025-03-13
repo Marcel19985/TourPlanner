@@ -1,6 +1,7 @@
 package org.example.tourplanner.ui.controllers;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -10,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.data.models.TourLog;
+import org.example.tourplanner.mediators.ButtonSelectionMediator;
 
 public class TourLogViewController {
 
@@ -59,6 +61,7 @@ public class TourLogViewController {
                 clearDetails();
             }
         });
+
     }
 
     /**
@@ -70,9 +73,16 @@ public class TourLogViewController {
         }
     }
 
+    public TourLog getSelectedTourLog() {
+        return tourLogListView.getSelectionModel().getSelectedItem();
+    }
+
+    public ObservableList<TourLog> getSelectedTourLogs() {
+        return tourLogListView.getSelectionModel().getSelectedItems();
+    }
+
+
     public void clear() {
-        // Instead of clearing the actual tour logs,
-        // set the ListView to an empty observable list.
         tourLogListView.setItems(FXCollections.observableArrayList());
         clearDetails();
     }
@@ -83,7 +93,7 @@ public class TourLogViewController {
     }
 
 
-    private void showTourLogDetails(TourLog tourLog) {
+    void showTourLogDetails(TourLog tourLog) {
         if (tourLog != null) {
             logDetailPane.setVisible(true);
             logNameLabel.setText(tourLog.getName());
@@ -120,4 +130,9 @@ public class TourLogViewController {
         totalDistanceLabel.setText("");
         difficultyLabel.setText("");
     }
+
+    public ListView<TourLog> getTourLogListView() {
+        return tourLogListView;
+    }
+
 }

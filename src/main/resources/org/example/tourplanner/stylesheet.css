@@ -1,46 +1,26 @@
-/* Allgemeine Stile für das Fenster */
+/* Root styles and background */
 .root {
-    -fx-background-color: #f4f4f4;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: linear-gradient(to bottom, #f6f8fa, #e9eff5);
 }
 
-/* Stil für den Titel */
+/* Labels */
 .label {
     -fx-text-fill: #2c3e50;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
+    -fx-font-weight: 600;
 }
 
-/* Liste für Touren */
-.list-view {
-    -fx-background-color: white;
-    -fx-border-color: #bdc3c7;
-    -fx-border-radius: 5px;
-    -fx-padding: 5px;
-}
-
-/* SplitPane Trennlinie */
-.split-pane *.split-pane-divider {
-    -fx-padding: 1px;
-    -fx-background-color: #7f8c8d;
-}
-
-/* Container für Tourdetails */
-.anchor-pane {
-    -fx-background-color: white;
-    -fx-border-color: #bdc3c7;
-    -fx-border-radius: 5px;
-    -fx-padding: 10px;
-}
-
-/* Stil für die Buttons */
+/* Buttons */
 .button {
-    -fx-background-color: #3498db;
+    -fx-background-color: #3498db;       /* Bright blue */
     -fx-text-fill: white;
-    -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-padding: 8px 16px;
-    -fx-border-radius: 5px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 2, 2);
+    -fx-padding: 8 16;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 2);
 }
 
 .button:hover {
@@ -48,13 +28,79 @@
 }
 
 .button:pressed {
-    -fx-background-color: #1f618d;
+    -fx-background-color: #1f6391;
 }
 
-/* Stil für den unteren Bereich */
-.hbox {
-    -fx-background-color: #ecf0f1;
-    -fx-padding: 10px;
-    -fx-spacing: 10px;
-    -fx-alignment: center;
+.button:disabled {
+    -fx-background-color: #bdc3c7;
+    -fx-text-fill: #ecf0f1;
+}
+
+/* TextFields, TextAreas, ComboBoxes, DatePickers */
+.text-field,
+.text-area,
+.combo-box,
+.date-picker {
+    -fx-background-color: white;
+    -fx-border-color: #95a5a6;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 4;
+}
+
+/* ListView styling */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: #ffffff;
+    -fx-border-color: #95a5a6;
+    -fx-border-width: 1;
+    -fx-padding: 4;
+}
+
+/* TabPane styling */
+.tab-pane .tab-header-area {
+    -fx-background-color: #e74c3c;  /* Vibrant red header */
+    -fx-padding: 5 0 5 0;
+}
+
+.tab-pane .tab {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: white;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e74c3c;
+    -fx-border-width: 0 0 3 0;
+    -fx-text-fill: #e74c3c;
+}
+
+/* BorderPane and SplitPane */
+.border-pane {
+    -fx-background-color: linear-gradient(to bottom, #f6f8fa, #e9eff5);
+}
+
+.split-pane {
+    -fx-divider-color: #95a5a6;
+}
+
+/* GridPane */
+.grid-pane {
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+/* AnchorPane */
+.anchor-pane {
+    -fx-padding: 10;
+}
+
+/* Tooltip styling */
+.tooltip {
+    -fx-background-color: #e67e22;  /* Orange tooltip background */
+    -fx-text-fill: white;
+    -fx-padding: 5;
+    -fx-background-radius: 3;
 }
