@@ -63,8 +63,7 @@ public class TourLogCreationController {
             int rating = ratingComboBox.getValue();
             LocalDate date = datePicker.getValue();
 
-            TourLog newTourLog = new TourLog(name, currentTour.getName(), date, comment, difficulty, totalDistance, totalTime, rating);
-
+            TourLog newTourLog = new TourLog(name, date, comment, difficulty, totalDistance, totalTime, rating);
             if (onTourLogCreatedCallback != null) {
                 onTourLogCreatedCallback.accept(newTourLog);
             }
@@ -73,6 +72,8 @@ public class TourLogCreationController {
             showAlert("Invalid input for distance or time.");
         }
     }
+
+
 
     @FXML
     private void onCancel() {

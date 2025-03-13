@@ -94,6 +94,6 @@ public class TourLogViewModel {
 
     // Optional: Methode zum Erstellen eines neuen TourLogs aus den aktuellen Werten
     public TourLog createTourLog() {
-        return new TourLog(name.get(), tourName.get(), date.get(), comment.get(), difficulty.get(), totalDistance.get(), totalTime.get(), rating.get());
+        return new TourLog(name.get(), date.get(), comment.get(), difficulty.get(), totalDistance.get(), totalTime.get(), rating.get());
     }
 }

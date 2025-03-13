@@ -14,9 +14,8 @@ public class TourLog {
     private int rating;
 
     // Konstruktor
-    public TourLog(String name, String tourName, LocalDate date, String comment, String difficulty, double totalDistance, double totalTime, int rating) {
+    public TourLog(String name, LocalDate date, String comment, String difficulty, double totalDistance, double totalTime, int rating) {
         this.name = name;
-        this.tourName = tourName;
         this.date = date;
         this.comment = comment;
         this.difficulty = difficulty;

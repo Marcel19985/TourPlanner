@@ -4,24 +4,53 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
 
-<SplitPane dividerPositions="0.5" orientation="HORIZONTAL" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tourplanner.ui.controllers.TourLogViewController">
+<SplitPane dividerPositions="0.5" orientation="HORIZONTAL"
+           xmlns="http://javafx.com/javafx/17.0.6"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="org.example.tourplanner.ui.controllers.TourLogViewController">
+
     <items>
-        <!-- Left side: List of Tour Logs -->
-        <AnchorPane minWidth="150.0" prefWidth="200.0">
-            <ListView fx:id="tourLogListView" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" />
+        <!-- Linke Seite: Liste der TourLogs -->
+        <AnchorPane minWidth="200.0" prefWidth="400.0">
+            <ListView fx:id="tourLogListView" AnchorPane.topAnchor="0"
+                      AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+                      AnchorPane.rightAnchor="0" />
         </AnchorPane>
-        <!-- Right side: Details of the selected Tour Log -->
+
+        <!-- Rechte Seite: GridPane für Tour-Log-Details -->
         <AnchorPane fx:id="logDetailPane">
-            <Label layoutX="10" layoutY="10" text="Name:" />
-            <Label fx:id="nameLabel" layoutX="90.0" layoutY="10.0" prefHeight="18.0" prefWidth="0.0" />
+            <GridPane layoutX="10" layoutY="10" hgap="10" vgap="10">
+                <!-- Name -->
+                <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <Label fx:id="logNameLabel" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-            <Label layoutX="10" layoutY="40" text="Date:" />
-            <Label fx:id="dateLabel" layoutX="90.0" layoutY="40" />
+                <!-- Date -->
+                <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <Label fx:id="dateLabel" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-            <Label layoutX="10" layoutY="70" text="Comment:" />
-            <Label fx:id="commentLabel" layoutX="90.0" layoutY="70" maxWidth="300" wrapText="true" />
-            <!-- Add additional labels for other details as needed -->
+                <!-- Difficulty -->
+                <Label text="Difficulty:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <Label fx:id="difficultyLabel" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <!-- Total Distance -->
+                <Label text="Total Distance:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <Label fx:id="totalDistanceLabel" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                <!-- Total Time -->
+                <Label text="Total Time:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <Label fx:id="totalTimeLabel" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                <!-- Rating -->
+                <Label text="Rating:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <Label fx:id="ratingLabel" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                <!-- Comment -->
+                <Label text="Comment:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                <Label fx:id="commentLabel" wrapText="true" maxWidth="300"
+                       GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+            </GridPane>
         </AnchorPane>
     </items>
 </SplitPane>

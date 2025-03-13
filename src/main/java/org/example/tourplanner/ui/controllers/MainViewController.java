@@ -51,7 +51,7 @@ public class MainViewController {
     // Controllers for the two detail views
     private TourViewController tourViewController;
     private TourLogViewController tourLogViewController;
-// todo: UNIT TESTS HINZUFÜGEN
+    // todo: UNIT TESTS HINZUFÜGEN
 // todo: edit und create button zusammenlegen
 // todo: Internationalisierung hinzufügen
     @FXML
