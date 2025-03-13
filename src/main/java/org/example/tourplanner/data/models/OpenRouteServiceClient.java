@@ -16,7 +16,7 @@ import java.io.FileInputStream;
 public class OpenRouteServiceClient {
 
     private static String API_KEY;
-
+// todo: bei edit soll die api aufgerufen werden
     static { //static wird ausgeführt, bevor eine Instanz der Klasse erstellt wird
         try {
             Properties properties = new Properties();

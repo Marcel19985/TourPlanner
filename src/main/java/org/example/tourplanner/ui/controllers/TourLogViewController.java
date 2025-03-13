@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.util.Callback;
 import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.data.models.TourLog;
@@ -25,6 +26,7 @@ public class TourLogViewController {
     @FXML
     public void initialize() {
         // Configure the ListView cell factory for a simple display.
+        tourLogListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tourLogListView.setCellFactory(new Callback<>() {
             @Override
             public ListCell<TourLog> call(ListView<TourLog> param) {

@@ -58,7 +58,7 @@ public class TourViewController {
 
         tourDetailsPane.setVisible(false);
     }
-
+    // todo: Platzhalter für bild hinzufügen
     public void setViewModel(MainViewModel viewModel) {
         this.viewModel = viewModel;
     }

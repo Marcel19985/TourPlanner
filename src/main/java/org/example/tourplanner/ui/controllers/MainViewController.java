@@ -51,12 +51,14 @@ public class MainViewController {
     // Controllers for the two detail views
     private TourViewController tourViewController;
     private TourLogViewController tourLogViewController;
-
+// todo: UNIT TESTS HINZUFÜGEN
+// todo: edit und create button zusammenlegen
+// todo: Internationalisierung hinzufügen
     @FXML
     private void initialize() {
         // Initialize the tours ListView.
         tourListView.setItems(viewModel.getTours());
-        tourListView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
+        tourListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tourListView.setCellFactory(param -> new ListCell<Tour>() {
             @Override
             protected void updateItem(Tour tour, boolean empty) {
