@@ -57,8 +57,8 @@ public class MainViewController {
     private ButtonSelectionMediator<Tour> tourMediator;
     private ButtonSelectionMediator<TourLog> tourLogMediator;
 
-    // todo: UNIT TESTS HINZUFÜGEN
-// todo: edit und create button zusammenlegen
+// todo: UNIT TESTS HINZUFÜGEN
+// todo: edit und create button zusammenlegen DONE
 // todo: Internationalisierung hinzufügen
     @FXML
     private void initialize() {
@@ -100,7 +100,7 @@ public class MainViewController {
                     editButton.setTooltip(new Tooltip("Click to create a new tour"));
                     editButton.setText("Edit Tour");
                     editButton.setTooltip(new Tooltip("Click to edit the selected tour"));
-                    deleteButton.setText("Delete Tour");
+                    deleteButton.setText("Delete Tour(s)");
                     deleteButton.setTooltip(new Tooltip("Click to delete the selected tour"));
 
                     // Aktiviere den Mediator für Tour und deaktiviere den für TourLogs.
@@ -232,15 +232,15 @@ public class MainViewController {
                 return;
             }
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourEditView.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourCreationView.fxml"));
                 Parent root = loader.load();
-                TourEditController controller = loader.getController();
-                controller.setTour(selectedTour);
-                controller.setOnTourUpdatedCallback(() -> {
+                TourCreationController controller = loader.getController();
+                controller.setTourForEditing(selectedTour);
+                controller.setOnTourUpdatedCallback(updatedTour -> {
                     tourListView.refresh();
-                    Tour updatedTour = tourListView.getSelectionModel().getSelectedItem();
-                    if (updatedTour != null) {
-                        tourViewController.setTour(updatedTour);
+                    Tour selected = tourListView.getSelectionModel().getSelectedItem();
+                    if (selected != null) {
+                        tourViewController.setTour(selected);
                     }
                 });
                 Stage stage = new Stage();

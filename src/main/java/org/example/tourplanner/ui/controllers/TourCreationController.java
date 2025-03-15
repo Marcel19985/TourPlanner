@@ -30,60 +30,84 @@ public class TourCreationController {
     @FXML
     private ComboBox<String> transportTypeBox;
 
+
     private Consumer<Tour> onTourCreatedCallback;
+    private Consumer<Tour> onTourUpdatedCallback;
+
+    private Tour editingTour = null;
 
     @FXML
-    private void initialize() { //initialize wird automatisch von FXML loader aufgerufen
-        //Werte für Transportmittel in fxml hinzufügen
+    private void initialize() {
         transportTypeBox.getItems().addAll("Walk", "Car", "Bike");
     }
 
-    //wird aufgerufen nach dem Erstellen einer Tour
     public void setOnTourCreatedCallback(Consumer<Tour> callback) {
         this.onTourCreatedCallback = callback;
     }
 
+    public void setOnTourUpdatedCallback(Consumer<Tour> callback) {
+        this.onTourUpdatedCallback = callback;
+    }
+
+    public void setTourForEditing(Tour tour) {
+        this.editingTour = tour;
+        tourNameField.setText(tour.getName());
+        tourDescriptionField.setText(tour.getDescription());
+        startField.setText(tour.getStart());
+        destinationField.setText(tour.getDestination());
+        transportTypeBox.setValue(tour.getTransportType());
+
+        // Nicht bearbeitbare Felder deaktivieren
+        startField.setDisable(true);
+        destinationField.setDisable(true);
+        transportTypeBox.setDisable(true);
+    }
+
     @FXML
-    private void onCreateButtonClick() { //wenn create Button geklickt:
-        if (TourValidatorController.validateTourInputs(tourNameField, tourDescriptionField, startField, destinationField, transportTypeBox)) {
+    private void onSaveButtonClick() {
+        if (!TourValidatorController.validateTourInputs(tourNameField, tourDescriptionField, startField, destinationField, transportTypeBox)) {
+            return;
+        }
+
+        String name = tourNameField.getText();
+        String description = tourDescriptionField.getText();
+
+        if (editingTour != null) {
+            // Bearbeitungsmodus: Nur Name & Beschreibung ändern
+            editingTour.setName(name);
+            editingTour.setDescription(description);
+
+            if (onTourUpdatedCallback != null) {
+                onTourUpdatedCallback.accept(editingTour);
+            }
+        } else {
+            // Erstellungsmodus: Neue Tour erstellen (inkl. API-Abfrage)
             try {
-                String name = tourNameField.getText();
-                String description = tourDescriptionField.getText();
                 String start = startField.getText();
                 String destination = destinationField.getText();
                 String transportType = transportTypeBox.getValue();
 
-                System.out.println("Tour wird erstellt: " + name + ", von " + start + " nach " + destination + " mit " + transportType); //debug
-
-                //Maybe in Zukunft route Objekt hin und her geben?
-                double[] routeDetails = OpenRouteServiceClient.getRouteDetails(start, destination, transportType); //Anfrage an openrouteservice
-                double distance = routeDetails[0]; //Distanz in Kilometer
-                double estimatedTime = routeDetails[1]; //Dauer in Minuten
-
-                System.out.println("Distanz: " + distance + " km, Geschätzte Zeit: " + estimatedTime + " min"); //debug
+                double[] routeDetails = OpenRouteServiceClient.getRouteDetails(start, destination, transportType);
+                double distance = routeDetails[0];
+                double estimatedTime = routeDetails[1];
 
                 Tour newTour = new Tour(name, description, start, destination, transportType, distance, estimatedTime);
-
-                if (onTourCreatedCallback != null) { //Tour wird über Callback zur Liste hinzugefügt
+                if (onTourCreatedCallback != null) {
                     onTourCreatedCallback.accept(newTour);
-                    System.out.println("Tour wurde zur Liste hinzugefügt.");
                 }
-
-                closeWindow();
-            } catch (IOException e) {
-                System.err.println("Fehler beim Abrufen der Route: " + e.getMessage());
+            } catch (IOException | JSONException e) {
                 showAlert("Fehler beim Abrufen der Route: " + e.getMessage());
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+                return;
             }
         }
-    }
 
+        closeWindow();
+    }
 
     @FXML
     private void onCancelButtonClick() {
         closeWindow();
-    } //Klick auf Cancel Button
+    }
 
     private void closeWindow() {
         Stage stage = (Stage) tourNameField.getScene().getWindow();

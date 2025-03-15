@@ -5,9 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import org.example.tourplanner.data.models.Tour;
 
-// todo: mediator auch für tourlogs hinzufügen
-// todo: delete von mehreren tours möglich machen
-// todo: edit und delete für tourlogs
+// todo: mediator auch für tourlogs hinzufügen DONE
+// todo: delete von mehreren tours möglich machen DONE
+// todo: edit und delete für tourlogs DONE
 
 public class ButtonSelectionMediator<T> {
     private final Button editButton;

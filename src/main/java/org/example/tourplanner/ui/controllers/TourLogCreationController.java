@@ -35,6 +35,7 @@ public class TourLogCreationController {
         // Befüllen der ComboBoxes
         difficultyComboBox.getItems().addAll("Easy", "Medium", "Hard");
         ratingComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
     }
 
     // Wird im Erstellungsmodus aufgerufen, um den Bezug zur Tour zu setzen.

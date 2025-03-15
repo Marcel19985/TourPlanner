@@ -10,16 +10,13 @@
 
 <GridPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="org.example.tourplanner.ui.controllers.TourCreationController"
-          hgap="10" vgap="10">
+          hgap="10" vgap="10" stylesheets="@stylesheet.css">
 
     <!-- Padding hinzufügen -->
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <!-- Titel über gesamte Breite -->
-    <Label text="Create Tour" style="-fx-font-size: 16px; -fx-font-weight: bold;"
-           GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" />
 
     <!-- Name -->
     <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
@@ -37,13 +34,14 @@
     <Label text="Destination:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
     <TextField fx:id="destinationField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
+
     <!-- Transport Mode -->
     <Label text="Transportation Mode:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
     <ComboBox fx:id="transportTypeBox" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
     <!-- Buttons in einer HBox für bessere Anordnung -->
-    <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2">
-        <Button text="Create" onAction="#onCreateButtonClick"/>
+    <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2">
+        <Button text="Save" onAction="#onSaveButtonClick"/>
         <Button text="Cancel" onAction="#onCancelButtonClick"/>
     </HBox>
 
