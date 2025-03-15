@@ -10,7 +10,7 @@
 
 <GridPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="org.example.tourplanner.ui.controllers.TourCreationController"
-          hgap="10" vgap="10" stylesheets="@stylesheet.css">
+          hgap="10" vgap="10">
 
     <!-- Padding hinzufügen -->
     <padding>
