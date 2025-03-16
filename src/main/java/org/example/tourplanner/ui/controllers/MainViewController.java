@@ -7,6 +7,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -126,6 +129,34 @@ public class MainViewController {
             Node clickedNode = event.getPickResult().getIntersectedNode();
             if (clickedNode != null && !tourListView.equals(clickedNode)) {
                 tourListView.getSelectionModel().clearSelection();
+            }
+        });
+
+        mainPane.sceneProperty().addListener((obs, oldScene, newScene) -> { //Keyboard Shortcuts
+            if (newScene != null) {
+                //STRG+N -> onCreate
+                newScene.getAccelerators().put(
+                        new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN),
+                        this::onCreate
+                );
+
+                //STRG+E -> onEdit
+                newScene.getAccelerators().put(
+                        new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN),
+                        this::onEdit
+                );
+
+                //STRG+D -> onDelete
+                newScene.getAccelerators().put(
+                        new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN),
+                        this::onDelete
+                );
+
+                // oder ENTF -> onDelete
+                newScene.getAccelerators().put(
+                        new KeyCodeCombination(KeyCode.DELETE),
+                        this::onDelete
+                );
             }
         });
     }
