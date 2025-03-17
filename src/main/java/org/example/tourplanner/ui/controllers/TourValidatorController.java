@@ -3,7 +3,7 @@ package org.example.tourplanner.ui.controllers;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
-
+// todo: Klasse auslagern und für tourLogs auch hinzufügen
 public class TourValidatorController {
 
     public static boolean validateTourInputs(TextField nameField, TextField descriptionField, TextField startField, TextField destinationField, ComboBox<String> transportTypeBox) {

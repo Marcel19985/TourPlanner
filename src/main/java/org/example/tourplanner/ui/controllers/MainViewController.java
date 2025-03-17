@@ -61,6 +61,7 @@ public class MainViewController {
     private ButtonSelectionMediator<TourLog> tourLogMediator;
 
 // todo: UNIT TESTS HINZUFÜGEN
+// todo: Ersten Buchstaben unterstreichen
 // todo: edit und create button zusammenlegen DONE
 // todo: Internationalisierung hinzufügen
     @FXML
@@ -136,7 +137,7 @@ public class MainViewController {
             if (newScene != null) {
                 //STRG+N -> onCreate
                 newScene.getAccelerators().put(
-                        new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN),
+                        new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN),
                         this::onCreate
                 );
 
