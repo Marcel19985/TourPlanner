@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+//todo: tag in git erstellen vor intermediate hand in
 public class TourPlannerApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {

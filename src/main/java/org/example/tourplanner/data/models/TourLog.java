@@ -31,17 +31,13 @@ public class TourLog {
     public void setName(String name) {
         this.name = name;
     }
-    public String getTourName() {
-        return tourName;
-    }
-    public LocalDate getDate() {
-        return date;
-    }
 
+    public String getTourName() { return tourName; }
     public void setTourName(String tourName) {
         this.tourName = tourName;
     }
 
+    public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) {
         this.date = date;
     }
@@ -49,7 +45,6 @@ public class TourLog {
     public String getComment() {
         return comment;
     }
-
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -57,7 +52,6 @@ public class TourLog {
     public String getDifficulty() {
         return difficulty;
     }
-
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
@@ -65,7 +59,6 @@ public class TourLog {
     public double getTotalDistance() {
         return totalDistance;
     }
-
     public void setTotalDistance(double totalDistance) {
         this.totalDistance = totalDistance;
     }
@@ -73,7 +66,6 @@ public class TourLog {
     public double getTotalTime() {
         return totalTime;
     }
-
     public void setTotalTime(double totalTime) {
         this.totalTime = totalTime;
     }
@@ -81,7 +73,6 @@ public class TourLog {
     public int getRating() {
         return rating;
     }
-
     public void setRating(int rating) {
         this.rating = rating;
     }

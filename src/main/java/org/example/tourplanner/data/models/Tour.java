@@ -11,6 +11,7 @@ public class Tour {
     private String transportType; //eventuell enum verwenden
     private double distance;
     private double estimatedTime;
+    //todo Datenstruktur für Map hinzufuegen
 
     private final ObservableList<TourLog> tourLogs = FXCollections.observableArrayList(); //man kann Listener definieren, die direkt bei einer Änderung einer observable list benachrichtigt werden
 
