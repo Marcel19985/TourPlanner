@@ -6,12 +6,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.tourplanner.data.models.OpenRouteServiceClient;
 import org.example.tourplanner.data.models.Tour;
+import org.example.tourplanner.ui.controllers.InputValidator;
 import org.json.JSONException;
-
 import java.io.IOException;
 import java.util.function.Consumer;
 
-import static org.example.tourplanner.ui.controllers.TourValidatorController.showAlert;
+import static org.example.tourplanner.ui.controllers.InputValidator.showAlert;
 
 public class TourCreationController {
 
@@ -64,8 +64,8 @@ public class TourCreationController {
     }
 
     @FXML
-    private void onSaveButtonClick() {
-        if (!TourValidatorController.validateTourInputs(tourNameField, tourDescriptionField, startField, destinationField, transportTypeBox)) {
+    void onSaveButtonClick() {
+        if (!InputValidator.validateTourInputs(tourNameField, tourDescriptionField, startField, destinationField, transportTypeBox)) {
             return;
         }
 
@@ -100,7 +100,6 @@ public class TourCreationController {
                 return;
             }
         }
-
         closeWindow();
     }
 

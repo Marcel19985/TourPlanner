@@ -36,6 +36,4 @@ public class MainViewModel {
         tourLogs.setAll(tour.getTourLogs());
     }
 
-
-
 }

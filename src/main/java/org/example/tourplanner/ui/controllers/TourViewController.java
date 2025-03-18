@@ -1,23 +1,14 @@
 package org.example.tourplanner.ui.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import org.example.tourplanner.data.models.Tour;
-import org.example.tourplanner.data.models.TourLog;
 import org.example.tourplanner.ui.viewmodels.MainViewModel;
-import org.example.tourplanner.ui.viewmodels.TourLogViewModel;
-import org.example.tourplanner.ui.viewmodels.TourViewModel;
 
-import java.io.IOException;
-
-import static org.example.tourplanner.ui.controllers.TourValidatorController.showAlert;
+import java.net.URL;
 
 public class TourViewController {
 
@@ -51,14 +42,28 @@ public class TourViewController {
     @FXML
     private Label estimatedTimeLabel;
 
+    @FXML
+    private ImageView tourImageView;
+
     private Tour currentTour;
 
     @FXML
     public void initialize() {
 
         tourDetailsPane.setVisible(false);
+        String imagePath = "/images/Placeholder.png";
+        URL imageUrl = getClass().getResource(imagePath);
+
+        if (imageUrl == null) {
+            System.err.println("❌ Bild nicht gefunden! Erwarteter Pfad: " + imagePath);
+        } else {
+            Image image = new Image(imageUrl.toExternalForm());
+            tourImageView.setImage(image);
+            System.out.println("✅ Bild erfolgreich geladen: " + imageUrl);
+        }
     }
-    // todo: Platzhalter für bild hinzufügen
+    // todo: Platzhalter für bild hinzufügen DONE
+    // todo: Bild dynamischer machen
     public void setViewModel(MainViewModel viewModel) {
         this.viewModel = viewModel;
     }

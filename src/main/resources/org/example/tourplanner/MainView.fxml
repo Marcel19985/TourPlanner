@@ -50,9 +50,9 @@
 
     <bottom>
         <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 10px;">
-            <Button fx:id="createButton" text="Create Tour" onAction="#onCreate"/>
-            <Button fx:id="editButton" text="Edit Tour" onAction="#onEdit"/>
-            <Button fx:id="deleteButton" text="Delete Tour(s)" onAction="#onDelete"/>
+            <Button fx:id="createButton" text="_Create Tour" onAction="#onCreate"/>
+            <Button fx:id="editButton" text="_Edit Tour" onAction="#onEdit"/>
+            <Button fx:id="deleteButton" text="_Delete Tour(s)" onAction="#onDelete"/>
         </HBox>
     </bottom>
 </BorderPane>

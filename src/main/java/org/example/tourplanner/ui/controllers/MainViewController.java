@@ -60,8 +60,8 @@ public class MainViewController {
     private ButtonSelectionMediator<Tour> tourMediator;
     private ButtonSelectionMediator<TourLog> tourLogMediator;
 
-// todo: UNIT TESTS HINZUFÜGEN
-// todo: Ersten Buchstaben unterstreichen
+// todo: UNIT TESTS HINZUFÜGEN DONE
+// todo: Ersten Buchstaben unterstreichen DONE
 // todo: edit und create button zusammenlegen DONE
 // todo: Internationalisierung hinzufügen
     @FXML
@@ -100,22 +100,22 @@ public class MainViewController {
             if (newTab != null) {
                 if (newTab.getText().equals("Tour Details")) {
                     // Setze Button-Text und Tooltip
-                    createButton.setText("Create Tour");
+                    createButton.setText("_Create Tour");
                     editButton.setTooltip(new Tooltip("Click to create a new tour"));
-                    editButton.setText("Edit Tour");
+                    editButton.setText("_Edit Tour");
                     editButton.setTooltip(new Tooltip("Click to edit the selected tour"));
-                    deleteButton.setText("Delete Tour(s)");
+                    deleteButton.setText("_Delete Tour(s)");
                     deleteButton.setTooltip(new Tooltip("Click to delete the selected tour"));
 
                     // Aktiviere den Mediator für Tour und deaktiviere den für TourLogs.
                     tourMediator.enable();
                     tourLogMediator.disable();
                 } else if (newTab.getText().equals("Tour Logs")) {
-                    createButton.setText("Create Tour Log");
+                    createButton.setText("_Create Tour Log");
                     editButton.setTooltip(new Tooltip("Click to create a new tour Log"));
-                    editButton.setText("Edit Tour Log");
+                    editButton.setText("_Edit Tour Log");
                     editButton.setTooltip(new Tooltip("Click to edit the selected tour log"));
-                    deleteButton.setText("Delete Tour Log(s)");
+                    deleteButton.setText("_Delete Tour Log(s)");
                     deleteButton.setTooltip(new Tooltip("Click to delete the selected tour log(s)"));
 
                     // Aktiviere den Mediator für TourLogs und deaktiviere den für Tour.

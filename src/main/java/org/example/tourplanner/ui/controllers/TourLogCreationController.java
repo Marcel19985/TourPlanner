@@ -67,15 +67,8 @@ public class TourLogCreationController {
     @FXML
     private void onSaveTourLog() {
         // Validierung: Alle Felder müssen ausgefüllt sein
-        if (nameLog.getText().trim().isEmpty() ||
-                commentField.getText().trim().isEmpty() ||
-                difficultyComboBox.getValue() == null ||
-                totalDistanceField.getText().trim().isEmpty() ||
-                totalTimeField.getText().trim().isEmpty() ||
-                ratingComboBox.getValue() == null ||
-                datePicker.getValue() == null) {
 
-            showAlert("Please fill in all fields.");
+        if (!InputValidator.validateTourLogInputs(nameLog, datePicker, commentField, difficultyComboBox, totalDistanceField, totalTimeField, ratingComboBox)) {
             return;
         }
 
