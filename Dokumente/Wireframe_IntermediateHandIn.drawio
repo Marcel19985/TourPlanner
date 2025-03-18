@@ -1,0 +1,129 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.16 Chrome/132.0.6834.196 Electron/34.2.0 Safari/537.36" version="26.0.16">
+  <diagram name="Page-1" id="03018318-947c-dd8e-b7a3-06fadd420f32">
+    <mxGraphModel dx="5940" dy="2733" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="rQqdEyX6MSEGRScpXds9-1" value="TourPlanner" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.window;align=left;verticalAlign=top;spacingLeft=8;strokeColor2=#008cff;strokeColor3=#c4c4c4;fontColor=#666666;mainText=;fontSize=17;labelBackgroundColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-2400" y="20" width="1210" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-2" value="&lt;font style=&quot;font-size: 27px;&quot;&gt;Tour Planner&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2400" y="50" width="1210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-3" value="" style="swimlane;strokeColor=#666666;swimlaneFillColor=#FFFFFF;fillColor=#ffffff;fontColor=#008CFF;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=0;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="-2400" y="100" width="330" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-4" value="Tour 1" style="text;spacing=0;strokeColor=inherit;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=inherit;fontColor=#666666;fontStyle=1;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-3">
+          <mxGeometry width="330" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-5" value="Tour 2" style="text;spacing=0;strokeColor=inherit;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;rSize=5;fillColor=inherit;fontStyle=1;fontColor=#666666;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-3">
+          <mxGeometry y="26" width="330" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-6" value="Tour 3" style="text;spacing=0;strokeColor=#008CFF;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;rSize=5;fillColor=#008CFF;fontStyle=1;fontColor=#ffffff;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-3">
+          <mxGeometry y="52" width="330" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-7" value="" style="text;spacing=0;strokeColor=inherit;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=inherit;fontStyle=1;fontColor=#666666;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-3">
+          <mxGeometry y="78" width="330" height="562" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-9" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2400" y="740" width="1210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-10" value="Crteate Tour Log" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-2380" y="745" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-11" value="Edit Tour Log" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-2210" y="745" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-12" value="Delete Tour Log(s)" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-2040" y="745" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-13" value="" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.marginRect2;rectMarginTop=32;strokeColor=#666666;gradientColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-2070" y="120" width="880" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-14" value="Tour Details" style="strokeColor=inherit;fillColor=inherit;gradientColor=inherit;strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.rrect;rSize=0;fontSize=17;fontColor=#666666;gradientColor=none;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-13">
+          <mxGeometry width="110" height="35" relative="1" as="geometry">
+            <mxPoint x="10" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-15" value="Tour Logs" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.rrect;rSize=0;fontSize=17;fontColor=#ffffff;strokeColor=#008cff;fillColor=#008cff;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-13">
+          <mxGeometry width="140" height="35" relative="1" as="geometry">
+            <mxPoint x="120" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-25" value="" style="swimlane;strokeColor=default;swimlaneFillColor=#FFFFFF;fillColor=#ffffff;fontColor=#008CFF;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=0;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fontSize=17;swimlaneLine=1;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-13">
+          <mxGeometry y="30" width="380" height="590.0025" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-26" value="Tour Log 1" style="text;spacing=0;strokeColor=inherit;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=inherit;fontColor=#666666;fontStyle=1;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-25">
+          <mxGeometry width="380" height="25.1875" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-27" value="Tour Log 2" style="text;spacing=0;strokeColor=inherit;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;rSize=5;fillColor=inherit;fontStyle=1;fontColor=#666666;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-25">
+          <mxGeometry y="25.1875" width="380" height="25.1875" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-28" value="&lt;span style=&quot;color: rgb(102, 102, 102);&quot;&gt;Tour Log 3&lt;/span&gt;" style="text;spacing=0;strokeColor=#008CFF;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;rSize=5;fillColor=#008CFF;fontStyle=1;fontColor=#ffffff;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-25">
+          <mxGeometry y="50.375" width="380" height="25.1875" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-29" value="" style="text;spacing=0;strokeColor=inherit;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=inherit;fontStyle=1;fontColor=#666666;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-25">
+          <mxGeometry y="75.5625" width="380" height="514.44" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-32" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;Name:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Tour Log 3&lt;br&gt;Date:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;24.02.2024&lt;br&gt;Difficulty:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;Medium&lt;br&gt;Total DIstance:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;123.0&lt;br&gt;&lt;div&gt;Total Time: &lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;12:45&lt;br&gt;Rating:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;br&gt;Comment:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;I &amp;lt;3 Java&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-13">
+          <mxGeometry x="390" y="40" width="360" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-56" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.mockup.misc.rating;strokeColor=#999999;fillColor=#ffff00;emptyFillColor=#ffffff;grade=4;ratingScale=5;ratingStyle=star;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-13">
+          <mxGeometry x="500" y="140" width="100" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-35" value="TourPlanner" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.window;align=left;verticalAlign=top;spacingLeft=8;strokeColor2=#008cff;strokeColor3=#c4c4c4;fontColor=#666666;mainText=;fontSize=17;labelBackgroundColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-2390" y="920" width="1210" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-36" value="&lt;font style=&quot;font-size: 27px;&quot;&gt;Tour Planner&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2390" y="950" width="1210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-37" value="" style="swimlane;strokeColor=#666666;swimlaneFillColor=#FFFFFF;fillColor=#ffffff;fontColor=#008CFF;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=0;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="-2390" y="1000" width="330" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-38" value="Tour 1" style="text;spacing=0;strokeColor=inherit;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=inherit;fontColor=#666666;fontStyle=1;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-37">
+          <mxGeometry width="330" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-39" value="Tour 2" style="text;spacing=0;strokeColor=inherit;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;rSize=5;fillColor=inherit;fontStyle=1;fontColor=#666666;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-37">
+          <mxGeometry y="26" width="330" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-40" value="Tour 3" style="text;spacing=0;strokeColor=#008CFF;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;rSize=5;fillColor=#008CFF;fontStyle=1;fontColor=#ffffff;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-37">
+          <mxGeometry y="52" width="330" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-41" value="" style="text;spacing=0;strokeColor=inherit;align=center;verticalAlign=middle;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fillColor=inherit;fontStyle=1;fontColor=#666666;fontSize=17;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-37">
+          <mxGeometry y="78" width="330" height="562" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-42" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2390" y="1640" width="1210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-43" value="Create Tour" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-2370" y="1645" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-44" value="Edit Tour" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-2200" y="1645" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-45" value="Delete Tour(s)" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-2030" y="1645" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-46" value="" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.marginRect2;rectMarginTop=32;strokeColor=#666666;gradientColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-2060" y="1020" width="880" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-47" value="Tour Logs" style="strokeColor=inherit;fillColor=inherit;gradientColor=inherit;strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.rrect;rSize=0;fontSize=17;fontColor=#666666;gradientColor=none;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-46">
+          <mxGeometry width="110" height="35" relative="1" as="geometry">
+            <mxPoint x="150" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-48" value="Tour Details" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.rrect;rSize=0;fontSize=17;fontColor=#ffffff;strokeColor=#008cff;fillColor=#008cff;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-46">
+          <mxGeometry width="140" height="35" relative="1" as="geometry">
+            <mxPoint x="10" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-54" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;Name:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Tour 3&lt;br&gt;Description:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Hike from Linz to Graz&lt;br&gt;Start:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Wien&lt;br&gt;Destination:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Graz&lt;br&gt;&lt;div&gt;Transport:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Walk&lt;/div&gt;&lt;div&gt;Distance:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;177,46 km&lt;br&gt;&lt;/div&gt;&lt;div&gt;Est. Time:&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;113:43 min&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-46">
+          <mxGeometry x="10" y="40" width="360" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="rQqdEyX6MSEGRScpXds9-55" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.mockup.misc.map;" vertex="1" parent="rQqdEyX6MSEGRScpXds9-46">
+          <mxGeometry x="40" y="180" width="810" height="410" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
