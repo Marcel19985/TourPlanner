@@ -87,7 +87,7 @@ public class TourCreationController {
                 String destination = destinationField.getText();
                 String transportType = transportTypeBox.getValue();
 
-                double[] routeDetails = OpenRouteServiceClient.getRouteDetails(start, destination, transportType);
+                double[] routeDetails = OpenRouteServiceClient.getRouteDetails(start, destination, transportType); //HTTP Requests an OpeRouteService
                 double distance = routeDetails[0];
                 double estimatedTime = routeDetails[1];
 

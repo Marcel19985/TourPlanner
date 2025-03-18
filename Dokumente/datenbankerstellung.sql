@@ -1,3 +1,4 @@
+--Datenbank Tabellen dienen derzeit nur als Test, wird noch nicht aktiv verwendet
 DROP TABLE IF EXISTS tour;
 DROP TABLE IF EXISTS tour_log;
 

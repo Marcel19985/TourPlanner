@@ -15,8 +15,7 @@ import java.io.FileInputStream;
 //Folgende Klasse wurde teilweise mit AI generiert
 public class OpenRouteServiceClient {
 
-    private static String API_KEY;
-// todo: bei edit soll die api aufgerufen werden -> statt API Aufruf können nur noch name und description einer Tour geändert werden -> sinnvoller im Bezug auf Tour Logs DONE
+    private static String API_KEY; //API key von OpenRouteService wird verwendet, um HTTP Request durchzuführen
     static { //static wird ausgeführt, bevor eine Instanz der Klasse erstellt wird
         try {
             Properties properties = new Properties();
@@ -28,31 +27,29 @@ public class OpenRouteServiceClient {
     }
 
     public static double[] getRouteDetails(String start, String destination, String transportType) throws IOException, JSONException {
-        //Koordinaten von STart und Zielort abfragen:
+        //Koordinaten von Start und Zielort abfragen:
         String startCoords = getCoordinates(start);
         String destCoords = getCoordinates(destination);
 
-        String orsMode = switch (transportType.toLowerCase()) { //Transportmittel bestimmen: kann man eleganter machen
+        String orsMode = switch (transportType.toLowerCase()) { //Transportmittel bestimmen: kann man eleganter machen; funktion mit ChatGPT generiert
             case "car" -> "driving-car";
             case "bike" -> "cycling-regular";
             case "walk" -> "foot-walking";
             default -> throw new IllegalArgumentException("Ungültiges Transportmittel: " + transportType);
         };
 
-        //URL für route request zusammenbauen:
+        //URL für route request zusammenbauen: Beispielrequests siehe hier: https://openrouteservice.org/dev/#/api-docs
         String urlString = "https://api.openrouteservice.org/v2/directions/" + orsMode +
                 "?api_key=" + API_KEY +
                 "&start=" + startCoords +
                 "&end=" + destCoords;
 
-        System.out.println("ORS API-Aufruf: " + urlString); //debug https request
-
-        URL url = new URL(urlString); //neues URL Objekt
+        URL url = new URL(urlString); //neues URL Objekt; Code Block mit ChatGPT generiert
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         //http header definieren:
         conn.setRequestProperty("Accept", "*/*");
-        conn.setRequestProperty("User-Agent", "Java-Client"); //Server bekommt Infro, dass Anfrage von Java Anwendung kommt
+        conn.setRequestProperty("User-Agent", "Java-Client"); //Server bekommt Info, dass Anfrage von Java Anwendung kommt
 
         if (conn.getResponseCode() != 200) { //Fehlerhafte Antwort vom Server
             throw new IOException("Fehler bei der API-Anfrage: HTTP " + conn.getResponseCode());
@@ -60,7 +57,7 @@ public class OpenRouteServiceClient {
 
         //Serverantwort als JSON einlesen:
         Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8);
-        String jsonResponse = scanner.useDelimiter("\\A").next(); //durch ("\\A").next() wird komplette JSON ANtwort als STRING gespeichert
+        String jsonResponse = scanner.useDelimiter("\\A").next(); //durch ("\\A").next() wird komplette JSON Antwort als STRING gespeichert
         scanner.close();
         conn.disconnect();
 
@@ -82,12 +79,8 @@ public class OpenRouteServiceClient {
     }
 
     private static String getCoordinates(String location) throws IOException, JSONException { //Wandelt einen Ort in dessen Koordinaten um
-        System.out.println("Starte Geocoding für: " + location); //debug Ort
-
         String urlString = "https://api.openrouteservice.org/geocode/search?api_key=" + API_KEY +
                 "&text=" + location.replace(" ", "%20") + "&size=1"; //Leerzeichen werden durch %20 ersetzt
-
-        System.out.println("Geocoding API URL: " + urlString); //URL debug
 
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -105,8 +98,6 @@ public class OpenRouteServiceClient {
         scanner.close();
         conn.disconnect();
 
-        System.out.println("Geocoding API Response: " + jsonResponse); //debug Server response
-
         JSONObject json = new JSONObject(jsonResponse); //Erstellt ein JSONObject aus der Antwort.
         JSONArray features = json.getJSONArray("features"); //Erstellt ein feature Array
 
@@ -118,8 +109,6 @@ public class OpenRouteServiceClient {
         //API liefert Koordinaten im Format "lon,lat":
         JSONArray coordinates = features.getJSONObject(0).getJSONObject("geometry").getJSONArray("coordinates");
         String coords = coordinates.getDouble(0) + "," + coordinates.getDouble(1);
-
-        System.out.println("Erfolgreich gefunden: " + location + " → " + coords); //debug Koordinaten
 
         return coords;
     }
