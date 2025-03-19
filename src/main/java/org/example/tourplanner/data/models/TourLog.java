@@ -1,9 +1,13 @@
 package org.example.tourplanner.data.models;
 
+import org.example.tourplanner.helpers.UUIDv7Generator;
+
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class TourLog {
 
+    private final UUID id; //soll als primary key für Datenbank und als Filename für Map- Images verwendet werden
     private String name;
     private String tourName;
     private LocalDate date;
@@ -15,6 +19,7 @@ public class TourLog {
 
     // Konstruktor
     public TourLog(String name, LocalDate date, String comment, String difficulty, double totalDistance, double totalTime, int rating) {
+        this.id = UUIDv7Generator.generateUUIDv7();
         this.name = name;
         this.date = date;
         this.comment = comment;
@@ -25,6 +30,9 @@ public class TourLog {
     }
 
     // Getter und Setter
+
+    public UUID getId() { return id; }
+
     public String getName() {
         return name;
     }

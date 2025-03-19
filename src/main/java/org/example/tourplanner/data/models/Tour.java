@@ -2,8 +2,12 @@ package org.example.tourplanner.data.models;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.example.tourplanner.helpers.UUIDv7Generator;
+
+import java.util.UUID;
 
 public class Tour {
+    private final UUID id; //soll als primary key für Datenbank und als Filename für Map- Images verwendet werden
     private String name;
     private String description;
     private String start;
@@ -11,7 +15,6 @@ public class Tour {
     private String transportType; //eventuell enum verwenden
     private double distance;
     private double estimatedTime;
-    //todo Datenstruktur für Map hinzufuegen
 
     private final ObservableList<TourLog> tourLogs = FXCollections.observableArrayList(); //man kann Listener definieren, die direkt bei einer Änderung einer observable list benachrichtigt werden
 
@@ -24,6 +27,7 @@ public class Tour {
     }
 
     public Tour(String name, String description, String start, String destination, String transportType) {
+        this.id = UUIDv7Generator.generateUUIDv7();
         this.name = name;
         this.description = description;
         this.start = start;
@@ -32,6 +36,7 @@ public class Tour {
     }
 
     public Tour(String name, String description, String start, String destination, String transportType, double distance, double estimatedTime) {
+        this.id = UUIDv7Generator.generateUUIDv7();
         this.name = name;
         this.description = description;
         this.start = start;
@@ -47,6 +52,9 @@ public class Tour {
     }
 
     // Getter & Setter
+
+    public UUID getId() { return id; }
+
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 

@@ -55,11 +55,11 @@ public class TourViewController {
         URL imageUrl = getClass().getResource(imagePath);
 
         if (imageUrl == null) {
-            System.err.println("❌ Bild nicht gefunden! Erwarteter Pfad: " + imagePath);
+            System.err.println("Bild nicht gefunden! Erwarteter Pfad: " + imagePath);
         } else {
             Image image = new Image(imageUrl.toExternalForm());
             tourImageView.setImage(image);
-            System.out.println("✅ Bild erfolgreich geladen: " + imageUrl);
+            System.out.println("Bild erfolgreich geladen: " + imageUrl);
         }
     }
     // todo: Platzhalter für bild hinzufügen DONE
