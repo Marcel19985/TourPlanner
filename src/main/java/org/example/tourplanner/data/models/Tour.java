@@ -51,7 +51,7 @@ public class Tour {
         return name + " - " + start + " → " + destination + " (" + transportType + ")";
     }
 
-    // Getter & Setter
+    //Getter & Setter:
 
     public UUID getId() { return id; }
 
