@@ -1,5 +1,6 @@
 package org.example.tourplanner.data.models;
 
+import org.example.tourplanner.helpers.LocationNotFoundException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +27,7 @@ public class OpenRouteServiceClient {
         }
     }
 
-    public static double[] getRouteDetails(String start, String destination, String transportType) throws IOException, JSONException {
+    public static double[] getRouteDetails(String start, String destination, String transportType) throws IOException, JSONException, LocationNotFoundException {
         //Koordinaten von Start und Zielort abfragen:
         String startCoords = getCoordinates(start);
         String destCoords = getCoordinates(destination);
@@ -78,7 +79,7 @@ public class OpenRouteServiceClient {
         return new double[]{distance, duration};
     }
 
-    private static String getCoordinates(String location) throws IOException, JSONException { //Wandelt einen Ort in dessen Koordinaten um
+    private static String getCoordinates(String location) throws IOException, JSONException, LocationNotFoundException { //Wandelt einen Ort in dessen Koordinaten um
         String urlString = "https://api.openrouteservice.org/geocode/search?api_key=" + API_KEY +
                 "&text=" + location.replace(" ", "%20") + "&size=1"; //Leerzeichen werden durch %20 ersetzt
 
@@ -103,7 +104,7 @@ public class OpenRouteServiceClient {
 
         if (features.length() == 0) {
             System.err.println("Ort nicht gefunden: " + location);
-            throw new RuntimeException("Ort nicht gefunden: " + location);
+            throw new LocationNotFoundException("Ort nicht gefunden: " + location);
         }
 
         //API liefert Koordinaten im Format "lon,lat":

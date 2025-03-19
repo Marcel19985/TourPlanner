@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class InputValidator {
 
-    // Validation for Tour inputs
+    //Validation for Tour inputs
     public static boolean validateTourInputs(TextField nameField, TextField descriptionField, TextField startField, TextField destinationField, ComboBox<String> transportTypeBox) {
         StringBuilder errorMessage = new StringBuilder();
 
@@ -28,7 +28,7 @@ public class InputValidator {
         return checkAndShowErrors(errorMessage);
     }
 
-    // Validation for TourLog inputs
+    //Validation for TourLog inputs
     public static boolean validateTourLogInputs(TextField nameLog, DatePicker dateField, TextArea commentField, ComboBox<String> difficultyBox, TextField distanceField, TextField totalTimeField, ComboBox<Integer> ratingField) {
         StringBuilder errorMessage = new StringBuilder();
 
@@ -61,7 +61,7 @@ public class InputValidator {
         return checkAndShowErrors(errorMessage);
     }
 
-    // Helper methods
+    //Helper methods
     private static boolean isEmpty(TextField field) {
         return field == null || field.getText().trim().isEmpty();
     }

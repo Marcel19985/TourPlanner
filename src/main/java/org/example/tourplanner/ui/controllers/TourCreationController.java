@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.tourplanner.data.models.OpenRouteServiceClient;
 import org.example.tourplanner.data.models.Tour;
+import org.example.tourplanner.helpers.LocationNotFoundException;
 import org.example.tourplanner.ui.controllers.InputValidator;
 import org.json.JSONException;
 import java.io.IOException;
@@ -95,6 +96,10 @@ public class TourCreationController {
                 if (onTourCreatedCallback != null) {
                     onTourCreatedCallback.accept(newTour);
                 }
+            } catch (LocationNotFoundException e) {
+                // Hier wird die Fehlermeldung an den User übermittelt:
+                InputValidator.showAlert(e.getMessage());
+                return;
             } catch (IOException | JSONException e) {
                 showAlert("Fehler beim Abrufen der Route: " + e.getMessage());
                 return;
