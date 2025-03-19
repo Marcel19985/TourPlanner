@@ -8,20 +8,20 @@ import javafx.scene.control.ListView;
 // todo: delete von mehreren tours möglich machen DONE
 // todo: edit und delete für tourlogs DONE
 
-//generische Klasse: <T> ist Platzhalter für Datentyp (Tour oder Tourlog), Datentyp wird beim Erzeugen einer Instanz gesetzt
-public class ButtonSelectionMediator<T> {
-    private final Button editButton;
-    private final Button deleteButton;
+//generische Klasse: <T> ist Platzhalter für Datentyp (Tour oder Tourlog), Datentyp wird beim Erzeugen einer Instanz gesetzt, Idee für generischen Datentyp stammt von ChatGPT
+public class ButtonSelectionMediator<T> { //Konstruktor
+    private final Button editButton; //nur aktiv wenn genau 1 Element ausgewählt
+    private final Button deleteButton; //nur aktiv wenn mindestens 1 Element ausgewählt
     private final ListView<T> listView;
-    private final ListChangeListener<T> listener;
+    private final ListChangeListener<T> listener; //Listener, der reagiert sobald sich Auswahl in Liste ändert
 
     public ButtonSelectionMediator(Button editButton, Button deleteButton, ListView<T> listView) {
         this.editButton = editButton;
         this.deleteButton = deleteButton;
         this.listView = listView;
-        this.listener = change -> updateButtonState();
-        listView.getSelectionModel().getSelectedItems().addListener(listener);
-        updateButtonState();
+        this.listener = change -> updateButtonState(); //Initialisierung des ListChangeListener, der bei jeder Änderung in der Selektion die updateButtonState()-Methode aufruft.
+        listView.getSelectionModel().getSelectedItems().addListener(listener); //Listener an die Auswahlliste der ListView anhängen
+        updateButtonState(); // setzt den initial Zustand der Buttons.
     }
 
     public void updateButtonState() {

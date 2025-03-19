@@ -1,6 +1,6 @@
 package org.example.tourplanner.helpers;
 
-//folgende Klasse wurde vom Präsent-Code des studentmanagementsystem2 übernommen:
+//folgende Klasse wurde vom Präsenz-Code des studentmanagementsystem2 übernommen:
 import java.time.Instant;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
