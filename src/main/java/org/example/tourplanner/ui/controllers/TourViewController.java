@@ -50,7 +50,6 @@ public class TourViewController {
         } else {
             Image image = new Image(imageUrl.toExternalForm());
             tourImageView.setImage(image);
-            System.out.println("Bild erfolgreich geladen: " + imageUrl);
         }
     }
     // todo: Platzhalter für bild hinzufügen DONE

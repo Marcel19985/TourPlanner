@@ -103,8 +103,8 @@ public class OpenRouteServiceClient {
         JSONArray features = json.getJSONArray("features"); //Erstellt ein feature Array
 
         if (features.length() == 0) {
-            System.err.println("Ort nicht gefunden: " + location);
-            throw new LocationNotFoundException("Ort nicht gefunden: " + location);
+            System.err.println("Location not found " + location);
+            throw new LocationNotFoundException("Location not found: " + location);
         }
 
         //API liefert Koordinaten im Format "lon,lat":
