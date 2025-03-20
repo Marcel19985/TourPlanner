@@ -19,6 +19,7 @@ public class TourCreationUITest extends ApplicationTest {
         primaryStage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("/org/example/tourplanner/MainView.fxml"));
         Scene scene = new Scene(root, 900, 700);
+        scene.getStylesheets().add(getClass().getResource("/org/example/tourplanner/stylesheet.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
         stage.toFront();
