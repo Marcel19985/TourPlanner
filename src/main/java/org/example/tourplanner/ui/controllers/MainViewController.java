@@ -26,37 +26,26 @@ import java.util.Optional;
 
 public class MainViewController {
 
-    @FXML
-    private BorderPane mainPane;
+    @FXML private BorderPane mainPane;
 
-    @FXML
-    private ListView<Tour> tourListView;
+    @FXML private ListView<Tour> tourListView; //Liste Tours
 
-    @FXML
-    private TabPane detailTabPane; //Rechte Seite von Main
+    @FXML private TabPane detailTabPane; //Auswahl zwischen Tour Details und Tour Logs
+    @FXML private AnchorPane tourDetailsContainer; //Tour Deatils
+    @FXML private AnchorPane tourLogDetailsContainer; //Tour logs
 
-    // Containers for each detail view (loaded into the respective Tab)
-    @FXML
-    private AnchorPane tourDetailsContainer;
-
-    @FXML
-    private AnchorPane tourLogDetailsContainer;
-
-    @FXML
-    private Button createButton;
-
-    @FXML
-    private Button editButton;
-
-    @FXML
-    private Button deleteButton;
+    //Create, Edit und Delete für Tour und Tourlogs:
+    @FXML private Button createButton;
+    @FXML private Button editButton;
+    @FXML private Button deleteButton;
 
     private MainViewModel viewModel = new MainViewModel();
 
-    // Controllers for the two detail views
+    //Controller für Tour und Tourlog:
     private TourViewController tourViewController;
     private TourLogViewController tourLogViewController;
 
+    //Mediators für Tour und Tour Log:
     private ButtonSelectionMediator<Tour> tourMediator;
     private ButtonSelectionMediator<TourLog> tourLogMediator;
 
@@ -65,20 +54,18 @@ public class MainViewController {
 // todo: edit und create button zusammenlegen DONE
 // todo: Internationalisierung hinzufügen
     @FXML
-    private void initialize() {
-        // Initialize the tours ListView.
-        tourListView.setItems(viewModel.getTours());
-        tourListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    private void initialize() { //Initialisierung tour ListView.
+        tourListView.setItems(viewModel.getTours()); //Tours laden
+        tourListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); //Mehrfachauswahl möglich
         tourListView.setCellFactory(param -> new ListCell<Tour>() { //erstellt neue cells für jedes Item in der Liste
             @Override
-            protected void updateItem(Tour tour, boolean empty) { //updated cells: wenn sie geändert werden oder z.B. Beim Scrollen durch Liste
+            protected void updateItem(Tour tour, boolean empty) { //updated cells: wenn sie geändert werden oder z.B. Beim Scrollen durch Liste; Block mit ChatGPT erstellt
                 super.updateItem(tour, empty);
                 setText(empty || tour == null ? null : tour.getName());
             }
         });
 
-        // Load the detail views into their respective containers.
-        loadTourDetailView();
+        loadTourDetailView(); //Details laden
         loadTourLogDetailView();
 
         //listener für Tour Auswahl: sobald eine liste ausgewählt oder abgewählt wird:
@@ -92,14 +79,15 @@ public class MainViewController {
             }
         });
 
+        //Mediators: Create, Edit und Delete Buttons aktivieren und deaktivieren je nach Auswahl
         tourMediator = new ButtonSelectionMediator<>(editButton, deleteButton, tourListView);
         tourLogMediator = new ButtonSelectionMediator<>(editButton, deleteButton, tourLogViewController.getTourLogListView());
 
         //Update create, delete und edit buttons je nachdem welcher Tab ausgewählt ist (TourDetails oder TourLogs)
-        detailTabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
+        detailTabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {   //Listener für TabPane
             if (newTab != null) {
                 if (newTab.getText().equals("Tour Details")) {
-                    // Setze Button-Text und Tooltip
+                    //Setze Button-Text und Tooltip
                     createButton.setText("_Create Tour");
                     editButton.setTooltip(new Tooltip("Click to create a new tour"));
                     editButton.setText("_Edit Tour");
@@ -107,7 +95,7 @@ public class MainViewController {
                     deleteButton.setText("_Delete Tour(s)");
                     deleteButton.setTooltip(new Tooltip("Click to delete the selected tour"));
 
-                    // Aktiviere den Mediator für Tour und deaktiviere den für TourLogs.
+                    //Aktiviere den Mediator für Tour und deaktiviere den für TourLogs.
                     tourMediator.enable();
                     tourLogMediator.disable();
                 } else if (newTab.getText().equals("Tour Logs")) {
@@ -118,15 +106,14 @@ public class MainViewController {
                     deleteButton.setText("_Delete Tour Log(s)");
                     deleteButton.setTooltip(new Tooltip("Click to delete the selected tour log(s)"));
 
-                    // Aktiviere den Mediator für TourLogs und deaktiviere den für Tour.
+                    //Aktiviere den Mediator für TourLogs und deaktiviere den für Tour.
                     tourLogMediator.enable();
                     tourMediator.disable();
                 }
             }
         });
 
-        // Clear selection if user clicks outside the ListView.
-        mainPane.setOnMouseClicked(event -> {
+        mainPane.setOnMouseClicked(event -> { //Clear selection if user clicks outside the ListView; Block mit ChatGPT erstellt
             Node clickedNode = event.getPickResult().getIntersectedNode();
             if (clickedNode != null && !tourListView.equals(clickedNode)) {
                 tourListView.getSelectionModel().clearSelection();
@@ -167,7 +154,6 @@ public class MainViewController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourView.fxml"));
             Parent tourView = loader.load();
             tourViewController = loader.getController();
-            // Set the view model on the TourViewController.
             tourViewController.setViewModel(viewModel);
             tourDetailsContainer.getChildren().add(tourView);
             AnchorPane.setTopAnchor(tourView, 0.0);
@@ -195,9 +181,8 @@ public class MainViewController {
     }
 
     @FXML
-    private void onCreate() {
-        // Determine which detail tab is active.
-        Tab selectedTab = detailTabPane.getSelectionModel().getSelectedItem();
+    private void onCreate() { //Auswahl zwischen TabPane TourDetails oder TourLogs
+        Tab selectedTab = detailTabPane.getSelectionModel().getSelectedItem(); //Speichere, welches TabPane aktive ist
         if (selectedTab.getText().equals("Tour Details")) {
             onCreateTour();
         } else if (selectedTab.getText().equals("Tour Logs")) {
@@ -221,9 +206,8 @@ public class MainViewController {
     }
 
     private void onCreateTourLog() {
-        // Retrieve the selected tour.
-        Tour selectedTour = tourListView.getSelectionModel().getSelectedItem();
-        if (selectedTour == null) {
+        Tour selectedTour = tourListView.getSelectionModel().getSelectedItem(); //Speichere, welche Tour ausgewählt ist
+        if (selectedTour == null) { //Keine Tour ausgewählt
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Tour Selected");
             alert.setHeaderText(null);
@@ -231,19 +215,15 @@ public class MainViewController {
             alert.showAndWait();
             return;
         }
-        try {
+        try { //Tour ausgewählt
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourLogCreationView.fxml"));
             Parent root = loader.load();
             TourLogCreationController controller = loader.getController();
             controller.setCurrentTour(selectedTour);
-            // Set the callback so that the new tour log is added to the selected tour.
-            controller.setOnTourLogCreatedCallback(tourLog -> {
-                System.out.println("Callback: Adding TourLog " + tourLog.getName() + " to Tour " + selectedTour.getName());
+            controller.setOnTourLogCreatedCallback(tourLog -> { //Callback: neue TourLog wird zur bestehenden Tour hinzugefügt; mit ChatGPT generiert
                 selectedTour.addTourLog(tourLog);
-                // Reassign the list (this is usually not needed with an ObservableList, but we force it here)
                 tourLogViewController.setTourForLogs(selectedTour);
                 tourLogViewController.refreshList();
-                System.out.println("TourLog count: " + selectedTour.getTourLogs().size());
             });
             Stage stage = new Stage();
             stage.setTitle("Create Tour Log");
@@ -256,9 +236,8 @@ public class MainViewController {
 
     @FXML
     private void onEdit() {
-        Tab selectedTab = detailTabPane.getSelectionModel().getSelectedItem();
-        if (selectedTab != null && selectedTab.getText().equals("Tour Details")) {
-            // Bearbeiten einer Tour (bestehender Code)
+        Tab selectedTab = detailTabPane.getSelectionModel().getSelectedItem(); //Speichern, welches TabPane ausgewählt ist (TourDetails oder TourLogs)
+        if (selectedTab != null && selectedTab.getText().equals("Tour Details")) { //Tour bearbeiten
             Tour selectedTour = tourListView.getSelectionModel().getSelectedItem();
             if (selectedTour == null) {
                 return;
@@ -282,10 +261,9 @@ public class MainViewController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (selectedTab != null && selectedTab.getText().equals("Tour Logs")) {
-            // Bearbeiten eines TourLogs
+        } else if (selectedTab != null && selectedTab.getText().equals("Tour Logs")) { //Tour log bearbeiten
             TourLog selectedLog = tourLogViewController.getSelectedTourLog();
-            if (selectedLog == null) {
+            if (selectedLog == null) { //keine TourLog ausgewählt
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("No Tour Log Selected");
                 alert.setHeaderText(null);
@@ -293,12 +271,11 @@ public class MainViewController {
                 alert.showAndWait();
                 return;
             }
-            try {
+            try { //TourLog ausgewählt
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourLogCreationView.fxml"));
                 Parent root = loader.load();
                 TourLogCreationController controller = loader.getController();
-                // Setze das ausgewählte TourLog in den Bearbeitungsmodus
-                controller.setTourLogForEditing(selectedLog);
+                controller.setTourLogForEditing(selectedLog); //Setze das ausgewählte TourLog in den Bearbeitungsmodus
                 controller.setOnTourLogUpdatedCallback(updatedLog -> {
                     tourLogViewController.refreshList();
                     tourLogViewController.showTourLogDetails(updatedLog);
@@ -320,8 +297,7 @@ public class MainViewController {
             return;
         }
 
-        if (selectedTab.getText().equals("Tour Details")) {
-            // Löschen von Touren
+        if (selectedTab.getText().equals("Tour Details")) { //Löschen von Touren
             ObservableList<Tour> selectedTours = tourListView.getSelectionModel().getSelectedItems();
             if (selectedTours.isEmpty()) {
                 return;
@@ -332,16 +308,14 @@ public class MainViewController {
             alert.setHeaderText("Are you sure?");
             alert.setContentText("This action cannot be undone!");
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                // Kopie der ausgewählten Touren erstellen, da die ObservableList schreibgeschützt ist.
-                List<Tour> toursToDelete = new ArrayList<>(selectedTours);
-                viewModel.getTours().removeAll(toursToDelete);
+            if (result.isPresent() && result.get() == ButtonType.OK) {//Wenn User OK bestätigt
+                List<Tour> toursToDelete = new ArrayList<>(selectedTours); //Kopie der ausgewählten Touren erstellen, da die ObservableList schreibgeschützt ist
+                viewModel.getTours().removeAll(toursToDelete); //Ausgewählte Tours aus Liste Löschen
                 tourListView.getSelectionModel().clearSelection();
                 tourViewController.setTour(null);
                 tourLogViewController.clear();
             }
-        } else if (selectedTab.getText().equals("Tour Logs")) {
-            // Bestehender Code zum Löschen von TourLogs (wie zuvor implementiert)
+        } else if (selectedTab.getText().equals("Tour Logs")) { //Tour Log löschen
             Tour selectedTour = tourListView.getSelectionModel().getSelectedItem();
             if (selectedTour == null) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);

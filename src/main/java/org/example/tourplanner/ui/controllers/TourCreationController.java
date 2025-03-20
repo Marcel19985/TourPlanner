@@ -16,21 +16,11 @@ import static org.example.tourplanner.ui.controllers.InputValidator.showAlert;
 
 public class TourCreationController {
 
-    @FXML
-    private TextField tourNameField;
-
-    @FXML
-    private TextField tourDescriptionField;
-
-    @FXML
-    private TextField startField;
-
-    @FXML
-    private TextField destinationField;
-
-    @FXML
-    private ComboBox<String> transportTypeBox;
-
+    @FXML private TextField tourNameField;
+    @FXML private TextField tourDescriptionField;
+    @FXML private TextField startField;
+    @FXML private TextField destinationField;
+    @FXML private ComboBox<String> transportTypeBox;
 
     private Consumer<Tour> onTourCreatedCallback;
     private Consumer<Tour> onTourUpdatedCallback;
@@ -58,7 +48,7 @@ public class TourCreationController {
         destinationField.setText(tour.getDestination());
         transportTypeBox.setValue(tour.getTransportType());
 
-        // Nicht bearbeitbare Felder deaktivieren
+        //Nicht bearbeitbare Felder deaktivieren:
         startField.setDisable(true);
         destinationField.setDisable(true);
         transportTypeBox.setDisable(true);
@@ -73,16 +63,13 @@ public class TourCreationController {
         String name = tourNameField.getText();
         String description = tourDescriptionField.getText();
 
-        if (editingTour != null) {
-            // Bearbeitungsmodus: Nur Name & Beschreibung ändern
+        if (editingTour != null) {//Bearbeitungsmodus: Nur Name & Beschreibung ändern
             editingTour.setName(name);
             editingTour.setDescription(description);
-
             if (onTourUpdatedCallback != null) {
                 onTourUpdatedCallback.accept(editingTour);
             }
-        } else {
-            // Erstellungsmodus: Neue Tour erstellen (inkl. API-Abfrage)
+        } else {//Erstellungsmodus: Neue Tour erstellen (inkl. API-Abfrage)
             try {
                 String start = startField.getText();
                 String destination = destinationField.getText();
@@ -97,7 +84,7 @@ public class TourCreationController {
                     onTourCreatedCallback.accept(newTour);
                 }
             } catch (LocationNotFoundException e) {
-                // Hier wird die Fehlermeldung an den User übermittelt:
+                //Hier wird die Fehlermeldung an den User übermittelt:
                 InputValidator.showAlert(e.getMessage());
                 return;
             } catch (IOException | JSONException e) {

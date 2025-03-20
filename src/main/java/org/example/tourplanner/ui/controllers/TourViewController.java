@@ -18,32 +18,23 @@ public class TourViewController {
 
     }
 
-    @FXML
-    private GridPane tourDetailsPane;
+    @FXML private GridPane tourDetailsPane;
 
-    @FXML
-    private Label nameLabel;
+    @FXML private Label nameLabel;
 
-    @FXML
-    private Label descriptionLabel;
+    @FXML private Label descriptionLabel;
 
-    @FXML
-    private Label startLabel;
+    @FXML private Label startLabel;
 
-    @FXML
-    private Label destinationLabel;
+    @FXML private Label destinationLabel;
 
-    @FXML
-    private Label transportTypeLabel;
+    @FXML private Label transportTypeLabel;
 
-    @FXML
-    private Label distanceLabel;
+    @FXML private Label distanceLabel;
 
-    @FXML
-    private Label estimatedTimeLabel;
+    @FXML private Label estimatedTimeLabel;
 
-    @FXML
-    private ImageView tourImageView;
+    @FXML private ImageView tourImageView;
 
     private Tour currentTour;
 

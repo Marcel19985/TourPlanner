@@ -15,58 +15,43 @@ import org.example.tourplanner.mediators.ButtonSelectionMediator;
 
 public class TourLogViewController {
 
-    @FXML
-    public Label ratingLabel;
-    @FXML
-    public Label totalTimeLabel;
-    @FXML
-    public Label totalDistanceLabel;
-    @FXML
-    public Label difficultyLabel;
-    @FXML
-    public AnchorPane logDetailPane;
-    @FXML
-    private ListView<TourLog> tourLogListView;
-    @FXML
-    private Label logNameLabel;
-    @FXML
-    private Label dateLabel;
-    @FXML
-    private Label commentLabel;
+    @FXML public Label ratingLabel;
+    @FXML public Label totalTimeLabel;
+    @FXML public Label totalDistanceLabel;
+    @FXML public Label difficultyLabel;
+    @FXML public AnchorPane logDetailPane;
+    @FXML private ListView<TourLog> tourLogListView;
+    @FXML private Label logNameLabel;
+    @FXML private Label dateLabel;
+    @FXML private Label commentLabel;
 
     @FXML
     public void initialize() {
-        logDetailPane.setVisible(false);
-        // Configure the ListView cell factory for a simple display.
-        tourLogListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tourLogListView.setCellFactory(new Callback<>() {
+        logDetailPane.setVisible(false); //DetailPane verstecken, da noch kein TourLog ausgewählt
+        tourLogListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); //Mehrfachauswahl möglich
+        tourLogListView.setCellFactory(new Callback<>() { //neue ListCell, mit CHatGPT generiert
             @Override
-            public ListCell<TourLog> call(ListView<TourLog> param) {
+            public ListCell<TourLog> call(ListView<TourLog> param) { //Überschreibt, wie Items aktualisiert werden
                 return new ListCell<>() {
                     @Override
                     protected void updateItem(TourLog item, boolean empty) {
-                        super.updateItem(item, empty);
-                        setText(empty || item == null ? null : item.getName());
+                        super.updateItem(item, empty); //Ruft Elternklasse auf
+                        setText(empty || item == null ? null : item.getName()); //wenn Zelle leer oder kein TourLog Objekt vorhanden, setzte den Text auf NULL
                     }
                 };
             }
         });
 
-        // Add a listener to update detail view when a tour log is selected.
-        tourLogListView.getSelectionModel().selectedItemProperty().addListener((obs, oldLog, newLog) -> {
-            if (newLog != null) {
+        tourLogListView.getSelectionModel().selectedItemProperty().addListener((obs, oldLog, newLog) -> { //Listerner zu selectedItemProperty hinzufügen: reagiert sobald sich die Auswahl in der ListView ändert
+            if (newLog != null) { //wenn TourLog ausgewählt wurde, werden Details des ausgewählten Log angezeigt
                 showTourLogDetails(newLog);
-            } else {
+            } else { //wenn kein TourLog ausgewählt
                 logDetailPane.setVisible(false);
                 clearDetails();
             }
         });
-
     }
 
-    /**
-     * Sets the items of the ListView to the tour logs of the given tour.
-     */
     public void setTourForLogs(Tour tour) {
         if (tour != null) {
             tourLogListView.setItems(tour.getTourLogs());
@@ -109,19 +94,19 @@ public class TourLogViewController {
         }
     }
 
-    private void setRatingStars(int rating) {
+    private void setRatingStars(int rating) { //Anzeige für Rating, mit ChatGPT generiert
         StringBuilder stars = new StringBuilder();
         for (int i = 0; i < 10; i++) {
             if (i < rating) {
-                stars.append("★");  // Voller Stern
+                stars.append("★");  //Voller Stern
             } else {
-                stars.append("☆");  // Leerer Stern
+                stars.append("☆");  //Leerer Stern
             }
         }
         ratingLabel.setText(stars.toString());
     }
 
-    void clearDetails() {
+    void clearDetails() { //Felder leeren:
         logNameLabel.setText("");
         dateLabel.setText("");
         commentLabel.setText("");

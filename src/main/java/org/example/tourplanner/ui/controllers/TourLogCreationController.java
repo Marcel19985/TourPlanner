@@ -1,13 +1,10 @@
 package org.example.tourplanner.ui.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.data.models.TourLog;
-import org.example.tourplanner.ui.viewmodels.TourLogViewModel;
-
 import java.time.LocalDate;
 import java.util.function.Consumer;
 
@@ -21,30 +18,25 @@ public class TourLogCreationController {
     @FXML private ComboBox<Integer> ratingComboBox;
     @FXML private DatePicker datePicker;
 
-    // Wird im Erstellungsmodus benötigt, um den Bezug zur Tour herzustellen
-    private Tour currentTour;
-    // Callback für den Erstellungsmodus
-    private Consumer<TourLog> onTourLogCreatedCallback;
-    // Callback für den Bearbeitungsmodus
-    private Consumer<TourLog> onTourLogUpdatedCallback;
-    // Wird im Bearbeitungsmodus gesetzt – ist null, wenn ein neues Log erstellt wird
-    private TourLog editingTourLog = null;
+    private Tour currentTour; // Wird im Erstellungsmodus benötigt, um den Bezug zur Tour herzustellen
+    private Consumer<TourLog> onTourLogCreatedCallback; //Callback für den Erstellungsmodus
+    private Consumer<TourLog> onTourLogUpdatedCallback; //Callback für den Bearbeitungsmodus
+    private TourLog editingTourLog = null; //Wird im Bearbeitungsmodus gesetzt – ist null, wenn ein neues Log erstellt wird
 
     @FXML
     private void initialize() {
-        // Befüllen der ComboBoxes
+        //Befüllen der ComboBoxes
         difficultyComboBox.getItems().addAll("Easy", "Medium", "Hard");
         ratingComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
     }
 
-    // Wird im Erstellungsmodus aufgerufen, um den Bezug zur Tour zu setzen.
+    //Wird im Erstellungsmodus aufgerufen, um den Bezug zur Tour zu setzen:
     public void setCurrentTour(Tour currentTour) {
         this.currentTour = currentTour;
     }
 
-    // Wird im Bearbeitungsmodus aufgerufen, um das zu editierende TourLog zu setzen
-    // und die Felder mit den existierenden Werten zu füllen.
+    //Wird im Bearbeitungsmodus aufgerufen, um das zu editierende TourLog zu setzen und die Felder mit den existierenden Werten zu füllen:
     public void setTourLogForEditing(TourLog tourLog) {
         this.editingTourLog = tourLog;
         nameLog.setText(tourLog.getName());
@@ -66,15 +58,14 @@ public class TourLogCreationController {
 
     @FXML
     private void onSaveTourLog() {
-        // Validierung: Alle Felder müssen ausgefüllt sein
-
+        //Validierung: Alle Felder müssen ausgefüllt sein
         if (!InputValidator.validateTourLogInputs(nameLog, datePicker, commentField, difficultyComboBox, totalDistanceField, totalTimeField, ratingComboBox)) {
             return;
         }
 
         try {
             if (editingTourLog != null) {
-                // Bearbeitungsmodus: Bestehendes TourLog aktualisieren
+                //Bearbeitungsmodus: Bestehendes TourLog aktualisieren
                 editingTourLog.setName(nameLog.getText());
                 editingTourLog.setComment(commentField.getText());
                 editingTourLog.setDifficulty(difficultyComboBox.getValue());
@@ -86,7 +77,7 @@ public class TourLogCreationController {
                     onTourLogUpdatedCallback.accept(editingTourLog);
                 }
             } else {
-                // Erstellungsmodus: Neues TourLog erzeugen
+                //Erstellungsmodus: Neues TourLog erzeugen
                 String name = nameLog.getText();
                 String comment = commentField.getText();
                 String difficulty = difficultyComboBox.getValue();
