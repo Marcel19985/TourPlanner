@@ -8,6 +8,7 @@ import org.example.tourplanner.data.models.OpenRouteServiceClient;
 import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.helpers.LocationNotFoundException;
 import org.example.tourplanner.ui.controllers.InputValidator;
+import org.example.tourplanner.ui.viewmodels.TourViewModel;
 import org.json.JSONException;
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -21,11 +22,14 @@ public class TourCreationController {
     @FXML private TextField startField;
     @FXML private TextField destinationField;
     @FXML private ComboBox<String> transportTypeBox;
+    //Read-only fields for displaying calculated values
+    @FXML private TextField distanceField;
+    @FXML private TextField estimatedTimeField;
 
     private Consumer<Tour> onTourCreatedCallback;
     private Consumer<Tour> onTourUpdatedCallback;
 
-    private Tour editingTour = null;
+    private TourViewModel tourViewModel = null;
 
     @FXML
     private void initialize() {
@@ -40,55 +44,60 @@ public class TourCreationController {
         this.onTourUpdatedCallback = callback;
     }
 
-    public void setTourForEditing(Tour tour) {
-        this.editingTour = tour;
-        tourNameField.setText(tour.getName());
-        tourDescriptionField.setText(tour.getDescription());
-        startField.setText(tour.getStart());
-        destinationField.setText(tour.getDestination());
-        transportTypeBox.setValue(tour.getTransportType());
+    public void setTourForEditing(TourViewModel tvm) {
+        this.tourViewModel = tvm;
+        // Bidirektionales Binding der Textfelder an die ViewModel Properties
+        tourNameField.textProperty().bindBidirectional(tourViewModel.nameProperty());
+        tourDescriptionField.textProperty().bindBidirectional(tourViewModel.descriptionProperty());
+        startField.textProperty().bindBidirectional(tourViewModel.startProperty());
+        destinationField.textProperty().bindBidirectional(tourViewModel.destinationProperty());
+        transportTypeBox.valueProperty().bindBidirectional(tourViewModel.transportTypeProperty());
 
-        //Nicht bearbeitbare Felder deaktivieren:
+        // Zeige berechnete Werte an, wenn vorhanden
+        if (distanceField != null) {
+            distanceField.setText(String.format("%.2f km", tvm.getTour().getDistance()));
+        }
+        if (estimatedTimeField != null) {
+            estimatedTimeField.setText(String.format("%.2f min", tvm.getTour().getEstimatedTime()));
+        }
+        // Deaktiviere Felder, die im Edit-Modus nicht verändert werden sollen
         startField.setDisable(true);
         destinationField.setDisable(true);
         transportTypeBox.setDisable(true);
     }
 
+
     @FXML
-    void onSaveButtonClick() {
-        if (!InputValidator.validateTourInputs(tourNameField, tourDescriptionField, startField, destinationField, transportTypeBox)) {
+    private void onSaveButtonClick() {
+        // Überprüfe, ob die Eingaben gültig sind
+        InputValidator TourValidatorController = new InputValidator();
+        if (!TourValidatorController.validateTourInputs(tourNameField, tourDescriptionField, startField, destinationField, transportTypeBox)) {
             return;
         }
 
-        String name = tourNameField.getText();
-        String description = tourDescriptionField.getText();
-
-        if (editingTour != null) {//Bearbeitungsmodus: Nur Name & Beschreibung ändern
-            editingTour.setName(name);
-            editingTour.setDescription(description);
+        if (tourViewModel != null) {
+            // Edit-Modus: Aktualisiere das zugrunde liegende Tour-Objekt via dem ViewModel
+            tourViewModel.updateTour();
             if (onTourUpdatedCallback != null) {
-                onTourUpdatedCallback.accept(editingTour);
+                onTourUpdatedCallback.accept(tourViewModel.getTour());
             }
-        } else {//Erstellungsmodus: Neue Tour erstellen (inkl. API-Abfrage)
+        } else {
+            // Erstellungsmodus: Neue Tour erstellen
             try {
                 String start = startField.getText();
                 String destination = destinationField.getText();
                 String transportType = transportTypeBox.getValue();
-
-                double[] routeDetails = OpenRouteServiceClient.getRouteDetails(start, destination, transportType); //HTTP Requests an OpeRouteService
+                // Rufe den OpenRouteServiceClient auf, um Distanz und geschätzte Zeit zu ermitteln
+                double[] routeDetails = OpenRouteServiceClient.getRouteDetails(start, destination, transportType);
                 double distance = routeDetails[0];
                 double estimatedTime = routeDetails[1];
-
-                Tour newTour = new Tour(name, description, start, destination, transportType, distance, estimatedTime);
+                // Erzeuge eine neue Tour
+                Tour newTour = new Tour(tourNameField.getText(), tourDescriptionField.getText(), start, destination, transportType, distance, estimatedTime);
                 if (onTourCreatedCallback != null) {
                     onTourCreatedCallback.accept(newTour);
                 }
-            } catch (LocationNotFoundException e) {
-                //Hier wird die Fehlermeldung an den User übermittelt:
-                InputValidator.showAlert(e.getMessage());
-                return;
-            } catch (IOException | JSONException e) {
-                showAlert("Fehler beim Abrufen der Route: " + e.getMessage());
+            } catch (IOException | JSONException | LocationNotFoundException e) {
+                showAlert("Error retrieving route: " + e.getMessage());
                 return;
             }
         }
