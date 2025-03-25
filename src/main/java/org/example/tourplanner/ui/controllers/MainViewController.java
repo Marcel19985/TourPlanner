@@ -17,6 +17,8 @@ import org.example.tourplanner.data.models.TourLog;
 import org.example.tourplanner.mediators.ButtonSelectionMediator;
 import org.example.tourplanner.ui.viewmodels.MainViewModel;
 import org.example.tourplanner.ui.viewmodels.TourViewModel;
+import org.example.tourplanner.ui.viewmodels.TourLogViewModel;
+import javafx.collections.FXCollections;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,8 +42,7 @@ public class MainViewController {
     private TourLogViewController tourLogViewController;
 
     private ButtonSelectionMediator<TourViewModel> tourMediator;
-    // Falls du TourLogs ebenfalls über ein ViewModel darstellen möchtest, passe auch diesen Mediator an.
-    // Hier belassen wir TourLogController vorerst unverändert.
+    private ButtonSelectionMediator<TourLogViewModel> tourLogMediator;
 
     @FXML
     private void initialize() {
@@ -62,7 +63,7 @@ public class MainViewController {
         tourListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTVM, newTVM) -> {
             if (newTVM != null) {
                 tourViewController.setTour(newTVM.getTour());
-                tourLogViewController.setTourForLogs(newTVM.getTour());
+                tourLogViewController.setTourLogItems(newTVM.getTourLogViewModels());
             } else {
                 tourViewController.setTour(null);
                 tourLogViewController.clearDetails();
@@ -70,6 +71,7 @@ public class MainViewController {
         });
 
         tourMediator = new ButtonSelectionMediator<>(editButton, deleteButton, tourListView);
+        tourLogMediator = new ButtonSelectionMediator<>(editButton, deleteButton, tourLogViewController.getTourLogListView());
 
         detailTabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
             if (newTab != null) {
@@ -78,11 +80,13 @@ public class MainViewController {
                     editButton.setText("_Edit Tour");
                     deleteButton.setText("_Delete Tour(s)");
                     tourMediator.enable();
+                    tourLogMediator.disable();
                 } else if (newTab.getText().equals("Tour Logs")) {
                     createButton.setText("_Create Tour Log");
                     editButton.setText("_Edit Tour Log");
                     deleteButton.setText("_Delete Tour Log(s)");
-                    // Hier müsste ein separater Mediator für TourLogs aktiviert werden, falls du diese über ViewModels darstellst.
+                    tourLogMediator.enable();
+                    tourMediator.disable();
                 }
             }
         });
@@ -191,10 +195,11 @@ public class MainViewController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourLogCreationView.fxml"));
             Parent root = loader.load();
             TourLogCreationController controller = loader.getController();
-            controller.setCurrentTour(selectedTVM.getTour());
+            controller.setCurrentTour(selectedTVM.getTour()); // falls benötigt
             controller.setOnTourLogCreatedCallback(tourLog -> {
-                selectedTVM.getTour().addTourLog(tourLog);
-                tourLogViewController.setTourForLogs(selectedTVM.getTour());
+                // Füge den neuen TourLog über das TourViewModel hinzu – intern wird auch das ViewModel aktualisiert
+                selectedTVM.addTourLog(tourLog);
+                tourLogViewController.setTourLogItems(selectedTVM.getTourLogViewModels());
                 tourLogViewController.refreshList();
             });
             Stage stage = new Stage();
@@ -205,6 +210,7 @@ public class MainViewController {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     private void onEdit() {
@@ -233,9 +239,9 @@ public class MainViewController {
                 e.printStackTrace();
             }
         } else if (selectedTab != null && selectedTab.getText().equals("Tour Logs")) {
-            // Tour Log bearbeiten (unverändert)
-            TourLog selectedLog = tourLogViewController.getSelectedTourLog();
-            if (selectedLog == null) {
+            // Beispiel aus MainViewController beim Editieren eines TourLogs
+            TourLogViewModel selectedLogVM = tourLogViewController.getSelectedTourLogViewModel();
+            if (selectedLogVM == null) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("No Tour Log Selected");
                 alert.setHeaderText(null);
@@ -243,14 +249,17 @@ public class MainViewController {
                 alert.showAndWait();
                 return;
             }
+
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourLogCreationView.fxml"));
                 Parent root = loader.load();
                 TourLogCreationController controller = loader.getController();
-                controller.setTourLogForEditing(selectedLog);
+                // Hier wird das bestehende TourLogViewModel übergeben – nicht eine neue Instanz!
+                controller.setTourLogForEditing(selectedLogVM);
                 controller.setOnTourLogUpdatedCallback(updatedLog -> {
+                    // Nachdem der Bearbeitungsdialog geschlossen wird, können wir die Liste aktualisieren.
                     tourLogViewController.refreshList();
-                    tourLogViewController.showTourLogDetails(updatedLog);
+                    tourLogViewController.showTourLogDetails(selectedLogVM);
                 });
                 Stage stage = new Stage();
                 stage.setTitle("Edit Tour Log");
@@ -295,7 +304,11 @@ public class MainViewController {
                 alert.showAndWait();
                 return;
             }
-            ObservableList<TourLog> selectedLogs = tourLogViewController.getSelectedTourLogs();
+            ObservableList<TourLogViewModel> selectedLogVMs = tourLogViewController.getSelectedTourLogViewModels();
+            ObservableList<TourLog> selectedLogs = FXCollections.observableArrayList();
+            for (TourLogViewModel vm : selectedLogVMs) {
+                selectedLogs.add(vm.getTourLog());
+            }
             if (selectedLogs.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("No Tour Log Selected");

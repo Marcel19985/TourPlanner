@@ -1,99 +1,83 @@
 package org.example.tourplanner.ui.viewmodels;
 
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.example.tourplanner.data.models.TourLog;
-
 import java.time.LocalDate;
 
 public class TourLogViewModel {
 
-    private final ObjectProperty<LocalDate> date = new SimpleObjectProperty<>();
-    private final StringProperty comment = new SimpleStringProperty();
-    private final StringProperty name = new SimpleStringProperty();
-    private final StringProperty tourName = new SimpleStringProperty();
-    private final StringProperty difficulty = new SimpleStringProperty();
-    private final DoubleProperty totalDistance = new SimpleDoubleProperty();
-    private final DoubleProperty totalTime = new SimpleDoubleProperty();
-    private final IntegerProperty rating = new SimpleIntegerProperty();
     private final TourLog tourLog;
-
-    // ObservableList für alle TourLogs
-    private final ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
+    private final ObjectProperty<LocalDate> date;
+    private final StringProperty comment;
+    private final StringProperty name;
+    private final StringProperty tourName;
+    private final StringProperty difficulty;
+    private final DoubleProperty totalDistance;
+    private final DoubleProperty totalTime;
+    private final IntegerProperty rating;
 
     public TourLogViewModel(TourLog tourLog) {
         this.tourLog = tourLog;
-        this.date.set(tourLog.getDate());
-        this.name.set(tourLog.getName());
-        this.tourName.set(tourLog.getTourName());
-        this.comment.set(tourLog.getComment());
-        this.difficulty.set(tourLog.getDifficulty());
-        this.totalDistance.set(tourLog.getTotalDistance());
-        this.totalTime.set(tourLog.getTotalTime());
-        this.rating.set(tourLog.getRating());
-
-        // Optional: Anfangs-TourLog zur Liste hinzufügen
-        this.tourLogs.add(tourLog);
+        this.date = new SimpleObjectProperty<>(tourLog.getDate());
+        this.comment = new SimpleStringProperty(tourLog.getComment());
+        this.name = new SimpleStringProperty(tourLog.getName());
+        this.tourName = new SimpleStringProperty(tourLog.getTourName());
+        this.difficulty = new SimpleStringProperty(tourLog.getDifficulty());
+        this.totalDistance = new SimpleDoubleProperty(tourLog.getTotalDistance());
+        this.totalTime = new SimpleDoubleProperty(tourLog.getTotalTime());
+        this.rating = new SimpleIntegerProperty(tourLog.getRating());
     }
 
-    // Getter für die Properties
-    public ObjectProperty<LocalDate> dateProperty() {
-        return date;
+    // Kopierkonstruktor: Erzeugt einen Editing-Clone
+    public TourLogViewModel(TourLogViewModel other) {
+        this.tourLog = other.tourLog; // Gleiche zugrunde liegende Instanz
+        this.date = new SimpleObjectProperty<>(other.date.get());
+        this.comment = new SimpleStringProperty(other.comment.get());
+        this.name = new SimpleStringProperty(other.name.get());
+        this.tourName = new SimpleStringProperty(other.tourName.get());
+        this.difficulty = new SimpleStringProperty(other.difficulty.get());
+        this.totalDistance = new SimpleDoubleProperty(other.totalDistance.get());
+        this.totalTime = new SimpleDoubleProperty(other.totalTime.get());
+        this.rating = new SimpleIntegerProperty(other.rating.get());
     }
 
-    public StringProperty commentProperty() {
-        return comment;
-    }
-    public StringProperty nameProperty() {
-        return name;
-    }
-    public StringProperty tourNameProperty() {
-        return tourName;
-    }
-
-    public StringProperty difficultyProperty() {
-        return difficulty;
-    }
-
-    public DoubleProperty totalDistanceProperty() {
-        return totalDistance;
+    // Kopiert die Werte aus dem anderen ViewModel in dieses (z. B. beim Speichern)
+    public void copyFrom(TourLogViewModel other) {
+        this.name.set(other.name.get());
+        this.comment.set(other.comment.get());
+        this.tourName.set(other.tourName.get());
+        this.date.set(other.date.get());
+        this.difficulty.set(other.difficulty.get());
+        this.totalDistance.set(other.totalDistance.get());
+        this.totalTime.set(other.totalTime.get());
+        this.rating.set(other.rating.get());
+        updateTourLog();
     }
 
-    public DoubleProperty totalTimeProperty() {
-        return totalTime;
-    }
-
-    public IntegerProperty ratingProperty() {
-        return rating;
-    }
-
-    // Getter für die Liste der TourLogs
-    public ObservableList<TourLog> getTourLogs() {
-        return tourLogs;
-    }
-
-    // Methode zum Hinzufügen eines TourLogs zur Liste
-    public void addTourLog(TourLog tourLog) {
-        tourLogs.add(tourLog);
-    }
-
-
-    // Methode zum Aktualisieren des TourLogs
+    // Überträgt die aktuellen Property-Werte in das zugrunde liegende TourLog-Objekt
     public void updateTourLog() {
         tourLog.setName(name.get());
+        tourLog.setComment(comment.get());
         tourLog.setTourName(tourName.get());
         tourLog.setDate(date.get());
-        tourLog.setComment(comment.get());
         tourLog.setDifficulty(difficulty.get());
         tourLog.setTotalDistance(totalDistance.get());
         tourLog.setTotalTime(totalTime.get());
         tourLog.setRating(rating.get());
     }
 
-
-    // Optional: Methode zum Erstellen eines neuen TourLogs aus den aktuellen Werten
-    public TourLog createTourLog() {
-        return new TourLog(name.get(), date.get(), comment.get(), difficulty.get(), totalDistance.get(), totalTime.get(), rating.get());
+    // Getter für den zugrunde liegenden TourLog
+    public TourLog getTourLog() {
+        return tourLog;
     }
+
+    // Property-Methoden
+    public ObjectProperty<LocalDate> dateProperty() { return date; }
+    public StringProperty commentProperty() { return comment; }
+    public StringProperty nameProperty() { return name; }
+    public StringProperty tourNameProperty() { return tourName; }
+    public StringProperty difficultyProperty() { return difficulty; }
+    public DoubleProperty totalDistanceProperty() { return totalDistance; }
+    public DoubleProperty totalTimeProperty() { return totalTime; }
+    public IntegerProperty ratingProperty() { return rating; }
 }

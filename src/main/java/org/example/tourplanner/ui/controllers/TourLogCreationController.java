@@ -3,8 +3,10 @@ package org.example.tourplanner.ui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
 import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.data.models.TourLog;
+import org.example.tourplanner.ui.viewmodels.TourLogViewModel;
 import java.time.LocalDate;
 import java.util.function.Consumer;
 
@@ -18,34 +20,47 @@ public class TourLogCreationController {
     @FXML private ComboBox<Integer> ratingComboBox;
     @FXML private DatePicker datePicker;
 
-    private Tour currentTour; // Wird im Erstellungsmodus benötigt, um den Bezug zur Tour herzustellen
-    private Consumer<TourLog> onTourLogCreatedCallback; //Callback für den Erstellungsmodus
-    private Consumer<TourLog> onTourLogUpdatedCallback; //Callback für den Bearbeitungsmodus
-    private TourLog editingTourLog = null; //Wird im Bearbeitungsmodus gesetzt – ist null, wenn ein neues Log erstellt wird
+    private Tour currentTour;
+    private Consumer<TourLog> onTourLogCreatedCallback;
+    private Consumer<TourLog> onTourLogUpdatedCallback;
+
+    // Wir speichern das Original und den Editing-Clone separat
+    private TourLogViewModel originalTourLogViewModel = null;
+    private TourLogViewModel editingTourLogViewModel = null;
 
     @FXML
     private void initialize() {
-        //Befüllen der ComboBoxes
         difficultyComboBox.getItems().addAll("Easy", "Medium", "Hard");
         ratingComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
+        //delete: damit nicht alle Felder manuell befüllt werden müssen
+        nameLog.setText("Test Log");
+        commentField.setText("Test Comment");
+        difficultyComboBox.setValue("Easy");
+        totalDistanceField.setText("20");
+        totalTimeField.setText("20");
+        ratingComboBox.setValue(5);
+        datePicker.setValue(LocalDate.now());
     }
 
-    //Wird im Erstellungsmodus aufgerufen, um den Bezug zur Tour zu setzen:
     public void setCurrentTour(Tour currentTour) {
         this.currentTour = currentTour;
     }
 
-    //Wird im Bearbeitungsmodus aufgerufen, um das zu editierende TourLog zu setzen und die Felder mit den existierenden Werten zu füllen:
-    public void setTourLogForEditing(TourLog tourLog) {
-        this.editingTourLog = tourLog;
-        nameLog.setText(tourLog.getName());
-        commentField.setText(tourLog.getComment());
-        difficultyComboBox.setValue(tourLog.getDifficulty());
-        totalDistanceField.setText(String.valueOf(tourLog.getTotalDistance()));
-        totalTimeField.setText(String.valueOf(tourLog.getTotalTime()));
-        ratingComboBox.setValue(tourLog.getRating());
-        datePicker.setValue(tourLog.getDate());
+    /**
+     * Im Bearbeitungsmodus übergeben wir das bereits vorhandene ViewModel.
+     * Es wird ein Editing-Clone erstellt, an den die UI-Felder gebunden werden.
+     */
+    public void setTourLogForEditing(TourLogViewModel original) {
+        this.originalTourLogViewModel = original;
+        this.editingTourLogViewModel = new TourLogViewModel(original); // Clone erstellen
+        nameLog.textProperty().bindBidirectional(editingTourLogViewModel.nameProperty());
+        commentField.textProperty().bindBidirectional(editingTourLogViewModel.commentProperty());
+        difficultyComboBox.valueProperty().bindBidirectional(editingTourLogViewModel.difficultyProperty());
+        totalDistanceField.textProperty().bindBidirectional(editingTourLogViewModel.totalDistanceProperty(), new NumberStringConverter());
+        totalTimeField.textProperty().bindBidirectional(editingTourLogViewModel.totalTimeProperty(), new NumberStringConverter());
+        ratingComboBox.valueProperty().bindBidirectional(editingTourLogViewModel.ratingProperty().asObject());
+        datePicker.valueProperty().bindBidirectional(editingTourLogViewModel.dateProperty());
     }
 
     public void setOnTourLogCreatedCallback(Consumer<TourLog> callback) {
@@ -58,26 +73,18 @@ public class TourLogCreationController {
 
     @FXML
     private void onSaveTourLog() {
-        //Validierung: Alle Felder müssen ausgefüllt sein
         if (!InputValidator.validateTourLogInputs(nameLog, datePicker, commentField, difficultyComboBox, totalDistanceField, totalTimeField, ratingComboBox)) {
             return;
         }
-
         try {
-            if (editingTourLog != null) {
-                //Bearbeitungsmodus: Bestehendes TourLog aktualisieren
-                editingTourLog.setName(nameLog.getText());
-                editingTourLog.setComment(commentField.getText());
-                editingTourLog.setDifficulty(difficultyComboBox.getValue());
-                editingTourLog.setTotalDistance(Double.parseDouble(totalDistanceField.getText()));
-                editingTourLog.setTotalTime(Double.parseDouble(totalTimeField.getText()));
-                editingTourLog.setRating(ratingComboBox.getValue());
-                editingTourLog.setDate(datePicker.getValue());
+            if (editingTourLogViewModel != null) {
+                // Speichere: Kopiere die Änderungen aus dem Editing-Clone in das Original
+                originalTourLogViewModel.copyFrom(editingTourLogViewModel);
                 if (onTourLogUpdatedCallback != null) {
-                    onTourLogUpdatedCallback.accept(editingTourLog);
+                    onTourLogUpdatedCallback.accept(originalTourLogViewModel.getTourLog());
                 }
             } else {
-                //Erstellungsmodus: Neues TourLog erzeugen
+                // Erstellungsmodus: Neues TourLog erzeugen
                 String name = nameLog.getText();
                 String comment = commentField.getText();
                 String difficulty = difficultyComboBox.getValue();
@@ -87,7 +94,6 @@ public class TourLogCreationController {
                 LocalDate date = datePicker.getValue();
 
                 TourLog newTourLog = new TourLog(name, date, comment, difficulty, totalDistance, totalTime, rating);
-                // Falls currentTour gesetzt ist, kann hier der Tour-Name übernommen werden:
                 if (currentTour != null) {
                     newTourLog.setTourName(currentTour.getName());
                 }
@@ -103,7 +109,21 @@ public class TourLogCreationController {
 
     @FXML
     private void onCancel() {
+        if(editingTourLogViewModel != null) { //sonst Fehlermeldung bei cancel, da unbindFiels nur bei edit geht wenn ein Editing-Clone erstellt wurde
+            unbindFields();
+        }
         closeWindow();
+    }
+
+
+    private void unbindFields() {
+        nameLog.textProperty().unbindBidirectional(editingTourLogViewModel.nameProperty());
+        commentField.textProperty().unbindBidirectional(editingTourLogViewModel.commentProperty());
+        difficultyComboBox.valueProperty().unbindBidirectional(editingTourLogViewModel.difficultyProperty());
+        totalDistanceField.textProperty().unbindBidirectional(editingTourLogViewModel.totalDistanceProperty());
+        totalTimeField.textProperty().unbindBidirectional(editingTourLogViewModel.totalTimeProperty());
+        ratingComboBox.valueProperty().unbindBidirectional(editingTourLogViewModel.ratingProperty().asObject());
+        datePicker.valueProperty().unbindBidirectional(editingTourLogViewModel.dateProperty());
     }
 
     private void showAlert(String message) {
