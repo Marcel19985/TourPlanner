@@ -323,9 +323,15 @@ public class MainViewController {
             alert.setContentText("This action cannot be undone!");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Zuerst die ViewModel-Liste aktualisieren:
+                selectedTVM.getTourLogViewModels().removeIf(vm -> selectedLogs.contains(vm.getTourLog()));
+                        // Dann den TourLog aus dem zugrunde liegenden Datenmodell entfernen:
                 selectedTVM.getTour().getTourLogs().removeAll(new ArrayList<>(selectedLogs));
+
+                // Danach die UI aktualisieren:
                 tourLogViewController.refreshList();
                 tourLogViewController.clearDetails();
+
             }
         }
     }
