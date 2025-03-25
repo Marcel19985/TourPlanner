@@ -331,6 +331,7 @@ public class MainViewController {
                 // Danach die UI aktualisieren:
                 tourLogViewController.refreshList();
                 tourLogViewController.clearDetails();
+                tourLogViewController.clearSelection();
 
             }
         }

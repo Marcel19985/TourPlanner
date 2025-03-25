@@ -29,7 +29,10 @@ public class InputValidator {
     }
 
     //Validation for TourLog inputs
-    public static boolean validateTourLogInputs(TextField nameLog, DatePicker dateField, TextArea commentField, ComboBox<String> difficultyBox, TextField distanceField, TextField totalTimeField, ComboBox<Integer> ratingField) {
+    public static boolean validateTourLogInputs(TextField nameLog, DatePicker dateField, TextArea commentField,
+                                                ComboBox<String> difficultyBox, TextField distanceField,
+                                                TextField totalTimeField, ComboBox<Integer> ratingField,
+                                                Spinner <Integer> minutesField, Spinner<Integer> hoursField) {
         StringBuilder errorMessage = new StringBuilder();
 
         if (isEmpty(nameLog)) {
@@ -42,24 +45,37 @@ public class InputValidator {
             errorMessage.append("Date cannot be in the future!\n");
         }
 
+        // Überprüfen der Minuten und Stunden Spinner-Werte, ob sie gültige Zahlen sind
+        if (minutesField.getValue() == null || minutesField.getValue() < 0 || minutesField.getValue() > 59) {
+            errorMessage.append("Minutes must be a valid number between 0 and 59!\n");
+        }
+        if (hoursField.getValue() == null || hoursField.getValue() < 0 || hoursField.getValue() > 23) {
+            errorMessage.append("Hours must be a valid number between 0 and 23!\n");
+        }
+
         if (isEmpty(commentField)) {
             errorMessage.append("Comment is required!\n");
         }
+
         if (difficultyBox == null || difficultyBox.getValue() == null || difficultyBox.getValue().trim().isEmpty()) {
             errorMessage.append("Please select a difficulty level!\n");
         }
+
         if (isEmpty(distanceField) || !isValidNumber(distanceField.getText())) {
             errorMessage.append("Distance must be a valid number!\n");
         }
+
         if (isEmpty(totalTimeField) || !isValidNumber(totalTimeField.getText())) {
             errorMessage.append("Total time must be a valid number!\n");
         }
+
         if (ratingField == null || ratingField.getValue() == null || ratingField.getValue() < 1 || ratingField.getValue() > 10) {
             errorMessage.append("Rating is required!\n");
         }
 
         return checkAndShowErrors(errorMessage);
     }
+
 
     //Helper methods
     private static boolean isEmpty(TextField field) {
@@ -78,6 +94,8 @@ public class InputValidator {
             return false;
         }
     }
+
+
 
     private static boolean checkAndShowErrors(StringBuilder errorMessage) {
         if (errorMessage.length() > 0) {

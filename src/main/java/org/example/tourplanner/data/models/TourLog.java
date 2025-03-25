@@ -3,6 +3,7 @@ package org.example.tourplanner.data.models;
 import org.example.tourplanner.helpers.UUIDv7Generator;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public class TourLog {
@@ -11,6 +12,7 @@ public class TourLog {
     private String name;
     private String tourName;
     private LocalDate date;
+    private LocalTime time;
     private String comment;
     private String difficulty;
     private double totalDistance;
@@ -18,10 +20,11 @@ public class TourLog {
     private int rating;
 
     // Konstruktor
-    public TourLog(String name, LocalDate date, String comment, String difficulty, double totalDistance, double totalTime, int rating) {
+    public TourLog(String name, LocalDate date, LocalTime time, String comment, String difficulty, double totalDistance, double totalTime, int rating) {
         this.id = UUIDv7Generator.generateUUIDv7();
         this.name = name;
         this.date = date;
+        this.time = time;
         this.comment = comment;
         this.difficulty = difficulty;
         this.totalDistance = totalDistance;
@@ -49,6 +52,9 @@ public class TourLog {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public LocalTime getTime() { return time; }
+    public void setTime(LocalTime time) { this.time = time; }
 
     public String getComment() {
         return comment;

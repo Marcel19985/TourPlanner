@@ -1,5 +1,8 @@
 package org.example.tourplanner.ui.controllers;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -8,7 +11,9 @@ import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.data.models.TourLog;
 import org.example.tourplanner.ui.viewmodels.TourLogViewModel;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 public class TourLogCreationController {
 
@@ -19,6 +24,8 @@ public class TourLogCreationController {
     @FXML private TextField totalTimeField;
     @FXML private ComboBox<Integer> ratingComboBox;
     @FXML private DatePicker datePicker;
+    @FXML private Spinner<Integer> hourSpinner;
+    @FXML private Spinner<Integer> minuteSpinner;
 
     private Tour currentTour;
     private Consumer<TourLog> onTourLogCreatedCallback;
@@ -32,7 +39,8 @@ public class TourLogCreationController {
     private void initialize() {
         difficultyComboBox.getItems().addAll("Easy", "Medium", "Hard");
         ratingComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-
+        hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 12));
+        minuteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 30));
         //delete: damit nicht alle Felder manuell befüllt werden müssen
         nameLog.setText("Test Log");
         commentField.setText("Test Comment");
@@ -61,6 +69,16 @@ public class TourLogCreationController {
         totalTimeField.textProperty().bindBidirectional(editingTourLogViewModel.totalTimeProperty(), new NumberStringConverter());
         ratingComboBox.valueProperty().bindBidirectional(editingTourLogViewModel.ratingProperty().asObject());
         datePicker.valueProperty().bindBidirectional(editingTourLogViewModel.dateProperty());
+        IntegerProperty hour = new SimpleIntegerProperty();
+        IntegerProperty minute = new SimpleIntegerProperty();
+
+        hourSpinner.getValueFactory().valueProperty().bindBidirectional(hour.asObject());
+        minuteSpinner.getValueFactory().valueProperty().bindBidirectional(minute.asObject());
+
+        editingTourLogViewModel.timeProperty().bind(Bindings.createObjectBinding(
+                () -> LocalTime.of(hour.get(), minute.get()),
+                hour, minute
+        ));
     }
 
     public void setOnTourLogCreatedCallback(Consumer<TourLog> callback) {
@@ -73,7 +91,7 @@ public class TourLogCreationController {
 
     @FXML
     private void onSaveTourLog() {
-        if (!InputValidator.validateTourLogInputs(nameLog, datePicker, commentField, difficultyComboBox, totalDistanceField, totalTimeField, ratingComboBox)) {
+        if (!InputValidator.validateTourLogInputs(nameLog, datePicker, commentField, difficultyComboBox, totalDistanceField, totalTimeField, ratingComboBox, minuteSpinner, hourSpinner)) {
             return;
         }
         try {
@@ -92,8 +110,11 @@ public class TourLogCreationController {
                 double totalTime = Double.parseDouble(totalTimeField.getText());
                 int rating = ratingComboBox.getValue();
                 LocalDate date = datePicker.getValue();
+                int hour = hourSpinner.getValue();
+                int minute = minuteSpinner.getValue();
+                LocalTime time = LocalTime.of(hour, minute);
 
-                TourLog newTourLog = new TourLog(name, date, comment, difficulty, totalDistance, totalTime, rating);
+                TourLog newTourLog = new TourLog(name, date, time, comment, difficulty, totalDistance, totalTime, rating);
                 if (currentTour != null) {
                     newTourLog.setTourName(currentTour.getName());
                 }
@@ -124,6 +145,7 @@ public class TourLogCreationController {
         totalTimeField.textProperty().unbindBidirectional(editingTourLogViewModel.totalTimeProperty());
         ratingComboBox.valueProperty().unbindBidirectional(editingTourLogViewModel.ratingProperty().asObject());
         datePicker.valueProperty().unbindBidirectional(editingTourLogViewModel.dateProperty());
+
     }
 
     private void showAlert(String message) {

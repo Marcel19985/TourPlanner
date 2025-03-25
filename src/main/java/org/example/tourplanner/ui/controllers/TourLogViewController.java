@@ -21,6 +21,7 @@ public class TourLogViewController {
     @FXML private ListView<TourLogViewModel> tourLogListView;
     @FXML private Label logNameLabel;
     @FXML private Label dateLabel;
+    @FXML private Label timeLabel;
     @FXML private Label commentLabel;
 
     @FXML
@@ -70,6 +71,9 @@ public class TourLogViewController {
         tourLogListView.setItems(FXCollections.observableArrayList());
         clearDetails();
     }
+    public void clearSelection() {
+        tourLogListView.getSelectionModel().clearSelection();
+    }
 
     public void refreshList() {
         tourLogListView.refresh();
@@ -85,6 +89,7 @@ public class TourLogViewController {
             totalTimeLabel.setText(String.valueOf(tvm.totalTimeProperty().get()));
             totalDistanceLabel.setText(String.valueOf(tvm.totalDistanceProperty().get()));
             difficultyLabel.setText(tvm.difficultyProperty().get());
+            timeLabel.setText(tvm.timeProperty().get().toString());
         } else {
             logDetailPane.setVisible(false);
         }
@@ -106,6 +111,7 @@ public class TourLogViewController {
         totalTimeLabel.setText("");
         totalDistanceLabel.setText("");
         difficultyLabel.setText("");
+        timeLabel.setText("");
     }
 
     public ListView<TourLogViewModel> getTourLogListView() {

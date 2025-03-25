@@ -30,26 +30,30 @@
                 <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
                 <Label fx:id="dateLabel" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
+                <!-- Time -->
+                <Label text="Start time: " GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <Label fx:id="timeLabel" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
                 <!-- Difficulty -->
-                <Label text="Difficulty:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <Label fx:id="difficultyLabel" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="Difficulty:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <Label fx:id="difficultyLabel" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
                 <!-- Total Distance -->
-                <Label text="Total Distance:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                <Label fx:id="totalDistanceLabel" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Label text="Total Distance:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <Label fx:id="totalDistanceLabel" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
                 <!-- Total Time -->
-                <Label text="Total Time:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                <Label fx:id="totalTimeLabel" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Label text="Total Time:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <Label fx:id="totalTimeLabel" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
                 <!-- Rating -->
-                <Label text="Rating:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-                <Label fx:id="ratingLabel" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                <Label text="Rating:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                <Label fx:id="ratingLabel" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
 
                 <!-- Comment -->
-                <Label text="Comment:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                <Label text="Comment:" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
                 <Label fx:id="commentLabel" wrapText="true" maxWidth="300"
-                       GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                       GridPane.columnIndex="1" GridPane.rowIndex="7"/>
             </GridPane>
         </AnchorPane>
     </items>

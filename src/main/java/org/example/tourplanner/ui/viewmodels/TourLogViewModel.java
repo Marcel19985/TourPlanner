@@ -3,11 +3,13 @@ package org.example.tourplanner.ui.viewmodels;
 import javafx.beans.property.*;
 import org.example.tourplanner.data.models.TourLog;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class TourLogViewModel {
 
     private final TourLog tourLog;
     private final ObjectProperty<LocalDate> date;
+    private final ObjectProperty<LocalTime> time;
     private final StringProperty comment;
     private final StringProperty name;
     private final StringProperty tourName;
@@ -19,6 +21,7 @@ public class TourLogViewModel {
     public TourLogViewModel(TourLog tourLog) {
         this.tourLog = tourLog;
         this.date = new SimpleObjectProperty<>(tourLog.getDate());
+        this.time = new SimpleObjectProperty<>(tourLog.getTime());
         this.comment = new SimpleStringProperty(tourLog.getComment());
         this.name = new SimpleStringProperty(tourLog.getName());
         this.tourName = new SimpleStringProperty(tourLog.getTourName());
@@ -32,6 +35,7 @@ public class TourLogViewModel {
     public TourLogViewModel(TourLogViewModel other) {
         this.tourLog = other.tourLog; // Gleiche zugrunde liegende Instanz
         this.date = new SimpleObjectProperty<>(other.date.get());
+        this.time = new SimpleObjectProperty<>(other.time.get());
         this.comment = new SimpleStringProperty(other.comment.get());
         this.name = new SimpleStringProperty(other.name.get());
         this.tourName = new SimpleStringProperty(other.tourName.get());
@@ -47,6 +51,7 @@ public class TourLogViewModel {
         this.comment.set(other.comment.get());
         this.tourName.set(other.tourName.get());
         this.date.set(other.date.get());
+        this.time.set(other.time.get());
         this.difficulty.set(other.difficulty.get());
         this.totalDistance.set(other.totalDistance.get());
         this.totalTime.set(other.totalTime.get());
@@ -60,6 +65,7 @@ public class TourLogViewModel {
         tourLog.setComment(comment.get());
         tourLog.setTourName(tourName.get());
         tourLog.setDate(date.get());
+        tourLog.setTime(time.get());
         tourLog.setDifficulty(difficulty.get());
         tourLog.setTotalDistance(totalDistance.get());
         tourLog.setTotalTime(totalTime.get());
@@ -73,6 +79,7 @@ public class TourLogViewModel {
 
     // Property-Methoden
     public ObjectProperty<LocalDate> dateProperty() { return date; }
+    public ObjectProperty<LocalTime> timeProperty() { return time; }
     public StringProperty commentProperty() { return comment; }
     public StringProperty nameProperty() { return name; }
     public StringProperty tourNameProperty() { return tourName; }

@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 
+<?import javafx.scene.control.Spinner?>
 <GridPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="org.example.tourplanner.ui.controllers.TourLogCreationController"
           hgap="10" vgap="10" stylesheets="@stylesheet.css">
@@ -23,9 +24,14 @@
     <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
     <TextField fx:id="nameLog" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-    <!-- Date -->
-    <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-    <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <!-- Date & Time -->
+    <Label text="Date &amp; Time:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <HBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <DatePicker fx:id="datePicker" editable="false"/>
+        <Spinner fx:id="hourSpinner" editable="false"/>
+        <Spinner fx:id="minuteSpinner" editable="false"/>
+    </HBox>
+
 
     <!-- Difficulty -->
     <Label text="Difficulty:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
