@@ -46,7 +46,7 @@
     <Label fx:id="estimatedTimeLabel" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
     <!-- Zeile 7: Bild für die Tour  -->
-    <ImageView  fx:id="mapImageView" fitWidth="600" fitHeight="300"
+    <ImageView  fx:id="mapImageView" fitWidth="600" fitHeight="400"
     GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 
 

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Tour Map</title>
+    <link rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css' />
+    <script src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js'></script>
+    <script src='https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js'></script>
+    <style>
+        html, body { height: 100%; margin: 0}
+        #map { height: 100%; width: 100%; }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    var startLat = {{startLat}};
+    var startLon = {{startLon}};
+    var destLat = {{destLat}};
+    var destLon = {{destLon}};
+
+    var map = L.map('map');
+    var centerLat = (startLat + destLat) / 2;
+    var centerLon = (startLon + destLon) / 2;
+    var bounds = [[startLat, startLon], [destLat, destLon]];
+
+    map.fitBounds(bounds);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([startLat, startLon]).addTo(map).bindPopup('Start');
+    L.marker([destLat, destLon]).addTo(map).bindPopup('Destination');
+
+    var apiKey = '{{apiKey}}';
+    var transportMode = '{{transportMode}}';
+    var url = 'https://api.openrouteservice.org/v2/directions/' + transportMode + '?api_key=' + apiKey + '&start=' + startLon + ',' + startLat + '&end=' + destLon + ',' + destLat;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.features && data.features.length > 0) {
+                var routeGeoJson = data.features[0].geometry;
+                L.geoJSON(routeGeoJson, {style: {color: 'blue', weight: 4}}).addTo(map);
+            } else {
+                console.error('Keine Route gefunden.');
+                alert('Keine Route gefunden.');
+            }
+        })
+        .catch(error => {
+            console.error('Fehler beim Abrufen der Route:', error);
+            alert('Fehler beim Abrufen der Route: ' + error.message);
+        });
+</script>
+</body>
+</html>

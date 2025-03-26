@@ -16,6 +16,8 @@ import javafx.util.Duration;
 import org.example.tourplanner.data.models.OpenRouteServiceClient;
 import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.ui.viewmodels.TourViewModel;
+import org.example.tourplanner.utils.HtmlTemplateLoader;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -34,7 +36,7 @@ public class TourCreationController {
     private WebEngine webEngine;
     private Consumer<Tour> onTourCreatedCallback;
     private Consumer<Tour> onTourUpdatedCallback;
-
+    private static String API_KEY;
     // Hier speichern wir das Original-ViewModel und den Editing-Clone separat.
     private TourViewModel originalTourViewModel = null;
     private TourViewModel editingTourViewModel = null;
@@ -152,7 +154,7 @@ public class TourCreationController {
             String destCoords = OpenRouteServiceClient.getCoordinates(destination);
 
             // Erstelle das HTML für die Karte
-            String html = createLeafletMapHtml(startCoords, destCoords, start, destination);
+            String html = HtmlTemplateLoader.loadTourMapHtml(startCoords, destCoords, transportTypeBox.getValue());
 
             // Lade das HTML in den WebView
             webEngine.loadContent(html);
@@ -162,55 +164,6 @@ public class TourCreationController {
         }
     }
 
-    private String createLeafletMapHtml(String startCoords, String destCoords, String start, String destination) {
-        String[] startCoordArray = startCoords.split(",");
-        String[] destCoordArray = destCoords.split(",");
-
-// Debug-Ausgabe der Koordinaten
-        System.out.println("Start: " + startCoordArray[0] + ", " + startCoordArray[1]);
-        System.out.println("Ziel: " + destCoordArray[0] + ", " + destCoordArray[1]);
-
-// Erstelle HTML mit Leaflet
-        String html = "<!DOCTYPE html>" +
-                "<html>" +
-                "<head>" +
-                "<meta charset='utf-8' />" +
-                "<title>Tour Map</title>" +
-                "<link rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css' />" +
-                "<script src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js'></script>" +
-                "<style>" +
-                "html, body { height: 100%; margin: 0}" +
-                "  #map { height: 100%; width: 100%; }" +
-                "</style>" +
-                "</head>" +
-                "<body>" +
-                "<div id='map'></div>" +
-                "<script>" +
-                "  var startLat = " + startCoordArray[1] + "; " +
-                "  var startLon = " + startCoordArray[0] + "; " +
-                "  var destLat = " + destCoordArray[1] + "; " +
-                "  var destLon = " + destCoordArray[0] + "; " +
-                "  var map = L.map('map');" +
-                "  var centerLat = (startLat + destLat) / 2;" +
-                "  var centerLon = (startLon + destLon) / 2;" +
-                "  var bounds = [[startLat, startLon], [destLat, destLon]];" +
-                "  map.fitBounds(bounds);" +
-                "  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {" +
-                "    attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'" +
-                "  }).addTo(map);" +
-                "  L.marker([startLat, startLon]).addTo(map).bindPopup('Start: " + start + "');" +
-                "  L.marker([destLat, destLon]).addTo(map).bindPopup('Destination: " + destination + "');" +
-                "  L.polyline([[" + startCoordArray[1] + "," + startCoordArray[0] + "], [" + destCoordArray[1] + "," + destCoordArray[0] + "]], {color: 'blue'}).addTo(map);" +
-                "</script>" +
-
-                "</body>" +
-                "</html>";
-
-        System.out.println(html); // Debug-Ausgabe des HTML-Codes
-
-        return html;
-
-    }
 
     private void takeMapScreenshot(Tour tour, Stage stageToClose) {
         // Überprüfen, ob das WebView sichtbar ist

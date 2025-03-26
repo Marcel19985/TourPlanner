@@ -41,7 +41,7 @@
     <ComboBox fx:id="transportTypeBox" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
     <WebView fx:id="mapView"
-             prefWidth="600" prefHeight="300"
+             prefWidth="600" prefHeight="400"
              GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 
     <!-- Buttons in einer HBox für bessere Anordnung -->
