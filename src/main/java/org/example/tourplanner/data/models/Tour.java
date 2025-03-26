@@ -15,6 +15,7 @@ public class Tour {
     private String transportType; //eventuell enum verwenden
     private double distance;
     private double estimatedTime;
+    private String tourImagePath;
 
     private final ObservableList<TourLog> tourLogs = FXCollections.observableArrayList(); //man kann Listener definieren, die direkt bei einer Änderung einer observable list benachrichtigt werden
 
@@ -72,6 +73,9 @@ public class Tour {
 
     public double getDistance() { return distance; }
     public double getEstimatedTime() { return estimatedTime; }
+
+    public String getTourImagePath() { return "/images/" + this.id + ".png"; }
+    public void setImagePath(String tourImagePath) { this.tourImagePath = tourImagePath; }
 
 }
 

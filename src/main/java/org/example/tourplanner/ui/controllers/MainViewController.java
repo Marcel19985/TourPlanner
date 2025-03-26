@@ -57,6 +57,7 @@ public class MainViewController {
             }
         });
 
+
         loadTourDetailView();
         loadTourLogDetailView();
 

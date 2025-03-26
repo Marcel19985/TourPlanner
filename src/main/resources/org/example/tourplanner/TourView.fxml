@@ -4,6 +4,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.web.WebView?>
+
 
 
 <GridPane xmlns="http://javafx.com/javafx/17.0.6"
@@ -43,9 +45,9 @@
     <Label text="Estimated time:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
     <Label fx:id="estimatedTimeLabel" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-    <!-- Zeile 7: Bild für die Tour (platzhalter für das spätere Bild) -->
-    <ImageView fx:id="tourImageView"
-               fitWidth="600" fitHeight="300" preserveRatio="true"
-               GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+    <!-- Zeile 7: Bild für die Tour  -->
+    <ImageView  fx:id="mapImageView" fitWidth="600" fitHeight="300"
+    GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
 
 </GridPane>

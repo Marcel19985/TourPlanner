@@ -3,12 +3,16 @@ package org.example.tourplanner.ui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+
 import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.ui.viewmodels.MainViewModel;
+import javafx.scene.image.ImageView;
 
-import java.net.URL;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 
 public class TourViewController {
 
@@ -34,25 +38,15 @@ public class TourViewController {
 
     @FXML private Label estimatedTimeLabel;
 
-    @FXML private ImageView tourImageView;
+    @FXML private ImageView mapImageView;
 
     private Tour currentTour;
 
     @FXML
     public void initialize() {
-
         tourDetailsPane.setVisible(false);
-        String imagePath = "/images/Placeholder.png";
-        URL imageUrl = getClass().getResource(imagePath);
 
-        if (imageUrl == null) {
-            System.err.println("Bild nicht gefunden! Erwarteter Pfad: " + imagePath);
-        } else {
-            Image image = new Image(imageUrl.toExternalForm());
-            tourImageView.setImage(image);
-        }
     }
-    // todo: Platzhalter für bild hinzufügen DONE
     // todo: Bild dynamischer machen
     public void setViewModel(MainViewModel viewModel) {
         this.viewModel = viewModel;
@@ -68,6 +62,8 @@ public class TourViewController {
             transportTypeLabel.setText(tour.getTransportType());
             distanceLabel.setText(String.format("%.2f km", tour.getDistance()));
             estimatedTimeLabel.setText(String.format("%.2f min", tour.getEstimatedTime()));
+            // Lade das Bild für das ImageView
+            loadMapImage(tour);
             this.currentTour = tour;
             tourDetailsPane.setVisible(true);
         } else {
@@ -75,6 +71,27 @@ public class TourViewController {
             this.currentTour = null;
         }
     }
+
+    private void loadMapImage(Tour tour) {
+        try {
+            // Der Pfad zum gespeicherten Screenshot (z.B. target/images/{tourId}.png)
+            File mapImageFile = new File("target/images/" + tour.getId() + ".png");
+
+            if (mapImageFile.exists()) {
+                // Erstelle ein Image aus der Datei
+                Image mapImage = new Image(new FileInputStream(mapImageFile));
+
+                // Setze das Bild in das ImageView
+                mapImageView.setImage(mapImage);
+            } else {
+                System.err.println("Bilddatei nicht gefunden: " + mapImageFile.getAbsolutePath());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
 
 

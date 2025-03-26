@@ -65,7 +65,7 @@ public class OpenRouteServiceClient {
         return parseRouteDetails(jsonResponse); //siehe Methode darunter
     }
 
-    private static double[] parseRouteDetails(String jsonResponse) throws JSONException {
+    public static double[] parseRouteDetails(String jsonResponse) throws JSONException {
         JSONObject json = new JSONObject(jsonResponse);
         JSONArray features = json.getJSONArray("features"); //erstellt ein JSON Array aus String
         if (features.length() == 0) {
@@ -79,7 +79,7 @@ public class OpenRouteServiceClient {
         return new double[]{distance, duration};
     }
 
-    private static String getCoordinates(String location) throws IOException, JSONException, LocationNotFoundException { //Wandelt einen Ort in dessen Koordinaten um
+    public static String getCoordinates(String location) throws IOException, JSONException, LocationNotFoundException { //Wandelt einen Ort in dessen Koordinaten um
         String urlString = "https://api.openrouteservice.org/geocode/search?api_key=" + API_KEY +
                 "&text=" + location.replace(" ", "%20") + "&size=1"; //Leerzeichen werden durch %20 ersetzt
 
@@ -112,5 +112,18 @@ public class OpenRouteServiceClient {
         String coords = coordinates.getDouble(0) + "," + coordinates.getDouble(1);
 
         return coords;
+    }
+
+    // Neue Methode für die Leaflet-Kartenintegration
+    public static String generateLeafletMap(String start, String destination) throws IOException, JSONException, LocationNotFoundException {
+        // Koordinaten von Start- und Zielort abfragen
+        String startCoords = getCoordinates(start);
+        String destCoords = getCoordinates(destination);
+
+        // Koordinaten für Leaflet geeignet formatieren
+        String leafletMapUrl = "https://www.openstreetmap.org/?mlat=" + startCoords.split(",")[1] + "&mlon=" + startCoords.split(",")[0]
+                + "#map=12/" + startCoords.split(",")[1] + "/" + startCoords.split(",")[0];
+
+        return leafletMapUrl;  // Rückgabe einer URL, die für die Anzeige in Leaflet verwendet werden kann
     }
 }

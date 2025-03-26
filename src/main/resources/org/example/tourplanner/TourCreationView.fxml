@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 
+<?import javafx.scene.web.WebView?>
 <GridPane xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="org.example.tourplanner.ui.controllers.TourCreationController"
           hgap="10" vgap="10" stylesheets="@stylesheet.css">
@@ -39,9 +40,13 @@
     <Label text="Transportation Mode:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
     <ComboBox fx:id="transportTypeBox" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
+    <WebView fx:id="mapView"
+             prefWidth="600" prefHeight="300"
+             GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
     <!-- Buttons in einer HBox für bessere Anordnung -->
-    <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2">
-        <Button text="Save" onAction="#onSaveButtonClick"/>
+    <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.columnSpan="2">
+        <Button fx:id= "saveButton" text="Save" onAction="#onSaveButtonClick"/>
         <Button text="Cancel" onAction="#onCancelButtonClick"/>
     </HBox>
 
