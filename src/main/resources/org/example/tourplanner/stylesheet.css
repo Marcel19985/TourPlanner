@@ -53,6 +53,15 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 3, 0, 0, 1);
 }
 
+/* ℹ Info-Label für Screenshot-Hinweis */
+.screenshot-info-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #666; /* Dunkelgrau */
+    -fx-padding: 5px;
+    -fx-font-style: italic;
+}
+
+
 .text-field:focused,
 .text-area:focused,
 .combo-box:focused,

@@ -1,18 +1,16 @@
 package org.example.tourplanner.ui.controllers;
 
 
-import javafx.animation.PauseTransition;
+
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.WritableImage;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
-import javafx.util.Duration;
 import org.example.tourplanner.data.models.OpenRouteServiceClient;
 import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.ui.viewmodels.TourViewModel;
@@ -32,11 +30,14 @@ public class TourCreationController {
     @FXML private TextField destinationField;
     @FXML private ComboBox<String> transportTypeBox;
     @FXML private WebView mapView;  // Das WebView für die Karte
-
+    @FXML private Button saveButton;
+    @FXML private Button loadMapButton;
+    @FXML private Label screenshotInfoLabel;
     private WebEngine webEngine;
     private Consumer<Tour> onTourCreatedCallback;
     private Consumer<Tour> onTourUpdatedCallback;
     private static String API_KEY;
+    private boolean isMapLoaded = false;
     // Hier speichern wir das Original-ViewModel und den Editing-Clone separat.
     private TourViewModel originalTourViewModel = null;
     private TourViewModel editingTourViewModel = null;
@@ -52,6 +53,11 @@ public class TourCreationController {
         transportTypeBox.setValue("Car");
         webEngine = mapView.getEngine();
         mapView.getEngine().setJavaScriptEnabled(true);
+
+        //check if the user changes start or destination after loading the map
+        startField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
+        destinationField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
+
 
 
     }
@@ -84,10 +90,10 @@ public class TourCreationController {
         startField.setDisable(true);
         destinationField.setDisable(true);
         transportTypeBox.setDisable(true);
-
-        // Falls du Felder für distance/estimatedTime hast, diese ebenfalls deaktivieren:
-        // distanceField.setDisable(true);
-        // estimatedTimeField.setDisable(true);
+        mapView.setVisible(false);
+        loadMapButton.setVisible(false);
+        screenshotInfoLabel.setVisible(false);
+        saveButton.setDisable(false);
     }
 
     @FXML
@@ -106,6 +112,7 @@ public class TourCreationController {
             if (onTourUpdatedCallback != null) {
                 onTourUpdatedCallback.accept(originalTourViewModel.getTour());
             }
+            currentStage.close();
 
         } else {
             // Erstellungsmodus: Route berechnen
@@ -119,8 +126,7 @@ public class TourCreationController {
                 double distance = routeDetails[0];
                 double estimatedTime = routeDetails[1];
 
-                // Lade die Karte mit den Koordinaten
-                loadMap(start, destination);
+
 
                 // Erzeuge die neue Tour
                 Tour newTour = new Tour(
@@ -144,73 +150,82 @@ public class TourCreationController {
                 showAlert("An error occurred while retrieving route information: " + e.getMessage());
             }
         }
+        isMapLoaded = false;
     }
 
+     @FXML private void onLoadMapClick() {
+            try {
+                String startCoords = OpenRouteServiceClient.getCoordinates(startField.getText());
+                String destCoords = OpenRouteServiceClient.getCoordinates(destinationField.getText());
 
-    private void loadMap(String start, String destination) {
-        try {
-            // Hole die Koordinaten des Start- und Zielorts über OpenRouteServiceClient
-            String startCoords = OpenRouteServiceClient.getCoordinates(start);
-            String destCoords = OpenRouteServiceClient.getCoordinates(destination);
+                if (startCoords == null || destCoords == null) {
+                    System.err.println("Fehler: Konnte die Koordinaten nicht abrufen.");
+                    saveButton.setDisable(true);
+                    return;
+                }
 
-            // Erstelle das HTML für die Karte
-            String html = HtmlTemplateLoader.loadTourMapHtml(startCoords, destCoords, transportTypeBox.getValue());
+                String html = HtmlTemplateLoader.loadTourMapHtml(startCoords, destCoords, transportTypeBox.getValue().toString());
+                mapView.getEngine().loadContent(html);
 
-            // Lade das HTML in den WebView
-            webEngine.loadContent(html);
+                // Warte darauf, dass die Karte geladen ist, bevor "Save" aktiviert wird
+                mapView.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+                    if (newState == Worker.State.SUCCEEDED) {
+                        isMapLoaded = true;
+                        saveButton.setDisable(false);
+                    }
+                });
 
-        } catch (Exception e) {
-            showAlert("Error while loading map: " + e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Fehler beim Laden der Karte: " + e.getMessage());
+            }
+        }
+    private void checkForRouteChange() {
+        // Wenn die Karte geladen ist und der Benutzer Änderungen vornimmt, deaktivieren wir den Save-Button
+        if (isMapLoaded) {
+            saveButton.setDisable(true);
         }
     }
 
-
     private void takeMapScreenshot(Tour tour, Stage stageToClose) {
-        // Überprüfen, ob das WebView sichtbar ist
         if (!mapView.isVisible()) {
             System.err.println("Fehler: mapView ist nicht sichtbar!");
             return;
         }
 
-        // Warte einige Frames, damit WebView sicher gerendert wird
-        PauseTransition delay = new PauseTransition(Duration.seconds(2));
-        delay.setOnFinished(event -> {
-            System.out.println("Erstelle Screenshot...");
+        System.out.println("Erstelle Screenshot...");
 
-            WritableImage image = mapView.snapshot(new SnapshotParameters(), null);
+        WritableImage image = mapView.snapshot(new SnapshotParameters(), null);
+        BufferedImage bufferedImage = new BufferedImage(
+                (int) image.getWidth(),
+                (int) image.getHeight(),
+                BufferedImage.TYPE_INT_ARGB
+        );
 
-            BufferedImage bufferedImage = new BufferedImage(
-                    (int) image.getWidth(),
-                    (int) image.getHeight(),
-                    BufferedImage.TYPE_INT_ARGB
-            );
-            for (int x = 0; x < image.getWidth(); x++) {
-                for (int y = 0; y < image.getHeight(); y++) {
-                    bufferedImage.setRGB(x, y, image.getPixelReader().getArgb(x, y));
-                }
+        for (int x = 0; x < image.getWidth(); x++) {
+            for (int y = 0; y < image.getHeight(); y++) {
+                bufferedImage.setRGB(x, y, image.getPixelReader().getArgb(x, y));
             }
+        }
 
-            File dir = new File("target/images");
-            if (!dir.exists() && !dir.mkdirs()) {
-                System.err.println("Fehler beim Erstellen des Verzeichnisses 'target/images'.");
-                return;
-            }
+        File dir = new File("target/images");
+        if (!dir.exists() && !dir.mkdirs()) {
+            System.err.println("Fehler beim Erstellen des Verzeichnisses 'target/images'.");
+            return;
+        }
 
-            File file = new File(dir, tour.getId() + ".png");
-            try {
-                ImageIO.write(bufferedImage, "png", file);
-                System.out.println("Screenshot gespeichert: " + file.getAbsolutePath());
-            } catch (IOException e) {
-                System.err.println("Fehler beim Speichern des Screenshots: " + e.getMessage());
-            }
+        File file = new File(dir, tour.getId() + ".png");
+        try {
+            ImageIO.write(bufferedImage, "png", file);
+            System.out.println("Screenshot gespeichert: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Fehler beim Speichern des Screenshots: " + e.getMessage());
+        }
 
-            // 🔥 Fenster erst jetzt schließen!
-            System.out.println("Schließe Fenster...");
-            stageToClose.close();
-        });
-
-        delay.play();
+        // Fenster sofort schließen, kein Delay mehr nötig
+        System.out.println("Schließe Fenster...");
+        stageToClose.close();
     }
+
 
 
 
