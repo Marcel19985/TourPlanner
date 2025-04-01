@@ -17,6 +17,7 @@ import org.example.tourplanner.SpringBootMain;
 import org.example.tourplanner.data.models.TourLog;
 import org.example.tourplanner.helpers.SpringContext;
 import org.example.tourplanner.mediators.ButtonSelectionMediator;
+import org.example.tourplanner.repositories.TourLogRepository;
 import org.example.tourplanner.repositories.TourRepository;
 import org.example.tourplanner.ui.viewmodels.MainViewModel;
 import org.example.tourplanner.ui.viewmodels.TourViewModel;
@@ -56,6 +57,8 @@ public class MainViewController {
     // Repositories werden via Spring injiziert
     @Autowired
     private TourRepository tourRepository;
+    @Autowired
+    private TourLogRepository tourLogRepository;
 
     public void init() throws Exception {
         ConfigurableApplicationContext springContext = new SpringApplicationBuilder(SpringBootMain.class).run();
@@ -357,17 +360,23 @@ public class MainViewController {
             alert.setContentText("This action cannot be undone!");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                // Entferne die Logs aus der ViewModel-Liste und der Tour-Collection
                 selectedTVM.getTourLogViewModels().removeIf(vm -> selectedLogs.contains(vm.getTourLog()));
-                selectedLogs.forEach(log -> selectedTVM.getTour().removeTourLog(log));
+                selectedTVM.getTour().getTourLogs().removeAll(selectedLogs);
 
-                // Speichere die Tour, damit die Änderungen in der Datenbank übernommen werden
-                tourRepository.save(selectedTVM.getTour());
+                // Lösche die ausgewählten TourLogs direkt über das Repository:
+                for (TourLog log : selectedLogs) {
+                    tourLogRepository.deleteById(log.getId());
+                }
+                tourLogRepository.flush(); // Erzwinge das Schreiben in die DB
+
+                // Optional: Aktualisiere den Parent, falls nötig
+                //tourRepository.saveAndFlush(selectedTVM.getTour());
 
                 // Aktualisiere die UI
                 tourLogViewController.refreshList();
                 tourLogViewController.clearDetails();
                 tourLogViewController.clearSelection();
+
 
             }
         }
