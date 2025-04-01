@@ -13,22 +13,30 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.example.tourplanner.SpringBootMain;
 import org.example.tourplanner.data.models.TourLog;
+import org.example.tourplanner.helpers.SpringContext;
 import org.example.tourplanner.mediators.ButtonSelectionMediator;
+import org.example.tourplanner.repositories.TourRepository;
 import org.example.tourplanner.ui.viewmodels.MainViewModel;
 import org.example.tourplanner.ui.viewmodels.TourViewModel;
 import org.example.tourplanner.ui.viewmodels.TourLogViewModel;
 import javafx.collections.FXCollections;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Controller
 public class MainViewController {
 
     @FXML private BorderPane mainPane;
-    @FXML private ListView<TourViewModel> tourListView; // Liste nun mit TourViewModel
+    @FXML private ListView<TourViewModel> tourListView; // Liste mit TourViewModel
     @FXML private TabPane detailTabPane;
     @FXML private AnchorPane tourDetailsContainer;
     @FXML private AnchorPane tourLogDetailsContainer;
@@ -36,6 +44,7 @@ public class MainViewController {
     @FXML private Button editButton;
     @FXML private Button deleteButton;
 
+    // Wir behalten das MainViewModel bei, um die UI-Liste zu pflegen.
     private MainViewModel viewModel = new MainViewModel();
 
     private TourViewController tourViewController;
@@ -43,6 +52,16 @@ public class MainViewController {
 
     private ButtonSelectionMediator<TourViewModel> tourMediator;
     private ButtonSelectionMediator<TourLogViewModel> tourLogMediator;
+
+    // Repositories werden via Spring injiziert
+    @Autowired
+    private TourRepository tourRepository;
+
+    public void init() throws Exception {
+        ConfigurableApplicationContext springContext = new SpringApplicationBuilder(SpringBootMain.class).run();
+        SpringContext.setApplicationContext(springContext);
+    }
+
 
     @FXML
     private void initialize() {
@@ -57,7 +76,7 @@ public class MainViewController {
             }
         });
 
-
+        // Lade Detail-Views
         loadTourDetailView();
         loadTourLogDetailView();
 
@@ -119,6 +138,15 @@ public class MainViewController {
                 );
             }
         });
+
+        viewModel.getTours().setAll(
+                tourRepository.findAllWithLogs()
+                        .stream()
+                        .distinct()  // Duplikate entfernen
+                        .map(TourViewModel::new)
+                        .toList()
+        );
+
     }
 
     private void loadTourDetailView() {
@@ -165,12 +193,12 @@ public class MainViewController {
     private void onCreateTour() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourCreationView.fxml"));
+            loader.setControllerFactory(clazz -> SpringContext.getApplicationContext().getBean(clazz));
             Parent root = loader.load();
             TourCreationController controller = loader.getController();
-            // Bei der Erstellung eines neuen Tours wird kein ViewModel übergeben,
-            // da im Erstellungsmodus tourViewModel == null ist.
+
             controller.setOnTourCreatedCallback(newTour -> {
-                // Füge das neue Tour-Objekt über sein ViewModel der ObservableList hinzu.
+                // Persistiere und füge das neue Tour-Objekt der UI-Liste hinzu
                 viewModel.addTour(newTour);
             });
             Stage stage = new Stage();
@@ -194,11 +222,13 @@ public class MainViewController {
         }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourLogCreationView.fxml"));
+            // Wichtig: Controller über den Spring-Kontext erzeugen
+            loader.setControllerFactory(clazz -> SpringContext.getApplicationContext().getBean(clazz));
             Parent root = loader.load();
             TourLogCreationController controller = loader.getController();
-            controller.setCurrentTour(selectedTVM.getTour()); // falls benötigt
+            controller.setCurrentTour(selectedTVM.getTour());
             controller.setOnTourLogCreatedCallback(tourLog -> {
-                // Füge den neuen TourLog über das TourViewModel hinzu – intern wird auch das ViewModel aktualisiert
+                // Füge den neuen TourLog über das TourViewModel hinzu und aktualisiere die UI
                 selectedTVM.addTourLog(tourLog);
                 tourLogViewController.setTourLogItems(selectedTVM.getTourLogViewModels());
                 tourLogViewController.refreshList();
@@ -223,12 +253,13 @@ public class MainViewController {
             }
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourCreationView.fxml"));
+                // WICHTIG: Setze den ControllerFactory, damit Spring den Controller erzeugt.
+                loader.setControllerFactory(clazz -> SpringContext.getApplicationContext().getBean(clazz));
                 Parent root = loader.load();
                 TourCreationController controller = loader.getController();
-                // Übergib direkt das vorhandene TourViewModel
+                // Übergib das vorhandene TourViewModel zum Bearbeiten
                 controller.setTourForEditing(selectedTVM);
                 controller.setOnTourUpdatedCallback(updatedTour -> {
-                    // Da beide Controller mit derselben TourViewModel-Instanz arbeiten, sind die Änderungen bereits übernommen.
                     tourListView.refresh();
                     tourViewController.setTour(selectedTVM.getTour());
                 });
@@ -240,7 +271,6 @@ public class MainViewController {
                 e.printStackTrace();
             }
         } else if (selectedTab != null && selectedTab.getText().equals("Tour Logs")) {
-            // Beispiel aus MainViewController beim Editieren eines TourLogs
             TourLogViewModel selectedLogVM = tourLogViewController.getSelectedTourLogViewModel();
             if (selectedLogVM == null) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -250,15 +280,14 @@ public class MainViewController {
                 alert.showAndWait();
                 return;
             }
-
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourLogCreationView.fxml"));
+                // Verwende die ControllerFactory, um den Controller als Spring Bean zu erzeugen
+                loader.setControllerFactory(clazz -> SpringContext.getApplicationContext().getBean(clazz));
                 Parent root = loader.load();
                 TourLogCreationController controller = loader.getController();
-                // Hier wird das bestehende TourLogViewModel übergeben – nicht eine neue Instanz!
                 controller.setTourLogForEditing(selectedLogVM);
                 controller.setOnTourLogUpdatedCallback(updatedLog -> {
-                    // Nachdem der Bearbeitungsdialog geschlossen wird, können wir die Liste aktualisieren.
                     tourLogViewController.refreshList();
                     tourLogViewController.showTourLogDetails(selectedLogVM);
                 });
@@ -289,8 +318,12 @@ public class MainViewController {
             alert.setContentText("This action cannot be undone!");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Lösche jede Tour über das Repository und entferne sie aus der UI-Liste
                 List<TourViewModel> toursToDelete = new ArrayList<>(selectedTVMs);
-                viewModel.deleteTours(toursToDelete);
+                toursToDelete.forEach(tvm -> {
+                    tourRepository.deleteById(tvm.getTour().getId());
+                    viewModel.getTours().remove(tvm);
+                });
                 tourListView.getSelectionModel().clearSelection();
                 tourViewController.setTour(null);
                 tourLogViewController.clear();
@@ -324,12 +357,14 @@ public class MainViewController {
             alert.setContentText("This action cannot be undone!");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                // Zuerst die ViewModel-Liste aktualisieren:
+                // Entferne die Logs aus der ViewModel-Liste und der Tour-Collection
                 selectedTVM.getTourLogViewModels().removeIf(vm -> selectedLogs.contains(vm.getTourLog()));
-                        // Dann den TourLog aus dem zugrunde liegenden Datenmodell entfernen:
-                selectedTVM.getTour().getTourLogs().removeAll(new ArrayList<>(selectedLogs));
+                selectedLogs.forEach(log -> selectedTVM.getTour().removeTourLog(log));
 
-                // Danach die UI aktualisieren:
+                // Speichere die Tour, damit die Änderungen in der Datenbank übernommen werden
+                tourRepository.save(selectedTVM.getTour());
+
+                // Aktualisiere die UI
                 tourLogViewController.refreshList();
                 tourLogViewController.clearDetails();
                 tourLogViewController.clearSelection();

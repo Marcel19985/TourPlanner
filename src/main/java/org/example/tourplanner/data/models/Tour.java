@@ -4,28 +4,45 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.tourplanner.helpers.UUIDv7Generator;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tours")
 public class Tour {
-    private final UUID id; //soll als primary key für Datenbank und als Filename für Map- Images verwendet werden
+
+    @Id
+    @Column(name = "id", columnDefinition = "uuid")
+    private UUID id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, length = 1024)
     private String description;
+
+    @Column(name = "start_location", nullable = false)
     private String start;
+
+    @Column(name = "destination", nullable = false)
     private String destination;
-    private String transportType; //eventuell enum verwenden
+
+    @Column(name = "transport_type", nullable = false)
+    private String transportType;
+
+    @Column(nullable = false)
     private double distance;
+
+    @Column(name = "estimated_time", nullable = false)
     private double estimatedTime;
-    private String tourImagePath;
 
-    private final ObservableList<TourLog> tourLogs = FXCollections.observableArrayList(); //man kann Listener definieren, die direkt bei einer Änderung einer observable list benachrichtigt werden
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TourLog> tourLogs = new ArrayList<>();
 
-    public ObservableList<TourLog> getTourLogs() {
-        return tourLogs;
-    }
-
-    public void addTourLog(TourLog tourLog) {
-        tourLogs.add(tourLog);
-    }
+    // Kein-Arg-Konstruktor für JPA
+    public Tour() {}
 
     public Tour(String name, String description, String start, String destination, String transportType) {
         this.id = UUIDv7Generator.generateUUIDv7();
@@ -47,12 +64,7 @@ public class Tour {
         this.estimatedTime = estimatedTime;
     }
 
-    @Override
-    public String toString() {
-        return name + " - " + start + " → " + destination + " (" + transportType + ")";
-    }
-
-    //Getter & Setter:
+    // Getter & Setter
 
     public UUID getId() { return id; }
 
@@ -72,10 +84,27 @@ public class Tour {
     public void setTransportType(String transportType) { this.transportType = transportType; }
 
     public double getDistance() { return distance; }
+    public void setDistance(double distance) { this.distance = distance; }
+
     public double getEstimatedTime() { return estimatedTime; }
+    public void setEstimatedTime(double estimatedTime) { this.estimatedTime = estimatedTime; }
 
-    public String getTourImagePath() { return "/images/" + this.id + ".png"; }
-    public void setImagePath(String tourImagePath) { this.tourImagePath = tourImagePath; }
+    public List<TourLog> getTourLogs() {
+        return tourLogs;
+    }
 
+    public void addTourLog(TourLog tourLog) {
+        tourLogs.add(tourLog);
+        tourLog.setTour(this);
+    }
+
+    public void removeTourLog(TourLog tourLog) {
+        tourLogs.remove(tourLog);
+        tourLog.setTour(null);
+    }
+
+    public String getTourImagePath() {
+        return "/images/" + this.id + ".png";
+    }
 }
 

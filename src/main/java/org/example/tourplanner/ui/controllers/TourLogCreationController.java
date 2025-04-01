@@ -9,12 +9,19 @@ import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.data.models.TourLog;
+import org.example.tourplanner.repositories.TourLogRepository;
 import org.example.tourplanner.ui.viewmodels.TourLogViewModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
+@Controller
+@Scope("prototype")
 public class TourLogCreationController {
 
     @FXML private TextField nameLog;
@@ -31,9 +38,13 @@ public class TourLogCreationController {
     private Consumer<TourLog> onTourLogCreatedCallback;
     private Consumer<TourLog> onTourLogUpdatedCallback;
 
-    // Wir speichern das Original und den Editing-Clone separat
+    // Original und Editing-Clone im Bearbeitungsmodus
     private TourLogViewModel originalTourLogViewModel = null;
     private TourLogViewModel editingTourLogViewModel = null;
+
+    // Repository zur Persistierung, via Spring injiziert
+    @Autowired
+    private TourLogRepository tourLogRepository;
 
     @FXML
     private void initialize() {
@@ -41,7 +52,7 @@ public class TourLogCreationController {
         ratingComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 12));
         minuteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 30));
-        //delete: damit nicht alle Felder manuell befüllt werden müssen
+        // Testwerte
         nameLog.setText("Test Log");
         commentField.setText("Test Comment");
         difficultyComboBox.setValue("Easy");
@@ -95,11 +106,14 @@ public class TourLogCreationController {
             return;
         }
         try {
+            TourLog tourLog;
             if (editingTourLogViewModel != null) {
-                // Speichere: Kopiere die Änderungen aus dem Editing-Clone in das Original
+                // Bearbeitungsmodus: Änderungen übernehmen
                 originalTourLogViewModel.copyFrom(editingTourLogViewModel);
+                // Persistiere das aktualisierte TourLog
+                tourLog = tourLogRepository.save(originalTourLogViewModel.getTourLog());
                 if (onTourLogUpdatedCallback != null) {
-                    onTourLogUpdatedCallback.accept(originalTourLogViewModel.getTourLog());
+                    onTourLogUpdatedCallback.accept(tourLog);
                 }
             } else {
                 // Erstellungsmodus: Neues TourLog erzeugen
@@ -114,12 +128,17 @@ public class TourLogCreationController {
                 int minute = minuteSpinner.getValue();
                 LocalTime time = LocalTime.of(hour, minute);
 
-                TourLog newTourLog = new TourLog(name, date, time, comment, difficulty, totalDistance, totalTime, rating);
+                tourLog = new TourLog(name, date, time, comment, difficulty, totalDistance, totalTime, rating);
+                // Setze ggf. den Tournamen (oder direkt die Beziehung zur Tour, falls deine Entity dies unterstützt)
                 if (currentTour != null) {
-                    newTourLog.setTourName(currentTour.getName());
+                    // Falls in deiner TourLog-Entity keine direkte Beziehung zur Tour gesetzt wird, kannst du hier den Namen speichern.
+                    // Bei Beziehung würde man z. B. tourLog.setTour(currentTour) aufrufen.
+                    tourLog.setTour(currentTour);
                 }
+                // Persistiere das neue TourLog
+                tourLog = tourLogRepository.save(tourLog);
                 if (onTourLogCreatedCallback != null) {
-                    onTourLogCreatedCallback.accept(newTourLog);
+                    onTourLogCreatedCallback.accept(tourLog);
                 }
             }
             closeWindow();
@@ -130,12 +149,11 @@ public class TourLogCreationController {
 
     @FXML
     private void onCancel() {
-        if(editingTourLogViewModel != null) { //sonst Fehlermeldung bei cancel, da unbindFiels nur bei edit geht wenn ein Editing-Clone erstellt wurde
+        if (editingTourLogViewModel != null) { // Unbind, falls im Bearbeitungsmodus
             unbindFields();
         }
         closeWindow();
     }
-
 
     private void unbindFields() {
         nameLog.textProperty().unbindBidirectional(editingTourLogViewModel.nameProperty());
@@ -145,7 +163,6 @@ public class TourLogCreationController {
         totalTimeField.textProperty().unbindBidirectional(editingTourLogViewModel.totalTimeProperty());
         ratingComboBox.valueProperty().unbindBidirectional(editingTourLogViewModel.ratingProperty().asObject());
         datePicker.valueProperty().unbindBidirectional(editingTourLogViewModel.dateProperty());
-
     }
 
     private void showAlert(String message) {

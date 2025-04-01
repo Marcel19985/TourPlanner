@@ -13,8 +13,12 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.example.tourplanner.data.models.OpenRouteServiceClient;
 import org.example.tourplanner.data.models.Tour;
+import org.example.tourplanner.repositories.TourRepository;
 import org.example.tourplanner.ui.viewmodels.TourViewModel;
 import org.example.tourplanner.utils.HtmlTemplateLoader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -22,6 +26,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.function.Consumer;
 
+@Controller
+@Scope("prototype") //jedes Mal ein neuer Controller vom Spring-Kontext erzeugt wird -> damit create nach edit funktioniert
 public class TourCreationController {
 
     @FXML private TextField tourNameField;
@@ -33,33 +39,36 @@ public class TourCreationController {
     @FXML private Button saveButton;
     @FXML private Button loadMapButton;
     @FXML private Label screenshotInfoLabel;
+
     private WebEngine webEngine;
     private Consumer<Tour> onTourCreatedCallback;
     private Consumer<Tour> onTourUpdatedCallback;
-    private static String API_KEY;
     private boolean isMapLoaded = false;
-    // Hier speichern wir das Original-ViewModel und den Editing-Clone separat.
+
+    // Original-ViewModel und Editing-Clone im Bearbeitungsmodus
     private TourViewModel originalTourViewModel = null;
     private TourViewModel editingTourViewModel = null;
+
+    // Repository zur Persistierung (wird per Spring injiziert)
+    @Autowired
+    private TourRepository tourRepository;
 
     @FXML
     private void initialize() {
         transportTypeBox.getItems().addAll("Walk", "Car", "Bike");
-        //delete: wird verwendet um schneller auszufüllen
+        // Füllwerte (nur für Testzwecke)
         tourNameField.setText("Test Tour");
         tourDescriptionField.setText("Test Beschreibung");
         startField.setText("Wien");
         destinationField.setText("Linz");
         transportTypeBox.setValue("Car");
+
         webEngine = mapView.getEngine();
         mapView.getEngine().setJavaScriptEnabled(true);
 
-        //check if the user changes start or destination after loading the map
+        // Falls Start oder Destination nach Laden der Karte geändert werden, deaktiviere den Save-Button
         startField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
         destinationField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
-
-
-
     }
 
     public void setOnTourCreatedCallback(Consumer<Tour> callback) {
@@ -86,7 +95,7 @@ public class TourCreationController {
         destinationField.textProperty().bindBidirectional(editingTourViewModel.destinationProperty());
         transportTypeBox.valueProperty().bindBidirectional(editingTourViewModel.transportTypeProperty());
 
-        // Nur Name und Description sollen editierbar sein:
+        // Nur Name und Description sollen editierbar sein
         startField.setDisable(true);
         destinationField.setDisable(true);
         transportTypeBox.setDisable(true);
@@ -98,7 +107,7 @@ public class TourCreationController {
 
     @FXML
     private void onSaveButtonClick(javafx.event.ActionEvent event) {
-        // Überprüfe, ob die Eingaben gültig sind
+        // Überprüfe die Eingaben
         if (!InputValidator.validateTourInputs(tourNameField, tourDescriptionField, startField, destinationField, transportTypeBox)) {
             return;
         }
@@ -109,11 +118,12 @@ public class TourCreationController {
         if (editingTourViewModel != null) {
             // Bearbeitungsmodus: Änderungen übernehmen
             originalTourViewModel.copyFrom(editingTourViewModel);
+            // Persistiere die geänderte Tour
+            Tour updatedTour = tourRepository.save(originalTourViewModel.getTour());
             if (onTourUpdatedCallback != null) {
-                onTourUpdatedCallback.accept(originalTourViewModel.getTour());
+                onTourUpdatedCallback.accept(updatedTour);
             }
             currentStage.close();
-
         } else {
             // Erstellungsmodus: Route berechnen
             try {
@@ -126,8 +136,6 @@ public class TourCreationController {
                 double distance = routeDetails[0];
                 double estimatedTime = routeDetails[1];
 
-
-
                 // Erzeuge die neue Tour
                 Tour newTour = new Tour(
                         tourNameField.getText(),
@@ -139,11 +147,13 @@ public class TourCreationController {
                         estimatedTime
                 );
 
-                // Screenshot machen und danach Fenster schließen
+                // Screenshot erstellen und Fenster anschließend schließen
                 takeMapScreenshot(newTour, currentStage);
 
+                // Persistiere die neue Tour in der Datenbank
+                Tour savedTour = tourRepository.save(newTour);
                 if (onTourCreatedCallback != null) {
-                    onTourCreatedCallback.accept(newTour);
+                    onTourCreatedCallback.accept(savedTour);
                 }
 
             } catch (Exception e) {
@@ -153,32 +163,34 @@ public class TourCreationController {
         isMapLoaded = false;
     }
 
-     @FXML private void onLoadMapClick() {
-            try {
-                String startCoords = OpenRouteServiceClient.getCoordinates(startField.getText());
-                String destCoords = OpenRouteServiceClient.getCoordinates(destinationField.getText());
+    @FXML
+    private void onLoadMapClick() {
+        try {
+            String startCoords = OpenRouteServiceClient.getCoordinates(startField.getText());
+            String destCoords = OpenRouteServiceClient.getCoordinates(destinationField.getText());
 
-                if (startCoords == null || destCoords == null) {
-                    System.err.println("Fehler: Konnte die Koordinaten nicht abrufen.");
-                    saveButton.setDisable(true);
-                    return;
-                }
-
-                String html = HtmlTemplateLoader.loadTourMapHtml(startCoords, destCoords, transportTypeBox.getValue().toString());
-                mapView.getEngine().loadContent(html);
-
-                // Warte darauf, dass die Karte geladen ist, bevor "Save" aktiviert wird
-                mapView.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
-                    if (newState == Worker.State.SUCCEEDED) {
-                        isMapLoaded = true;
-                        saveButton.setDisable(false);
-                    }
-                });
-
-            } catch (Exception e) {
-                System.err.println("Fehler beim Laden der Karte: " + e.getMessage());
+            if (startCoords == null || destCoords == null) {
+                System.err.println("Fehler: Konnte die Koordinaten nicht abrufen.");
+                saveButton.setDisable(true);
+                return;
             }
+
+            String html = HtmlTemplateLoader.loadTourMapHtml(startCoords, destCoords, transportTypeBox.getValue().toString());
+            mapView.getEngine().loadContent(html);
+
+            // Warte, bis die Karte geladen ist, bevor "Save" aktiviert wird
+            mapView.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+                if (newState == Worker.State.SUCCEEDED) {
+                    isMapLoaded = true;
+                    saveButton.setDisable(false);
+                }
+            });
+
+        } catch (Exception e) {
+            System.err.println("Fehler beim Laden der Karte: " + e.getMessage());
         }
+    }
+
     private void checkForRouteChange() {
         // Wenn die Karte geladen ist und der Benutzer Änderungen vornimmt, deaktivieren wir den Save-Button
         if (isMapLoaded) {
@@ -221,16 +233,10 @@ public class TourCreationController {
             System.err.println("Fehler beim Speichern des Screenshots: " + e.getMessage());
         }
 
-        // Fenster sofort schließen, kein Delay mehr nötig
+        // Fenster schließen
         System.out.println("Schließe Fenster...");
         stageToClose.close();
     }
-
-
-
-
-
-
 
     @FXML
     private void onCancelButtonClick() {
@@ -250,6 +256,4 @@ public class TourCreationController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
 }
