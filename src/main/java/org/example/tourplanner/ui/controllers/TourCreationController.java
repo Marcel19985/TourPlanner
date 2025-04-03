@@ -187,7 +187,7 @@ public class TourCreationController {
             });
 
         } catch (Exception e) {
-            System.err.println("Fehler beim Laden der Karte: " + e.getMessage());
+            showAlert("An error occurred while retrieving route information: " + e.getMessage());
         }
     }
 
