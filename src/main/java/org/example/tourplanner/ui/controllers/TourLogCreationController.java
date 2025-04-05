@@ -80,16 +80,25 @@ public class TourLogCreationController {
         totalTimeField.textProperty().bindBidirectional(editingTourLogViewModel.totalTimeProperty(), new NumberStringConverter());
         ratingComboBox.valueProperty().bindBidirectional(editingTourLogViewModel.ratingProperty().asObject());
         datePicker.valueProperty().bindBidirectional(editingTourLogViewModel.dateProperty());
-        IntegerProperty hour = new SimpleIntegerProperty();
-        IntegerProperty minute = new SimpleIntegerProperty();
+        // Hole die aktuelle Uhrzeit aus dem TourLog
+        LocalTime existingTime = editingTourLogViewModel.getTourLog().getTime();
+        IntegerProperty hour = new SimpleIntegerProperty(existingTime.getHour());
+        IntegerProperty minute = new SimpleIntegerProperty(existingTime.getMinute());
+
+        // Binde Spinner-Werte an die Properties
+        hourSpinner.getValueFactory().setValue(existingTime.getHour());
+        minuteSpinner.getValueFactory().setValue(existingTime.getMinute());
 
         hourSpinner.getValueFactory().valueProperty().bindBidirectional(hour.asObject());
         minuteSpinner.getValueFactory().valueProperty().bindBidirectional(minute.asObject());
 
-        editingTourLogViewModel.timeProperty().bind(Bindings.createObjectBinding(
-                () -> LocalTime.of(hour.get(), minute.get()),
-                hour, minute
-        ));
+        // Binde die zusammengesetzte Zeit wieder zurück ans ViewModel
+        editingTourLogViewModel.timeProperty().bind(
+                Bindings.createObjectBinding(
+                        () -> LocalTime.of(hour.get(), minute.get()),
+                        hour, minute
+                )
+        );
     }
 
     public void setOnTourLogCreatedCallback(Consumer<TourLog> callback) {
