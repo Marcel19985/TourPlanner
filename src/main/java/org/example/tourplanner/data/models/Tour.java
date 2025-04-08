@@ -41,6 +41,18 @@ public class Tour {
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TourLog> tourLogs = new ArrayList<>();
 
+    @Transient
+    public String getPopularity() {
+        if (tourLogs.isEmpty()) {
+            return "not rated yet";
+        }
+        double averageRating = tourLogs.stream()
+                                       .mapToInt(TourLog::getRating)
+                                       .average()
+                                       .orElse(0);
+        return String.format("%.2f", averageRating);
+    }
+
     // Kein-Arg-Konstruktor für JPA
     public Tour() {}
 
@@ -107,4 +119,3 @@ public class Tour {
         return "/images/" + this.id + ".png";
     }
 }
-

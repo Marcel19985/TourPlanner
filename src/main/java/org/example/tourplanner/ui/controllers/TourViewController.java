@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 
 public class TourViewController {
 
@@ -40,6 +42,8 @@ public class TourViewController {
 
     @FXML private ImageView mapImageView;
 
+    @FXML private Label popularityLabel;
+
     private Tour currentTour;
 
     @FXML
@@ -62,12 +66,20 @@ public class TourViewController {
             transportTypeLabel.setText(tour.getTransportType());
             distanceLabel.setText(String.format("%.2f km", tour.getDistance()));
             estimatedTimeLabel.setText(String.format("%.2f min", tour.getEstimatedTime()));
+
+            // Binde die Popularität dynamisch an die Änderungen der TourLogs
+            popularityLabel.textProperty().bind(Bindings.createStringBinding(
+                tour::getPopularity,
+                FXCollections.observableList(tour.getTourLogs())
+            ));
+
             // Lade das Bild für das ImageView
             loadMapImage(tour);
-            this.currentTour = tour;
             tourDetailsPane.setVisible(true);
         } else {
             tourDetailsPane.setVisible(false);
+            popularityLabel.textProperty().unbind(); // Unbind, wenn keine Tour ausgewählt ist
+            popularityLabel.setText("");
             this.currentTour = null;
         }
     }
@@ -93,5 +105,6 @@ public class TourViewController {
 
 
 }
+
 
 
