@@ -15,7 +15,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.tourplanner.ui.controllers.MainViewController">
+            fx:controller="org.example.tourplanner.presentationLayer.controllers.MainViewController">
 
     <top>
         <VBox alignment="CENTER">

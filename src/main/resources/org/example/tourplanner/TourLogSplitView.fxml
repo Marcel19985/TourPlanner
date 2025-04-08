@@ -9,7 +9,7 @@
 <SplitPane dividerPositions="0.5" orientation="HORIZONTAL"
            xmlns="http://javafx.com/javafx/17.0.6"
            xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="org.example.tourplanner.ui.controllers.TourLogViewController" stylesheets="@stylesheet.css">
+           fx:controller="org.example.tourplanner.presentationLayer.controllers.TourLogViewController" stylesheets="@stylesheet.css">
 
     <items>
         <!-- Linke Seite: Liste der TourLogs -->
