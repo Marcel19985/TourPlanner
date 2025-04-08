@@ -13,7 +13,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.example.tourplanner.data.models.OpenRouteServiceClient;
 import org.example.tourplanner.data.models.Tour;
-import org.example.tourplanner.repositories.TourRepository;
+import org.example.tourplanner.services.TourService;
 import org.example.tourplanner.ui.viewmodels.TourViewModel;
 import org.example.tourplanner.utils.HtmlTemplateLoader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +49,9 @@ public class TourCreationController {
     private TourViewModel originalTourViewModel = null;
     private TourViewModel editingTourViewModel = null;
 
-    // Repository zur Persistierung (wird per Spring injiziert)
+
     @Autowired
-    private TourRepository tourRepository;
+    private TourService tourService;
 
     @FXML
     private void initialize() {
@@ -119,7 +119,7 @@ public class TourCreationController {
             // Bearbeitungsmodus: Änderungen übernehmen
             originalTourViewModel.copyFrom(editingTourViewModel);
             // Persistiere die geänderte Tour
-            Tour updatedTour = tourRepository.save(originalTourViewModel.getTour());
+            Tour updatedTour = tourService.saveTour(originalTourViewModel.getTour()); // Verwende den Service
             if (onTourUpdatedCallback != null) {
                 onTourUpdatedCallback.accept(updatedTour);
             }
@@ -147,11 +147,12 @@ public class TourCreationController {
                         estimatedTime
                 );
 
-                // Screenshot erstellen und Fenster anschließend schließen
+                // Screenshot erstellen
                 takeMapScreenshot(newTour, currentStage);
 
                 // Persistiere die neue Tour in der Datenbank
-                Tour savedTour = tourRepository.save(newTour);
+                Tour savedTour = tourService.saveTour(newTour); // Verwende den Service
+
                 if (onTourCreatedCallback != null) {
                     onTourCreatedCallback.accept(savedTour);
                 }

@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import org.example.tourplanner.data.models.Tour;
 import org.example.tourplanner.data.models.TourLog;
-import org.example.tourplanner.repositories.TourLogRepository;
+import org.example.tourplanner.services.TourLogService;
 import org.example.tourplanner.ui.viewmodels.TourLogViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.function.Consumer;
-import java.util.stream.IntStream;
 
 @Controller
 @Scope("prototype")
@@ -42,9 +41,9 @@ public class TourLogCreationController {
     private TourLogViewModel originalTourLogViewModel = null;
     private TourLogViewModel editingTourLogViewModel = null;
 
-    // Repository zur Persistierung, via Spring injiziert
+
     @Autowired
-    private TourLogRepository tourLogRepository;
+    private TourLogService tourLogService; // Verwende den TourLogService
 
     @FXML
     private void initialize() {
@@ -120,7 +119,7 @@ public class TourLogCreationController {
                 // Bearbeitungsmodus: Änderungen übernehmen
                 originalTourLogViewModel.copyFrom(editingTourLogViewModel);
                 // Persistiere das aktualisierte TourLog
-                tourLog = tourLogRepository.save(originalTourLogViewModel.getTourLog());
+                tourLog = tourLogService.saveTourLog(originalTourLogViewModel.getTourLog()); // Verwende den Service
                 if (onTourLogUpdatedCallback != null) {
                     onTourLogUpdatedCallback.accept(tourLog);
                 }
@@ -145,7 +144,7 @@ public class TourLogCreationController {
                     tourLog.setTour(currentTour);
                 }
                 // Persistiere das neue TourLog
-                tourLog = tourLogRepository.save(tourLog);
+                tourLog = tourLogService.saveTourLog(tourLog); // Verwende den Service
                 if (onTourLogCreatedCallback != null) {
                     onTourLogCreatedCallback.accept(tourLog);
                 }

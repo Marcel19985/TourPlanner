@@ -12,6 +12,7 @@ open module org.example.tourplanner {
     requires spring.context;
     requires spring.boot;
     requires spring.boot.autoconfigure;
+    requires spring.data.commons;
 
     exports org.example.tourplanner;
     exports org.example.tourplanner.data.database;

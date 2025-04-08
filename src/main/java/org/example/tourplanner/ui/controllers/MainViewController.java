@@ -17,8 +17,8 @@ import org.example.tourplanner.SpringBootMain;
 import org.example.tourplanner.data.models.TourLog;
 import org.example.tourplanner.helpers.SpringContext;
 import org.example.tourplanner.mediators.ButtonSelectionMediator;
-import org.example.tourplanner.repositories.TourLogRepository;
-import org.example.tourplanner.repositories.TourRepository;
+import org.example.tourplanner.services.TourService;
+import org.example.tourplanner.services.TourLogService;
 import org.example.tourplanner.ui.viewmodels.MainViewModel;
 import org.example.tourplanner.ui.viewmodels.TourViewModel;
 import org.example.tourplanner.ui.viewmodels.TourLogViewModel;
@@ -54,11 +54,11 @@ public class MainViewController {
     private ButtonSelectionMediator<TourViewModel> tourMediator;
     private ButtonSelectionMediator<TourLogViewModel> tourLogMediator;
 
-    // Repositories werden via Spring injiziert
+    // Services werden via Spring injiziert
     @Autowired
-    private TourRepository tourRepository;
+    private TourService tourService;
     @Autowired
-    private TourLogRepository tourLogRepository;
+    private TourLogService tourLogService;
 
     public void init() throws Exception {
         ConfigurableApplicationContext springContext = new SpringApplicationBuilder(SpringBootMain.class).run();
@@ -143,7 +143,7 @@ public class MainViewController {
         });
 
         viewModel.getTours().setAll(
-                tourRepository.findAllWithLogs()
+                tourService.getAllTours() // Verwende den Service, um die Tours zu laden
                         .stream()
                         .distinct()  // Duplikate entfernen
                         .map(TourViewModel::new)
@@ -321,10 +321,10 @@ public class MainViewController {
             alert.setContentText("This action cannot be undone!");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                // Lösche jede Tour über das Repository und entferne sie aus der UI-Liste
+                // Lösche jede Tour über den Service und entferne sie aus der UI-Liste
                 List<TourViewModel> toursToDelete = new ArrayList<>(selectedTVMs);
                 toursToDelete.forEach(tvm -> {
-                    tourRepository.deleteById(tvm.getTour().getId());
+                    tourService.deleteTourById(tvm.getTour().getId()); // Verwende den Service
                     viewModel.getTours().remove(tvm);
                 });
                 tourListView.getSelectionModel().clearSelection();
@@ -363,21 +363,14 @@ public class MainViewController {
                 selectedTVM.getTourLogViewModels().removeIf(vm -> selectedLogs.contains(vm.getTourLog()));
                 selectedTVM.getTour().getTourLogs().removeAll(selectedLogs);
 
-                // Lösche die ausgewählten TourLogs direkt über das Repository:
                 for (TourLog log : selectedLogs) {
-                    tourLogRepository.deleteById(log.getId());
+                    tourLogService.deleteTourLogById(log.getId()); // Verwende den Service
                 }
-                tourLogRepository.flush(); // Erzwinge das Schreiben in die DB
-
-                // Optional: Aktualisiere den Parent, falls nötig
-                //tourRepository.saveAndFlush(selectedTVM.getTour());
 
                 // Aktualisiere die UI
                 tourLogViewController.refreshList();
                 tourLogViewController.clearDetails();
                 tourLogViewController.clearSelection();
-
-
             }
         }
     }

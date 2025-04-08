@@ -1,4 +1,4 @@
-package org.example.tourplanner.repositories;
+package org.example.tourplanner.data.repositories;
 
 import org.example.tourplanner.data.models.Tour;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +12,6 @@ public interface TourRepository extends JpaRepository<Tour, UUID> {
     @Query("SELECT t FROM Tour t LEFT JOIN FETCH t.tourLogs")
     List<Tour> findAllWithLogs();
 
+    @Query("SELECT t FROM Tour t LEFT JOIN FETCH t.tourLogs")
+    List<Tour> findAllWithTourLogs();
 }
