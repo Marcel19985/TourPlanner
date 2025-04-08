@@ -45,7 +45,7 @@
 
     <!-- Map View -->
     <WebView fx:id="mapView"
-             prefWidth="600" prefHeight="400"
+             prefWidth="600" prefHeight="350"
              GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 
     <!-- Info-Label für Screenshot-Hinweis -->

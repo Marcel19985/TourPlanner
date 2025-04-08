@@ -1,6 +1,8 @@
 package org.example.tourplanner.ui.viewmodels;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -18,6 +20,8 @@ public class TourViewModel {
     private final StringProperty transportType = new SimpleStringProperty();
     private final DoubleProperty distance = new SimpleDoubleProperty();
     private final DoubleProperty estimatedTime = new SimpleDoubleProperty();
+    private final StringProperty popularity = new SimpleStringProperty();
+    private final BooleanProperty childFriendly = new SimpleBooleanProperty();
 
     // Neue ObservableList für die TourLogViewModels
     private final ObservableList<TourLogViewModel> tourLogViewModels = FXCollections.observableArrayList();
@@ -32,6 +36,8 @@ public class TourViewModel {
         this.transportType.set(tour.getTransportType());
         this.distance.set(tour.getDistance());
         this.estimatedTime.set(tour.getEstimatedTime());
+        this.popularity.set(tour.getPopularity());
+        this.childFriendly.set(tour.isChildFriendly());
         // Bestehende TourLogs in ViewModels umwandeln
         for (TourLog log : tour.getTourLogs()) {
             tourLogViewModels.add(new TourLogViewModel(log));
@@ -48,6 +54,7 @@ public class TourViewModel {
         this.transportType.set(other.transportType.get());
         this.distance.set(other.distance.get());
         this.estimatedTime.set(other.estimatedTime.get());
+        this.popularity.set(other.popularity.get());
         // Optional: Den Clone der TourLogs könntest du hier ebenfalls erzeugen, falls nötig
     }
 
@@ -60,6 +67,7 @@ public class TourViewModel {
         this.transportType.set(editingClone.transportType.get());
         this.distance.set(editingClone.distance.get());
         this.estimatedTime.set(editingClone.estimatedTime.get());
+        this.popularity.set(editingClone.popularity.get());
 
         // Aktualisiere auch das zugrunde liegende Tour-Datenmodell
         tour.setName(editingClone.name.get());
@@ -84,8 +92,9 @@ public class TourViewModel {
         // Falls distance/estimatedTime geändert werden sollen:
         // tour.setDistance(distance.get());
         // tour.setEstimatedTime(estimatedTime.get());
+        this.popularity.set(tour.getPopularity());
+        this.childFriendly.set(tour.isChildFriendly());
     }
-
 
     // Neue Methode: Fügt einen TourLog hinzu – sowohl im zugrunde liegenden Tour-Modell als auch in der ObservableList
     public void addTourLog(TourLog newLog) {
@@ -118,5 +127,11 @@ public class TourViewModel {
     }
     public DoubleProperty estimatedTimeProperty() {
         return estimatedTime;
+    }
+    public StringProperty popularityProperty() {
+        return popularity;
+    }
+    public BooleanProperty childFriendlyProperty() {
+        return childFriendly;
     }
 }

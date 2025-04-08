@@ -44,6 +44,8 @@ public class TourViewController {
 
     @FXML private Label popularityLabel;
 
+    @FXML private Label childFriendlyLabel;
+
     private Tour currentTour;
 
     @FXML
@@ -73,6 +75,7 @@ public class TourViewController {
                 FXCollections.observableList(tour.getTourLogs())
             ));
 
+            childFriendlyLabel.setText(tour.isChildFriendly() ? "\u2714" : "\u2718");
             // Lade das Bild für das ImageView
             loadMapImage(tour);
             tourDetailsPane.setVisible(true);
@@ -80,6 +83,7 @@ public class TourViewController {
             tourDetailsPane.setVisible(false);
             popularityLabel.textProperty().unbind(); // Unbind, wenn keine Tour ausgewählt ist
             popularityLabel.setText("");
+            childFriendlyLabel.setText("");
             this.currentTour = null;
         }
     }
@@ -105,6 +109,7 @@ public class TourViewController {
 
 
 }
+
 
 
 

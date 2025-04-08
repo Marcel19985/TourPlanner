@@ -53,6 +53,21 @@ public class Tour {
         return String.format("%.2f", averageRating);
     }
 
+    @Transient
+    public boolean isChildFriendly() {
+        if (estimatedTime > 150) {
+            return false;
+        }
+        if (tourLogs.isEmpty()) {
+            return true; // Keine Logs, nur Zeit wird berücksichtigt
+        }
+        double averageRating = tourLogs.stream()
+                                       .mapToInt(TourLog::getRating)
+                                       .average()
+                                       .orElse(0);
+        return averageRating >= 6;
+    }
+
     // Kein-Arg-Konstruktor für JPA
     public Tour() {}
 
