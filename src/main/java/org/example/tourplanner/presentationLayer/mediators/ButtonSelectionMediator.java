@@ -21,7 +21,7 @@ public class ButtonSelectionMediator<T> { //Konstruktor
         this.listView = listView;
         this.listener = change -> updateButtonState(); //Initialisierung des ListChangeListener, der bei jeder Änderung in der Selektion die updateButtonState()-Methode aufruft.
         listView.getSelectionModel().getSelectedItems().addListener(listener); //Listener an die Auswahlliste der ListView anhängen
-        updateButtonState(); // setzt den initial Zustand der Buttons.
+        updateButtonState(); //setzt den initial Zustand der Buttons.
     }
 
     public void updateButtonState() {

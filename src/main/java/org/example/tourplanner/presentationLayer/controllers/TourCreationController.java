@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.function.Consumer;
 
 @Controller
-@Scope("prototype") //jedes Mal ein neuer Controller vom Spring-Kontext erzeugt wird -> damit create nach edit funktioniert
+@Scope("prototype") //wenn TourCreationController von Spring angefordert wird, wird jedes mal eine neue Instanz erstellt (falls mehrere Create oder Edit Fenster gleichzeitig offen sind
 public class TourCreationController {
 
     @FXML private TextField tourNameField;
@@ -35,7 +35,7 @@ public class TourCreationController {
     @FXML private TextField startField;
     @FXML private TextField destinationField;
     @FXML private ComboBox<String> transportTypeBox;
-    @FXML private WebView mapView;  // Das WebView für die Karte
+    @FXML private WebView mapView; //WebView für die Karte
     @FXML private Button saveButton;
     @FXML private Button loadMapButton;
     @FXML private Label screenshotInfoLabel;
@@ -50,13 +50,13 @@ public class TourCreationController {
     private TourViewModel editingTourViewModel = null;
 
 
-    @Autowired
+    @Autowired //automatischer Dependency Injection -> Spring sucht nach einer Instanz von TourService und injiziert sie hier (gibt nur eine Instanz davon)
     private TourService tourService;
 
     @FXML
     private void initialize() {
         transportTypeBox.getItems().addAll("Walk", "Car", "Bike");
-        // Füllwerte (nur für Testzwecke)
+        //Füllwerte (nur für Testzwecke): delete before submission!
         tourNameField.setText("Test Tour");
         tourDescriptionField.setText("Test Beschreibung");
         startField.setText("Wien");
@@ -66,7 +66,7 @@ public class TourCreationController {
         webEngine = mapView.getEngine();
         mapView.getEngine().setJavaScriptEnabled(true);
 
-        // Falls Start oder Destination nach Laden der Karte geändert werden, deaktiviere den Save-Button
+        //Falls Start oder Destination nach Laden der Karte geändert werden, deaktiviere den Save-Button
         startField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
         destinationField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
     }
@@ -88,14 +88,14 @@ public class TourCreationController {
         this.originalTourViewModel = original;
         this.editingTourViewModel = new TourViewModel(original); // Editing-Clone erstellen
 
-        // Bidirektionales Binding an den Editing-Clone
+        //Bidirektionales Binding an den Editing-Clone:
         tourNameField.textProperty().bindBidirectional(editingTourViewModel.nameProperty());
         tourDescriptionField.textProperty().bindBidirectional(editingTourViewModel.descriptionProperty());
         startField.textProperty().bindBidirectional(editingTourViewModel.startProperty());
         destinationField.textProperty().bindBidirectional(editingTourViewModel.destinationProperty());
         transportTypeBox.valueProperty().bindBidirectional(editingTourViewModel.transportTypeProperty());
 
-        // Nur Name und Description sollen editierbar sein
+        //Nur Name und Description sollen editierbar sein:
         startField.setDisable(true);
         destinationField.setDisable(true);
         transportTypeBox.setDisable(true);
@@ -107,36 +107,36 @@ public class TourCreationController {
 
     @FXML
     private void onSaveButtonClick(javafx.event.ActionEvent event) {
-        // Überprüfe die Eingaben
+        //Überprüfe die Eingaben:
         if (!InputValidator.validateTourInputs(tourNameField, tourDescriptionField, startField, destinationField, transportTypeBox)) {
             return;
         }
 
-        // Stage aus dem Event abrufen
+        //Stage aus dem Event abrufen:
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         if (editingTourViewModel != null) {
-            // Bearbeitungsmodus: Änderungen übernehmen
+            //Bearbeitungsmodus: Änderungen übernehmen
             originalTourViewModel.copyFrom(editingTourViewModel);
-            // Persistiere die geänderte Tour
-            Tour updatedTour = tourService.saveTour(originalTourViewModel.getTour()); // Verwende den Service
+            //Persistiere die geänderte Tour
+            Tour updatedTour = tourService.saveTour(originalTourViewModel.getTour());
             if (onTourUpdatedCallback != null) {
                 onTourUpdatedCallback.accept(updatedTour);
             }
             currentStage.close();
         } else {
-            // Erstellungsmodus: Route berechnen
+            //Erstellungsmodus: Route berechnen
             try {
                 String start = startField.getText();
                 String destination = destinationField.getText();
                 String transportType = transportTypeBox.getValue();
 
-                // Abruf der Routendetails via OpenRouteServiceClient
+                //Abruf der Routendetails via OpenRouteServiceClient:
                 double[] routeDetails = OpenRouteServiceClient.getRouteDetails(start, destination, transportType);
                 double distance = routeDetails[0];
                 double estimatedTime = routeDetails[1];
 
-                // Erzeuge die neue Tour
+                //Erzeuge die neue Tour:
                 Tour newTour = new Tour(
                         tourNameField.getText(),
                         tourDescriptionField.getText(),
@@ -147,11 +147,10 @@ public class TourCreationController {
                         estimatedTime
                 );
 
-                // Screenshot erstellen
-                takeMapScreenshot(newTour, currentStage);
+                takeMapScreenshot(newTour, currentStage); //Screenshot erstellen
 
-                // Persistiere die neue Tour in der Datenbank
-                Tour savedTour = tourService.saveTour(newTour); // Verwende den Service
+                //Persistiere die neue Tour in der Datenbank:
+                Tour savedTour = tourService.saveTour(newTour);
 
                 if (onTourCreatedCallback != null) {
                     onTourCreatedCallback.accept(savedTour);
@@ -179,7 +178,7 @@ public class TourCreationController {
             String html = HtmlTemplateLoader.loadTourMapHtml(startCoords, destCoords, transportTypeBox.getValue().toString());
             mapView.getEngine().loadContent(html);
 
-            // Warte, bis die Karte geladen ist, bevor "Save" aktiviert wird
+            //Warte, bis die Karte geladen ist, bevor "Save" aktiviert wird:
             mapView.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
                 if (newState == Worker.State.SUCCEEDED) {
                     isMapLoaded = true;
@@ -193,7 +192,7 @@ public class TourCreationController {
     }
 
     private void checkForRouteChange() {
-        // Wenn die Karte geladen ist und der Benutzer Änderungen vornimmt, deaktivieren wir den Save-Button
+        //Wenn die Karte geladen ist und der Benutzer Änderungen vornimmt, deaktivieren wir den Save-Button:
         if (isMapLoaded) {
             saveButton.setDisable(true);
         }

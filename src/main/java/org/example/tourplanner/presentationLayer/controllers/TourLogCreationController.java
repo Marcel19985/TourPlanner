@@ -37,13 +37,13 @@ public class TourLogCreationController {
     private Consumer<TourLog> onTourLogCreatedCallback;
     private Consumer<TourLog> onTourLogUpdatedCallback;
 
-    // Original und Editing-Clone im Bearbeitungsmodus
+    //Original und Editing-Clone im Bearbeitungsmodus
     private TourLogViewModel originalTourLogViewModel = null;
     private TourLogViewModel editingTourLogViewModel = null;
 
 
     @Autowired
-    private TourLogService tourLogService; // Verwende den TourLogService
+    private TourLogService tourLogService;
 
     @FXML
     private void initialize() {
@@ -51,7 +51,7 @@ public class TourLogCreationController {
         ratingComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 12));
         minuteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 30));
-        // Testwerte
+        //Testwerte: lösche bevor final Abgabe
         nameLog.setText("Test Log");
         commentField.setText("Test Comment");
         difficultyComboBox.setValue("Easy");
@@ -71,7 +71,7 @@ public class TourLogCreationController {
      */
     public void setTourLogForEditing(TourLogViewModel original) {
         this.originalTourLogViewModel = original;
-        this.editingTourLogViewModel = new TourLogViewModel(original); // Clone erstellen
+        this.editingTourLogViewModel = new TourLogViewModel(original); //Clone erstellen
         nameLog.textProperty().bindBidirectional(editingTourLogViewModel.nameProperty());
         commentField.textProperty().bindBidirectional(editingTourLogViewModel.commentProperty());
         difficultyComboBox.valueProperty().bindBidirectional(editingTourLogViewModel.difficultyProperty());

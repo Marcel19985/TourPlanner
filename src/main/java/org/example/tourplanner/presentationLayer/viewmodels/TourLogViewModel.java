@@ -42,7 +42,7 @@ public class TourLogViewModel {
         this.rating = new SimpleIntegerProperty(other.rating.get());
     }
 
-    // Kopiert die Werte aus dem anderen ViewModel in dieses (z. B. beim Speichern)
+    // Kopiert die Werte aus dem anderen ViewModel in dieses (z.B. beim Speichern)
     public void copyFrom(TourLogViewModel other) {
         this.name.set(other.name.get());
         this.comment.set(other.comment.get());

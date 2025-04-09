@@ -107,17 +107,4 @@ public class OpenRouteServiceClient {
 
         return coords;
     }
-
-    //Für die Leaflet-Kartenintegration
-    public static String generateLeafletMap(String start, String destination) throws IOException, JSONException, LocationNotFoundException {
-        //Koordinaten von Start- und Zielort abfragen
-        String startCoords = getCoordinates(start);
-        String destCoords = getCoordinates(destination);
-
-        //Koordinaten für Leaflet geeignet formatieren
-        String leafletMapUrl = "https://www.openstreetmap.org/?mlat=" + startCoords.split(",")[1] + "&mlon=" + startCoords.split(",")[0]
-                + "#map=12/" + startCoords.split(",")[1] + "/" + startCoords.split(",")[0];
-
-        return leafletMapUrl;  //Rückgabe einer URL, die für die Anzeige in Leaflet verwendet werden kann
-    }
 }

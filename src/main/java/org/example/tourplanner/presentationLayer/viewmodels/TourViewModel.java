@@ -55,7 +55,6 @@ public class TourViewModel {
         this.distance.set(other.distance.get());
         this.estimatedTime.set(other.estimatedTime.get());
         this.popularity.set(other.popularity.get());
-        // Optional: Den Clone der TourLogs könntest du hier ebenfalls erzeugen, falls nötig
     }
 
     // Methode, um Änderungen aus einem Editing-Clone ins Original zu kopieren
