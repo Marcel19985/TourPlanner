@@ -27,7 +27,7 @@ public class Tour {
     @Column(name = "destination", nullable = false)
     private String destination;
 
-    @Column(name = "transport_type", nullable = false)
+    @Column(name = "transport_type", nullable = false) //ToDo: Enum
     private String transportType;
 
     @Column(nullable = false)
@@ -64,19 +64,20 @@ public class Tour {
                                        .average()
                                        .orElse(0);
         return averageRating >= 6;
+        //todo: maybe auch difficulty hinzufügen
     }
 
     //Kein-Arg-Konstruktor für JPA
     public Tour() {}
 
-    public Tour(String name, String description, String start, String destination, String transportType) {
+   /* public Tour(String name, String description, String start, String destination, String transportType) { //todo: delete weil vermutlich nicht verwendet wird
         this.id = UUIDv7Generator.generateUUIDv7();
         this.name = name;
         this.description = description;
         this.start = start;
         this.destination = destination;
         this.transportType = transportType;
-    }
+    }*/
 
     public Tour(String name, String description, String start, String destination, String transportType, double distance, double estimatedTime) {
         this.id = UUIDv7Generator.generateUUIDv7();
@@ -129,6 +130,7 @@ public class Tour {
     }
 
     public String getTourImagePath() {
-        return "/images/" + this.id + ".png";
+        return "target/images/" + id + ".png";
     }
+
 }

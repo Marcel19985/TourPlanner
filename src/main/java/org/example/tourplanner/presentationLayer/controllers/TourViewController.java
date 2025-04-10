@@ -51,8 +51,8 @@ public class TourViewController {
     @FXML
     public void initialize() {
         tourDetailsPane.setVisible(false);
-
     }
+
     // todo: Bild dynamischer machen
     public void setViewModel(MainViewModel viewModel) {
         this.viewModel = viewModel;
@@ -91,7 +91,7 @@ public class TourViewController {
     private void loadMapImage(Tour tour) {
         try {
             // Der Pfad zum gespeicherten Screenshot (z.B. target/images/{tourId}.png)
-            File mapImageFile = new File("target/images/" + tour.getId() + ".png");
+            File mapImageFile = new File(tour.getTourImagePath());
 
             if (mapImageFile.exists()) {
                 // Erstelle ein Image aus der Datei
