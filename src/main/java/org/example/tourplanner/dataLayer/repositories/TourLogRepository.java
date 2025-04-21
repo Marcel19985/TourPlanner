@@ -10,11 +10,19 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TourLogRepository extends JpaRepository<TourLog, UUID> {
-    // Eigene Methoden bei Bedarf
+    //ruft alle TourLogs ab, die zu einer bestimmten Tour gehören:
     @Query("SELECT tl FROM TourLog tl WHERE tl.tour.id = :tourId")
     List<TourLog> findByTourId(@Param("tourId") UUID tourId);
 
-    @Query("SELECT t FROM Tour t LEFT JOIN FETCH t.tourLogs")
-    List<Tour> findAllWithTourLogs();
+    //Für Tour Log Suche:
+    @Query("""
+      SELECT tl
+      FROM TourLog tl
+      WHERE tl.tour.id = :tourId
+        AND LOWER(tl.name) LIKE LOWER(CONCAT('%', :term, '%'))
+    """)
+    List<TourLog> searchByTourIdAndName(
+            @Param("tourId") UUID tourId,
+            @Param("term") String term);
 }
 

@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.example.tourplanner.businessLayer.models.Tour;
 import org.example.tourplanner.businessLayer.models.TourLog;
 import org.example.tourplanner.helpers.SpringContext;
 import org.example.tourplanner.presentationLayer.mediators.ButtonSelectionMediator;
@@ -42,7 +43,13 @@ public class MainViewController {
     @FXML private Button editButton;
     @FXML private Button deleteButton;
 
-    // Wir behalten das MainViewModel bei, um die UI-Liste zu pflegen.
+    //Für Suche von Tours:
+    @FXML private TextField searchField;
+    @FXML private Button searchButton;
+    @FXML private Button clearSearchButton;
+    @FXML private CheckBox    childFriendlyCheckbox;
+    @FXML private Spinner<Double> minPopularitySpinner;
+
     private MainViewModel viewModel = new MainViewModel();
 
     private TourViewController tourViewController;
@@ -51,7 +58,6 @@ public class MainViewController {
     private ButtonSelectionMediator<TourViewModel> tourMediator;
     private ButtonSelectionMediator<TourLogViewModel> tourLogMediator;
 
-    // Services werden via Spring injiziert
     @Autowired //autowired = es gibt in gesamter Spring application nur eine Instanz von TourService; Gegenteil = prototype
     private TourService tourService;
     @Autowired
@@ -77,7 +83,13 @@ public class MainViewController {
         tourListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTVM, newTVM) -> { //Listener für TourList
             if (newTVM != null) { //neu ausgewähltes Element
                 tourViewController.setTour(newTVM.getTour()); //Details der Tour werden angezeigt
-                tourLogViewController.setTourLogItems(newTVM.getTourLogViewModels()); //TourLog details laden
+                // Tour Log details laden:
+                tourLogViewController.setTourLogItems(
+                        newTVM.getTour().getId(),
+                        newTVM.getTourLogViewModels()
+                );
+
+                tourLogViewController.setTour(newTVM.getTour().getId()); //neu: nur noch die ID übergeben, lädt alles frisch
             } else { //Wenn keine Elemente ausgewählt -> setze Tours und TourLogs auf null
                 tourViewController.setTour(null);
                 tourLogViewController.clearDetails();
@@ -89,7 +101,7 @@ public class MainViewController {
 
         detailTabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> { //Je nachdem ob Tour oder TourLog im tabpane ausgewählt ist
             if (newTab != null) {
-                if (newTab.getText().equals("Tour Details")) { //TourDetails ausgewählt -> Create, Edit und Delete werden aktualisiert
+                if (newTab.getText().equals("Tour Details")) { //TourDetails ausgewählt -> Button Texts von Create, Edit und Delete werden aktualisiert
                     createButton.setText("_Create Tour");
                     editButton.setText("_Edit Tour");
                     deleteButton.setText("_Delete Tour(s)");
@@ -141,7 +153,43 @@ public class MainViewController {
                         .toList()
         );
 
+        SpinnerValueFactory<Double> factory =
+                new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 10, 0, 0.1);
+        minPopularitySpinner.setValueFactory(factory);
+        loadAllTours();
+
     } //Initialize end
+
+    @FXML
+    private void onSearch() {
+        String term = searchField.getText().trim();
+        double minPop = minPopularitySpinner.getValue();
+        boolean onlyChild = childFriendlyCheckbox.isSelected();
+
+        List<Tour> found = tourService.searchTours(term, minPop, onlyChild);
+        viewModel.getTourViewModels().setAll(
+                found.stream().map(TourViewModel::new).toList()
+        );
+    }
+
+    @FXML
+    private void onClearSearch() {
+        searchField.clear();
+        childFriendlyCheckbox.setSelected(false);
+        minPopularitySpinner.getValueFactory().setValue(0.0);
+        loadAllTours();
+    }
+
+    private void loadAllTours() {
+        viewModel.getTourViewModels().setAll(
+                tourService.getAllTours().stream()
+                        .distinct()
+                        .map(TourViewModel::new)
+                        .toList()
+        );
+    }
+
+
 
     private void loadTourDetailView() { //in initialize() aufgerufen
         try {
@@ -162,6 +210,8 @@ public class MainViewController {
     private void loadTourLogDetailView() { //in initialize() aufgerufen
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourLogSplitView.fxml"));
+            // Controller von Spring holen, damit @Autowired funktioniert
+            loader.setControllerFactory(clazz -> SpringContext.getApplicationContext().getBean(clazz));
             Parent tourLogSplitView = loader.load();
             tourLogViewController = loader.getController();
             tourLogDetailsContainer.getChildren().add(tourLogSplitView);
@@ -221,10 +271,11 @@ public class MainViewController {
             TourLogCreationController controller = loader.getController();
             controller.setCurrentTour(selectedTVM.getTour());
             controller.setOnTourLogCreatedCallback(tourLog -> {
-                //Füge den neuen TourLog über das TourViewModel hinzu und aktualisiere die UI:
+                //1. ViewModel updaten, damit TourView/List korrekt bleibt
                 selectedTVM.addTourLog(tourLog);
-                tourLogViewController.setTourLogItems(selectedTVM.getTourLogViewModels());
-                tourLogViewController.refreshList();
+
+                //2. **Nur** einmal komplett neu laden
+                tourLogViewController.setTour(selectedTVM.getTour().getId());
             });
             Stage stage = new Stage();
             stage.setTitle("Create Tour Log");
@@ -273,6 +324,7 @@ public class MainViewController {
                 return;
             }
             try {
+                TourViewModel selectedTVM = tourListView.getSelectionModel().getSelectedItem();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourLogCreationView.fxml"));
                 // Verwende die ControllerFactory, um den Controller als Spring Bean zu erzeugen
                 loader.setControllerFactory(clazz -> SpringContext.getApplicationContext().getBean(clazz)); //Spring Beans in JavaFX integriert
@@ -280,9 +332,12 @@ public class MainViewController {
                 TourLogCreationController controller = loader.getController();
                 controller.setTourLogForEditing(selectedLogVM);
                 controller.setOnTourLogUpdatedCallback(updatedLog -> {
-                    tourLogViewController.refreshList();
-                    tourLogViewController.showTourLogDetails(selectedLogVM);
+                    //nach dem Speichern neu laden
+                    tourLogViewController.setTour(selectedTVM.getTour().getId());
+                    //Optional: Details des gerade geänderten Logs anzeigen
+                    tourLogViewController.showTourLogDetails(new TourLogViewModel(updatedLog));
                 });
+
                 Stage stage = new Stage();
                 stage.setTitle("Edit Tour Log");
                 stage.setScene(new Scene(root));
@@ -357,7 +412,7 @@ public class MainViewController {
                 }
 
                 // Aktualisiere die UI
-                tourLogViewController.refreshList();
+                tourLogViewController.refreshLogs();
                 tourLogViewController.clearDetails();
                 tourLogViewController.clearSelection();
             }

@@ -44,7 +44,7 @@ public class TourViewModel {
         }
     }
 
-    // Kopierkonstruktor für Editing-Clones (bereits bekannt)
+    // Kopierkonstruktor für Editing-Clones
     public TourViewModel(TourViewModel other) {
         this.tour = other.tour;
         this.name.set(other.name.get());

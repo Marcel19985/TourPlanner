@@ -66,7 +66,7 @@ public class TourCreationController {
         webEngine = mapView.getEngine();
         mapView.getEngine().setJavaScriptEnabled(true);
 
-        //Falls Start oder Destination nach Laden der Karte geändert werden, deaktiviere den Save-Button
+        //Falls Start oder Destination nach Laden der Karte geändert werden, deaktiviere den Save-Button:
         startField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
         destinationField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
     }
@@ -86,7 +86,7 @@ public class TourCreationController {
      */
     public void setTourForEditing(TourViewModel original) {
         this.originalTourViewModel = original;
-        this.editingTourViewModel = new TourViewModel(original); // Editing-Clone erstellen
+        this.editingTourViewModel = new TourViewModel(original); //Editing-Clone erstellen
 
         //Bidirektionales Binding an den Editing-Clone:
         tourNameField.textProperty().bindBidirectional(editingTourViewModel.nameProperty());
@@ -132,7 +132,7 @@ public class TourCreationController {
                 String transportType = transportTypeBox.getValue();
 
                 //Abruf der Routendetails via OpenRouteServiceClient:
-                double[] routeDetails = OpenRouteServiceClient.getRouteDetails(start, destination, transportType);
+                double[] routeDetails = OpenRouteServiceClient.getRouteDetails(start, destination, transportType); //todo: eventuell nur Tour Objekt übergeben
                 double distance = routeDetails[0];
                 double estimatedTime = routeDetails[1];
 
@@ -192,12 +192,13 @@ public class TourCreationController {
     }
 
     private void checkForRouteChange() {
-        //Wenn die Karte geladen ist und der Benutzer Änderungen vornimmt, deaktivieren wir den Save-Button:
+        //Wenn die Karte geladen ist und der Benutzer Änderungen vornimmt, deaktiviere den Save-Button:
         if (isMapLoaded) {
             saveButton.setDisable(true);
         }
     }
 
+    //Mithilfe von ChatGPT generiert:
     private void takeMapScreenshot(Tour tour, Stage stageToClose) {
         if (!mapView.isVisible()) {
             System.err.println("Fehler: mapView ist nicht sichtbar!");
@@ -206,26 +207,28 @@ public class TourCreationController {
 
         System.out.println("Erstelle Screenshot...");
 
-        WritableImage image = mapView.snapshot(new SnapshotParameters(), null);
+        WritableImage image = mapView.snapshot(new SnapshotParameters(), null); //Erstelle einen Snapshot der Karte
         BufferedImage bufferedImage = new BufferedImage(
                 (int) image.getWidth(),
                 (int) image.getHeight(),
                 BufferedImage.TYPE_INT_ARGB
         );
 
+        //Pixel werden auf BufferedImage kopiert:
         for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
                 bufferedImage.setRGB(x, y, image.getPixelReader().getArgb(x, y));
             }
         }
 
+        //Verzeichnis target/images erstellen falls nicht existent:
         File dir = new File("target/images");
         if (!dir.exists() && !dir.mkdirs()) {
             System.err.println("Fehler beim Erstellen des Verzeichnisses 'target/images'.");
             return;
         }
 
-        File file = new File(dir, tour.getId() + ".png");
+        File file = new File(dir, tour.getId() + ".png"); //Bild wird als png mit Tour-ID gespeichert
         try {
             ImageIO.write(bufferedImage, "png", file);
             System.out.println("Screenshot gespeichert: " + file.getAbsolutePath());

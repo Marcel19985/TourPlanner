@@ -9,6 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.CheckBox?>
 <BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.tourplanner.presentationLayer.controllers.MainViewController">
 
@@ -22,9 +25,21 @@
         <SplitPane dividerPositions="0.3">
             <!-- Left side: List of Tours -->
             <AnchorPane>
-                <ListView fx:id="tourListView" AnchorPane.topAnchor="0"
-                          AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
-                          AnchorPane.rightAnchor="0"/>
+                <VBox spacing="5" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+                    <!-- Suchleiste-->
+                    <HBox spacing="5" alignment="CENTER_LEFT">
+                        <TextField fx:id="searchField" promptText="Search tours…" HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="searchButton" text="Search" onAction="#onSearch"/>
+                        <Button fx:id="clearSearchButton" text="Clear" onAction="#onClearSearch"/>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <CheckBox fx:id="childFriendlyCheckbox" text="Only child‑friendly"/>
+                        <Label text="Min. Rating:"/>
+                        <Spinner fx:id="minPopularitySpinner"
+                                 prefWidth="80"/>
+                    </HBox>
+                    <ListView fx:id="tourListView" VBox.vgrow="ALWAYS"/>
+                </VBox>
             </AnchorPane>
 
             <!-- Right side: TabPane for detail views -->

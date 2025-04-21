@@ -6,6 +6,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
 
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
 <SplitPane dividerPositions="0.5" orientation="HORIZONTAL"
            xmlns="http://javafx.com/javafx/17.0.6"
            xmlns:fx="http://javafx.com/fxml/1"
@@ -17,6 +21,23 @@
             <ListView fx:id="tourLogListView" AnchorPane.topAnchor="0"
                       AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
                       AnchorPane.rightAnchor="0" />
+            <VBox spacing="5"
+                  AnchorPane.topAnchor="0"
+                  AnchorPane.bottomAnchor="0"
+                  AnchorPane.leftAnchor="0"
+                  AnchorPane.rightAnchor="0">
+
+                <!-- 1) Suchleiste -->
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <TextField fx:id="logSearchField"
+                               promptText="Search logs…"
+                               HBox.hgrow="ALWAYS"/>
+                    <Button text="Search" onAction="#onSearchLogs"/>
+                    <Button text="Clear"  onAction="#onClearLogs"/>
+                </HBox>
+
+                <ListView fx:id="tourLogListView" VBox.vgrow="ALWAYS"/>
+            </VBox>
         </AnchorPane>
 
         <!-- Rechte Seite: GridPane für Tour-Log-Details -->

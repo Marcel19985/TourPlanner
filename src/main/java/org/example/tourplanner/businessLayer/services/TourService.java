@@ -51,4 +51,23 @@ public class TourService {
     public void deleteTourLogById(UUID tourLogId) {
         tourLogRepository.deleteById(tourLogId);
     }
+
+    /**
+     * Suche nach Tours anhand des Namens (ignore case).
+     */
+    public List<Tour> searchToursByName(String name) {
+        return tourRepository.searchByName(name);
+    }
+
+    public List<Tour> searchTours(String name,
+                                  double minPopularity,
+                                  boolean onlyChildFriendly) {
+        List<Tour> base = (name == null || name.isBlank())
+                ? tourRepository.findAllWithLogs()
+                : tourRepository.searchByName(name);
+        return base.stream()
+                .filter(t -> t.getAverageRating() >= minPopularity)
+                .filter(t -> !onlyChildFriendly || t.isChildFriendly())
+                .toList();
+    }
 }

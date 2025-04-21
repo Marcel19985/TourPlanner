@@ -3,14 +3,19 @@ package org.example.tourplanner.presentationLayer.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
+import org.example.tourplanner.businessLayer.models.TourLog;
+import org.example.tourplanner.businessLayer.services.TourLogService;
 import org.example.tourplanner.presentationLayer.viewmodels.TourLogViewModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
+import java.util.List;
+import java.util.UUID;
+
+@Controller
 public class TourLogViewController {
 
     @FXML private Label ratingLabel;
@@ -23,6 +28,14 @@ public class TourLogViewController {
     @FXML private Label dateLabel;
     @FXML private Label timeLabel;
     @FXML private Label commentLabel;
+
+    @FXML private TextField logSearchField;
+
+    @Autowired
+    private TourLogService tourLogService;
+
+    // interne Tour‑ID, nie im UI angezeigt
+    private UUID currentTourId;
 
     @FXML
     public void initialize() {
@@ -49,6 +62,65 @@ public class TourLogViewController {
                 clearDetails();
             }
         });
+
+        //Suche: Anzeige bleibt nur der Name:
+        tourLogListView.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(TourLogViewModel vm, boolean empty) {
+                super.updateItem(vm, empty);
+                setText(empty || vm == null ? null : vm.nameProperty().get());
+            }
+        });
+    }
+
+    public void refreshLogs() { //wird verwendet nachdem ein Tourlog gelöscht wird nachdem danach gesucht wurde
+        String term = logSearchField.getText().trim();
+        if (term.isEmpty()) {
+            onClearLogs();
+        } else {
+            onSearchLogs();
+        }
+    }
+
+    /** Wird aus MainViewController gerufen, wenn sich die Tour ändert: */
+    public void setTourLogItems(UUID tourId,
+                                ObservableList<TourLogViewModel> baseModels) {
+        this.currentTourId = tourId;
+        tourLogListView.setItems(baseModels);
+    }
+
+    @FXML
+    private void onSearchLogs() {
+        String term = logSearchField.getText().trim();
+        List<TourLog> filtered = tourLogService.searchLogsByTour(currentTourId, term);
+        ObservableList<TourLogViewModel> vms = FXCollections.observableArrayList(
+                filtered.stream()
+                        .map(TourLogViewModel::new)
+                        .toList()
+        );
+        tourLogListView.setItems(vms);
+        clearDetails();
+    }
+
+    @FXML
+    private void onClearLogs() {
+        logSearchField.clear();
+        onSearchLogs(); // term == "" → lädt alle Logs
+    }
+
+    public void setTour(UUID tourId) {
+        this.currentTourId = tourId;
+        // Suchfeld löschen
+        logSearchField.clear();
+        // Alle Logs neu holen
+        List<TourLog> allLogs = tourLogService.searchLogsByTour(tourId, "");
+        ObservableList<TourLogViewModel> vms = FXCollections.observableArrayList(
+                allLogs.stream()
+                        .map(TourLogViewModel::new)
+                        .toList()
+        );
+        tourLogListView.setItems(vms);
+        clearDetails();
     }
 
     /**

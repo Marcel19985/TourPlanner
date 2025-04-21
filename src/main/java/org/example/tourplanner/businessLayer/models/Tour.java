@@ -39,6 +39,16 @@ public class Tour {
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true) //mappedBy gibt an, dass die Tour-Log-Tabelle den Fremdschlüssel Tour enthält
     private List<TourLog> tourLogs = new ArrayList<>();
 
+    @Transient
+    public double getAverageRating() {
+        return tourLogs.isEmpty()
+                ? 0
+                : tourLogs.stream()
+                .mapToInt(TourLog::getRating)
+                .average()
+                .orElse(0);
+    }
+
     @Transient //Transient wird von JPA ignoriert -> keine Spalte in Tabelle
     public String getPopularity() {
         if (tourLogs.isEmpty()) {

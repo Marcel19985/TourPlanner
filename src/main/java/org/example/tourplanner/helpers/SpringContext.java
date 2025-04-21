@@ -2,7 +2,7 @@ package org.example.tourplanner.helpers;
 
 import org.springframework.context.ConfigurableApplicationContext;
 
-public class SpringContext {
+public class SpringContext { //Singleton class to hold the Spring application context -> wird global verfügbar
     private static ConfigurableApplicationContext context;
 
     public static void setApplicationContext(ConfigurableApplicationContext context) {
