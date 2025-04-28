@@ -1,6 +1,7 @@
 package org.example.tourplanner.presentationLayer.controllers;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -156,7 +157,7 @@ public class MainViewController {
         );
 
         SpinnerValueFactory<Double> factory =
-                new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 10, 0, 0.1);
+                new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 10, 0, 1);
         minPopularitySpinner.setValueFactory(factory);
         loadAllTours();
 
@@ -433,8 +434,8 @@ public class MainViewController {
         }
 
         try {
-            String filePath = "Reports/tour-report-" + selectedTVM.getTour().getId() + ".txt";
-            reportService.generateTourReport(selectedTVM.getTour(), filePath);
+            String filePath = "Reports/tour-report-" + selectedTVM.getTour().getId() + ".pdf";
+            reportService.generateTourReportPdf(selectedTVM.getTour(), filePath);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Report Generated");
             alert.setHeaderText(null);
@@ -451,12 +452,11 @@ public class MainViewController {
     }
 
     @FXML
-    private void onGenerateSummarizeReport() {
+    private void onGenerateSummarizeReport(ActionEvent event) {
         try {
-            String filePath = "Reports/summarize-report.txt";
-            reportService.generateSummaryReport(
-                    tourService.getAllTours(), filePath
-            );
+            String filePath = "Reports/summarize-report.pdf";
+            List<Tour> tours = tourService.getAllTours(); // Alle Touren aus der Datenbank laden
+            reportService.generateSummaryReportPdf(tours, filePath); // PDF-Report generieren
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Report Generated");
             alert.setHeaderText(null);

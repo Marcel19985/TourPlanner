@@ -34,6 +34,7 @@ public class TourPlannerApplication extends Application {
         scene.getStylesheets().add(getClass().getResource("/org/example/tourplanner/stylesheet.css").toExternalForm());
         stage.setTitle("TourPlanner");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 

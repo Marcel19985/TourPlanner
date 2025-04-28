@@ -13,6 +13,9 @@ open module org.example.tourplanner {
     requires spring.boot;
     requires spring.boot.autoconfigure;
     requires spring.data.commons;
+    requires kernel;
+    requires layout;
+    requires io;
 
     exports org.example.tourplanner;
     exports org.example.tourplanner.dataLayer.database;
