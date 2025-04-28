@@ -12,6 +12,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.Region?>
 <BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.tourplanner.presentationLayer.controllers.MainViewController">
 
@@ -63,6 +64,9 @@
             <Button fx:id="createButton" text="_Create Tour" onAction="#onCreate"/>
             <Button fx:id="editButton" text="_Edit Tour" onAction="#onEdit"/>
             <Button fx:id="deleteButton" text="_Delete Tour(s)" onAction="#onDelete"/>
+            <Region HBox.hgrow="ALWAYS"/> <!-- Platzhalter für den freien Raum -->
+            <Button fx:id="tourReportButton" text="Generate Tour Report" onAction="#onGenerateTourReport"/>
+            <Button fx:id="summarizeReportButton" text="Generate Summarize Report" onAction="#onGenerateSummarizeReport"/>
         </HBox>
     </bottom>
 </BorderPane>

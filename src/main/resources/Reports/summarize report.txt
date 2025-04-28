@@ -1,0 +1,7 @@
+Summary Report
+==============
+Tour: 1234
+  Average Time: 20.0 min
+  Average Distance: 177.4839 km
+  Average Rating: 7.5/10
+

@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.example.tourplanner.businessLayer.models.Tour;
 import org.example.tourplanner.businessLayer.models.TourLog;
+import org.example.tourplanner.businessLayer.services.ReportService;
 import org.example.tourplanner.helpers.SpringContext;
 import org.example.tourplanner.presentationLayer.mediators.ButtonSelectionMediator;
 import org.example.tourplanner.businessLayer.services.TourService;
@@ -62,7 +63,8 @@ public class MainViewController {
     private TourService tourService;
     @Autowired
     private TourLogService tourLogService;
-
+    @Autowired
+    private ReportService reportService;
     @FXML
     private void initialize() {
         // Binde die Liste an die ViewModel-Liste
@@ -418,4 +420,56 @@ public class MainViewController {
             }
         }
     }
+    @FXML
+    private void onGenerateTourReport() {
+        TourViewModel selectedTVM = tourListView.getSelectionModel().getSelectedItem();
+        if (selectedTVM == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Tour Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a tour to generate the report.");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            String filePath = "Reports/tour-report-" + selectedTVM.getTour().getId() + ".txt";
+            reportService.generateTourReport(selectedTVM.getTour(), filePath);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Report Generated");
+            alert.setHeaderText(null);
+            alert.setContentText("Tour report generated successfully: " + filePath);
+            alert.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Failed to generate the tour report.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void onGenerateSummarizeReport() {
+        try {
+            String filePath = "Reports/summarize-report.txt";
+            reportService.generateSummaryReport(
+                    tourService.getAllTours(), filePath
+            );
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Report Generated");
+            alert.setHeaderText(null);
+            alert.setContentText("Summarize report generated successfully: " + filePath);
+            alert.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Failed to generate the summarize report.");
+            alert.showAndWait();
+        }
+    }
+
 }
