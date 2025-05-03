@@ -13,9 +13,11 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.tourplanner.businessLayer.models.Tour;
 import org.example.tourplanner.businessLayer.models.TourLog;
+import org.example.tourplanner.businessLayer.services.ImportExportService;
 import org.example.tourplanner.businessLayer.services.ReportService;
 import org.example.tourplanner.helpers.SpringContext;
 import org.example.tourplanner.presentationLayer.mediators.ButtonSelectionMediator;
@@ -28,6 +30,7 @@ import javafx.collections.FXCollections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +69,8 @@ public class MainViewController {
     private TourLogService tourLogService;
     @Autowired
     private ReportService reportService;
+    @Autowired
+    private ImportExportService importExportService;
     @FXML
     private void initialize() {
         // Binde die Liste an die ViewModel-Liste
@@ -471,5 +476,54 @@ public class MainViewController {
             alert.showAndWait();
         }
     }
+    @FXML
+    private void onExportJson() {
+        try {
+            List<Tour> tours = tourService.getAllTours();
+            importExportService.exportToursToJson(tours);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Export Successful");
+            alert.setHeaderText(null);
+            alert.setContentText("Tours exported to 'import_export_json/tours_export.json'.");
+            alert.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Export Failed");
+            alert.setHeaderText(null);
+            alert.setContentText("Failed to export tours.");
+            alert.showAndWait();
+        }
+    }
 
+    @FXML
+    private void onImportJson() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select JSON File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
+        fileChooser.setInitialDirectory(new File("import_export_json"));
+
+        File selectedFile = fileChooser.showOpenDialog(mainPane.getScene().getWindow());
+        if (selectedFile != null) {
+            try {
+                List<Tour> importedTours = importExportService.importToursFromJson(selectedFile);
+                for (Tour tour : importedTours) {
+                    tourService.addTour(tour); // Fügt die Tour zur Datenbank hinzu
+                }
+                loadAllTours(); // Aktualisiert die UI
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Import Successful");
+                alert.setHeaderText(null);
+                alert.setContentText("Tours imported successfully.");
+                alert.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Import Failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Failed to import tours.");
+                alert.showAndWait();
+            }
+        }
+    }
 }

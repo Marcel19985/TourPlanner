@@ -20,6 +20,10 @@
         <VBox alignment="CENTER">
             <Label text="Tour Planner" style="-fx-font-size: 24px;"/>
         </VBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Button fx:id="importButton" text="Import JSON" onAction="#onImportJson"/>
+            <Button fx:id="exportButton" text="Export JSON" onAction="#onExportJson"/>
+        </HBox>
     </top>
 
     <center>

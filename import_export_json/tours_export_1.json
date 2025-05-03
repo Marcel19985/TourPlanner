@@ -1,0 +1,59 @@
+[ {
+  "id" : "019695ea-1e81-7000-abe0-220def272a7d",
+  "name" : "Test Tour1234",
+  "description" : "Test Beschreibung",
+  "start" : "Wien",
+  "destination" : "graz",
+  "transportType" : "Car",
+  "distance" : 194.1945,
+  "estimatedTime" : 131.04833333333332,
+  "tourLogs" : [ {
+    "id" : "019695eb-bd2c-7000-9c8a-5a238e0ed809",
+    "name" : "456",
+    "date" : "2025-05-03",
+    "time" : "12:30:00",
+    "comment" : "Test Comment",
+    "difficulty" : "Easy",
+    "totalDistance" : 20.0,
+    "totalTime" : 20.0,
+    "rating" : 10
+  }, {
+    "id" : "019695eb-ae04-7000-99b9-25d571bff5c2",
+    "name" : "123",
+    "date" : "2025-05-03",
+    "time" : "12:30:00",
+    "comment" : "Test Comment",
+    "difficulty" : "Easy",
+    "totalDistance" : 20.0,
+    "totalTime" : 20.0,
+    "rating" : 5
+  } ],
+  "childFriendly" : true,
+  "popularity" : "7,5",
+  "averageRating" : 7.5,
+  "tourImagePath" : "target/images/019695ea-1e81-7000-abe0-220def272a7d.png"
+}, {
+  "id" : "019695e1-212a-7000-bdc0-a73d56550ad7",
+  "name" : "Test Tour",
+  "description" : "Test Beschreibung",
+  "start" : "Wien",
+  "destination" : "Linz",
+  "transportType" : "Car",
+  "distance" : 177.4839,
+  "estimatedTime" : 113.19833333333332,
+  "tourLogs" : [ {
+    "id" : "019695e1-4a58-7000-bf0e-1a1deebd05e1",
+    "name" : "Test Log",
+    "date" : "2025-05-03",
+    "time" : "12:32:00",
+    "comment" : "Test Comment",
+    "difficulty" : "Easy",
+    "totalDistance" : 20.0,
+    "totalTime" : 20.0,
+    "rating" : 5
+  } ],
+  "childFriendly" : false,
+  "popularity" : "5,0",
+  "averageRating" : 5.0,
+  "tourImagePath" : "target/images/019695e1-212a-7000-bdc0-a73d56550ad7.png"
+} ]

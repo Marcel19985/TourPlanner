@@ -31,6 +31,8 @@ public class TourService {
         return tourRepository.findById(tourId).orElse(null);
     }
 
+    public void addTour(Tour tour) { tourRepository.save(tour); }
+
     public Tour saveTour(Tour tour) {
         return tourRepository.save(tour);
     }

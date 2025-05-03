@@ -16,6 +16,9 @@ open module org.example.tourplanner {
     requires kernel;
     requires layout;
     requires io;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.datatype.jsr310;
 
     exports org.example.tourplanner;
     exports org.example.tourplanner.dataLayer.database;

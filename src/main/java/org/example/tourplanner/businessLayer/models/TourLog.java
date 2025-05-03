@@ -1,5 +1,6 @@
 package org.example.tourplanner.businessLayer.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.example.tourplanner.helpers.UUIDv7Generator;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class TourLog {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tour_id", nullable = false)
+    @JsonBackReference //Verhindert zirkuläre Referenzen bei der Serialisierung
     private Tour tour;
 
     @Column(name = "log_date", nullable = false)

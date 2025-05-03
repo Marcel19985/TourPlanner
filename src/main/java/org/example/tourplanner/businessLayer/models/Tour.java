@@ -1,5 +1,7 @@
 package org.example.tourplanner.businessLayer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.example.tourplanner.helpers.UUIDv7Generator;
 
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import java.util.UUID;
 
 @Entity //Tabelle in db
 @Table(name = "tours")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Tour {
 
     @Id //Primärschlüssel
@@ -37,6 +40,7 @@ public class Tour {
     private double estimatedTime;
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true) //mappedBy gibt an, dass die Tour-Log-Tabelle den Fremdschlüssel Tour enthält
+    @JsonManagedReference //Verhindert zirkuläre Referenzen bei der Serialisierung
     private List<TourLog> tourLogs = new ArrayList<>();
 
     @Transient
