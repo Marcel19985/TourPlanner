@@ -21,7 +21,6 @@ open module org.example.tourplanner {
     requires com.fasterxml.jackson.datatype.jsr310;
 
     exports org.example.tourplanner;
-    exports org.example.tourplanner.dataLayer.database;
     exports org.example.tourplanner.presentationLayer.controllers;
     exports org.example.tourplanner.presentationLayer.viewmodels;
     exports org.example.tourplanner.businessLayer.models;
