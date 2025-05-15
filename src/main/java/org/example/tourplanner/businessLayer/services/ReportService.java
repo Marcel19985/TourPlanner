@@ -1,6 +1,8 @@
 package org.example.tourplanner.businessLayer.services;
 
 import com.itextpdf.layout.element.Text;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.tourplanner.businessLayer.models.Tour;
 import org.example.tourplanner.businessLayer.models.TourLog;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,10 @@ import java.io.IOException;
 
 @Service
 public class ReportService {
+
+    private static final Logger logger = LogManager.getLogger(ReportService.class);
+
+
     public void generateTourReportPdf(Tour tour, String filePath) throws IOException {
         PdfWriter writer = new PdfWriter(filePath);
         PdfDocument pdf = new PdfDocument(writer);
@@ -70,6 +76,7 @@ public class ReportService {
                     .add(new Text("  Rating: ").setBold()).add(log.getRating() + "/10\n");
             document.add(logParagraph);
         }
+        logger.info("Tour report generated: {}", filePath);
 
         document.close();
     }
@@ -125,6 +132,7 @@ public class ReportService {
 
             document.add(new Paragraph("\n"));
         }
+        logger.info("Summary report generated: {}", filePath);
 
         document.close();
     }

@@ -1,6 +1,8 @@
 package org.example.tourplanner.businessLayer.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.tourplanner.businessLayer.models.Tour;
 import org.example.tourplanner.businessLayer.models.TourLog;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,13 @@ import java.util.List;
 
 @Service
 public class ImportExportService {
-        private static final String EXPORT_FOLDER = "import_export_json";
+    private static final Logger logger = LogManager.getLogger(ImportExportService.class);
+    private static final String EXPORT_FOLDER = "import_export_json";
         public ImportExportService() {
             // Registriere das Modul für Java-Zeittypen
             mapper.registerModule(new JavaTimeModule());
+            logger.info("Tours imported from JSON.");
+
         }
 
         private final ObjectMapper mapper = new ObjectMapper()
@@ -39,6 +44,8 @@ public class ImportExportService {
                 .toList();
 
         mapper.writeValue(file, uniqueTours);
+        logger.info("Tours exported to JSON.");
+
     }
 
         public List<Tour> importToursFromJson(File jsonFile) throws IOException {

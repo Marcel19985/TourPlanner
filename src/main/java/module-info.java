@@ -19,6 +19,7 @@ open module org.example.tourplanner {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.datatype.jsr310;
+    requires org.apache.logging.log4j;
 
     exports org.example.tourplanner;
     exports org.example.tourplanner.presentationLayer.controllers;

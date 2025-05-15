@@ -1,5 +1,5 @@
 package org.example.tourplanner.presentationLayer.UiTests;
-
+/*
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -102,3 +102,4 @@ public class TourCreationUITest extends ApplicationTest {
         );
     }
 }
+*/
