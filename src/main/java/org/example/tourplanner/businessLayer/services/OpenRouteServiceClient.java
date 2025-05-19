@@ -20,7 +20,7 @@ public class OpenRouteServiceClient {
     //API key aus config file laden:
     private static String API_KEY; //API key von OpenRouteService wird verwendet, um HTTP Request durchzuführen
     static { //static wird ausgeführt, bevor eine Instanz der Klasse erstellt wird
-        API_KEY = ConfigLoader.loadConfig("src/main/resources/config.properties").getProperty("ors.api.key");
+        API_KEY = ConfigLoader.loadConfig("src/main/resources/application.properties").getProperty("ors.api.key");
     }
 
     public static double[] getRouteDetails(String start, String destination, String transportType) throws IOException, JSONException, LocationNotFoundException {
