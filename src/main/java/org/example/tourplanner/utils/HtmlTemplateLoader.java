@@ -9,7 +9,7 @@ public class HtmlTemplateLoader {
     static { //static wird ausgeführt, bevor eine Instanz der Klasse erstellt wird
         try {
             Properties properties = new Properties();
-            properties.load(new FileInputStream("src/main/resources/config.properties"));
+            properties.load(new FileInputStream("src/main/resources/application.properties"));
             API_KEY = properties.getProperty("ors.api.key"); //API Schlüssel aus Konfig Datei speichern
         } catch (IOException e) {
             e.printStackTrace();
