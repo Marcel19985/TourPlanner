@@ -1,0 +1,59 @@
+[ {
+  "id" : "0196ef0f-ee47-7000-8ddc-333bbf5100f6",
+  "name" : "Wien-Graz",
+  "description" : "Test Beschreibung",
+  "start" : "Wien",
+  "destination" : "Graz",
+  "transportType" : "Car",
+  "distance" : 194.1945,
+  "estimatedTime" : 131.04833333333332,
+  "tourLogs" : [ {
+    "id" : "0196ef10-2141-7000-b956-64aed2ac331d",
+    "name" : "Woa cool",
+    "date" : "2025-05-20",
+    "time" : "12:30:00",
+    "comment" : "Test Comment",
+    "difficulty" : "Easy",
+    "totalDistance" : 20.0,
+    "totalTime" : 20.0,
+    "rating" : 9
+  }, {
+    "id" : "0196ef10-3e20-7000-82c5-ccfd58302d4b",
+    "name" : "hod passt",
+    "date" : "2025-05-20",
+    "time" : "12:30:00",
+    "comment" : "Test Comment",
+    "difficulty" : "Easy",
+    "totalDistance" : 20.0,
+    "totalTime" : 20.0,
+    "rating" : 7
+  } ],
+  "childFriendly" : true,
+  "averageRating" : 8.0,
+  "popularity" : "8,0",
+  "tourImagePath" : "target/images/0196ef0f-ee47-7000-8ddc-333bbf5100f6.png"
+}, {
+  "id" : "0196ef10-a12d-7000-89a4-0e5dae3a94a8",
+  "name" : "Wien-Bratislava",
+  "description" : "Test Beschreibung",
+  "start" : "Wien",
+  "destination" : "Bratislava",
+  "transportType" : "Car",
+  "distance" : 89.2046,
+  "estimatedTime" : 74.00666666666666,
+  "tourLogs" : [ {
+    "id" : "0196ef10-d8d8-7000-bd1e-e1af163adc6a",
+    "name" : "Woa oasch",
+    "date" : "2025-05-20",
+    "time" : "12:30:00",
+    "comment" : "Test Comment",
+    "difficulty" : "Medium",
+    "totalDistance" : 20.0,
+    "totalTime" : 20.0,
+    "rating" : 3
+  } ],
+  "childFriendly" : false,
+  "averageRating" : 3.0,
+  "popularity" : "3,0",
+  "tourImagePath" : "target/images/0196ef10-a12d-7000-89a4-0e5dae3a94a8.png"
+} ]

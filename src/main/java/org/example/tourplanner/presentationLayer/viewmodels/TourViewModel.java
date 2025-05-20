@@ -106,9 +106,7 @@ public class TourViewModel {
     }
 
     // Property-Methoden für das Data Binding
-    public StringProperty nameProperty() {
-        return name;
-    }
+    public StringProperty nameProperty() {return name;}
     public StringProperty descriptionProperty() {
         return description;
     }
@@ -121,16 +119,5 @@ public class TourViewModel {
     public StringProperty transportTypeProperty() {
         return transportType;
     }
-    public DoubleProperty distanceProperty() {
-        return distance;
-    }
-    public DoubleProperty estimatedTimeProperty() {
-        return estimatedTime;
-    }
-    public StringProperty popularityProperty() {
-        return popularity;
-    }
-    public BooleanProperty childFriendlyProperty() {
-        return childFriendly;
-    }
+
 }

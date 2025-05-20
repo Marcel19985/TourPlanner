@@ -159,3 +159,117 @@
 2025-05-19 17:29:47 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-05-19 17:29:47 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-05-19 17:29:47 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-05-20 20:57:46 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Starting application using Java 21.0.6 on DESKTOP-4HCI31U with PID 22904 (started by Dominik in C:\Users\Dominik\IdeaProjects\TourPlanner)
+2025-05-20 20:57:46 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-20 20:57:47 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-20 20:57:47 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 19 ms. Found 2 JPA repository interfaces.
+2025-05-20 20:57:47 [JavaFX-Launcher] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-20 20:57:47 [JavaFX-Launcher] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-05-20 20:57:47 [JavaFX-Launcher] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-05-20 20:57:47 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-05-20 20:57:47 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-05-20 20:57:47 [JavaFX-Launcher] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2025-05-20 20:57:48 [JavaFX-Launcher] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-05-20 20:57:48 [JavaFX-Launcher] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-20 20:57:48 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours imported from JSON.
+2025-05-20 20:57:48 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-05-20 20:57:48 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Started application in 1.819 seconds (JVM running for 2.707)
+2025-05-20 20:57:48 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-05-20 20:57:48 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-05-20 20:57:50 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196d4c3-15f7-7000-9fc9-7e9f65ffa8e9
+2025-05-20 20:57:50 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196d4ac-1771-7000-84c2-b6cba99ed94b
+2025-05-20 20:57:51 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196d4c2-bd41-7000-8dbf-dc041a38ee24
+2025-05-20 20:57:51 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196c374-c8c9-7000-bc0d-7fc2c2a3bd36
+2025-05-20 20:57:52 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 019695ea-1e81-7000-abe0-220def272a7d
+2025-05-20 20:57:52 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 019695e1-212a-7000-bdc0-a73d56550ad7
+2025-05-20 20:57:53 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196c374-c8c9-7000-bc0d-7fc2c2a3bd36
+2025-05-20 20:57:53 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196d4c2-bd41-7000-8dbf-dc041a38ee24
+2025-05-20 20:57:53 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196d4c3-15f7-7000-9fc9-7e9f65ffa8e9
+2025-05-20 20:57:53 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196d4ac-1771-7000-84c2-b6cba99ed94b
+2025-05-20 20:57:54 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 019695ea-1e81-7000-abe0-220def272a7d
+2025-05-20 20:57:56 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 019695ea-1e81-7000-abe0-220def272a7d
+2025-05-20 20:57:56 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 019695e1-212a-7000-bdc0-a73d56550ad7
+2025-05-20 20:57:56 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 019695e1-212a-7000-bdc0-a73d56550ad7
+2025-05-20 20:57:56 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196c374-c8c9-7000-bc0d-7fc2c2a3bd36
+2025-05-20 20:57:56 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 0196c374-c8c9-7000-bc0d-7fc2c2a3bd36
+2025-05-20 20:57:56 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196d4c2-bd41-7000-8dbf-dc041a38ee24
+2025-05-20 20:57:56 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 0196d4c2-bd41-7000-8dbf-dc041a38ee24
+2025-05-20 20:57:56 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196d4c3-15f7-7000-9fc9-7e9f65ffa8e9
+2025-05-20 20:57:56 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 0196d4c3-15f7-7000-9fc9-7e9f65ffa8e9
+2025-05-20 20:57:56 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196d4ac-1771-7000-84c2-b6cba99ed94b
+2025-05-20 20:57:56 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 0196d4ac-1771-7000-84c2-b6cba99ed94b
+2025-05-20 20:58:02 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-05-20 20:58:02 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.ReportService - Summary report generated: Reports/summarize-report.pdf
+2025-05-20 20:58:40 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Saving tour: Wien-Graz
+2025-05-20 20:58:42 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef0f-ee47-7000-8ddc-333bbf5100f6
+2025-05-20 20:58:53 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Saving a tour log: Woa cool
+2025-05-20 20:58:53 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef0f-ee47-7000-8ddc-333bbf5100f6
+2025-05-20 20:59:01 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Saving a tour log: hod passt
+2025-05-20 20:59:01 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef0f-ee47-7000-8ddc-333bbf5100f6
+2025-05-20 20:59:26 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Saving tour: Wien-Bratislava
+2025-05-20 20:59:28 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef10-a12d-7000-89a4-0e5dae3a94a8
+2025-05-20 20:59:29 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef0f-ee47-7000-8ddc-333bbf5100f6
+2025-05-20 20:59:29 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef10-a12d-7000-89a4-0e5dae3a94a8
+2025-05-20 20:59:29 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef0f-ee47-7000-8ddc-333bbf5100f6
+2025-05-20 20:59:30 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef10-a12d-7000-89a4-0e5dae3a94a8
+2025-05-20 20:59:40 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Saving a tour log: Woa oasch
+2025-05-20 20:59:40 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef10-a12d-7000-89a4-0e5dae3a94a8
+2025-05-20 20:59:42 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef0f-ee47-7000-8ddc-333bbf5100f6
+2025-05-20 20:59:43 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-05-20 20:59:43 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.ReportService - Summary report generated: Reports/summarize-report.pdf
+2025-05-20 21:00:27 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef10-a12d-7000-89a4-0e5dae3a94a8
+2025-05-20 21:00:30 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.ReportService - Tour report generated: Reports/tour-report-0196ef10-a12d-7000-89a4-0e5dae3a94a8.pdf
+2025-05-20 21:00:55 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-05-20 21:00:55 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours exported to JSON.
+2025-05-20 21:00:57 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef0f-ee47-7000-8ddc-333bbf5100f6
+2025-05-20 21:00:58 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef10-a12d-7000-89a4-0e5dae3a94a8
+2025-05-20 21:00:58 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef0f-ee47-7000-8ddc-333bbf5100f6
+2025-05-20 21:01:14 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef10-a12d-7000-89a4-0e5dae3a94a8
+2025-05-20 21:01:15 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef0f-ee47-7000-8ddc-333bbf5100f6
+2025-05-20 21:03:39 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-20 21:03:39 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-05-20 21:03:39 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-05-20 21:20:23 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Starting application using Java 21.0.6 on DESKTOP-4HCI31U with PID 19864 (started by Dominik in C:\Users\Dominik\IdeaProjects\TourPlanner)
+2025-05-20 21:20:23 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-20 21:20:23 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-20 21:20:23 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 2 JPA repository interfaces.
+2025-05-20 21:20:23 [JavaFX-Launcher] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-20 21:20:23 [JavaFX-Launcher] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-05-20 21:20:23 [JavaFX-Launcher] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-05-20 21:20:23 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-05-20 21:20:23 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-05-20 21:20:23 [JavaFX-Launcher] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2025-05-20 21:20:24 [JavaFX-Launcher] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-05-20 21:20:24 [JavaFX-Launcher] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-20 21:20:24 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours imported from JSON.
+2025-05-20 21:20:24 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-05-20 21:20:24 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Started application in 1.669 seconds (JVM running for 2.437)
+2025-05-20 21:20:24 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-05-20 21:20:24 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-05-20 21:20:29 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef10-a12d-7000-89a4-0e5dae3a94a8
+2025-05-20 21:20:30 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef0f-ee47-7000-8ddc-333bbf5100f6
+2025-05-20 21:20:36 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourLogService - Deleting tour log with ID: 0196ef10-3e20-7000-82c5-ccfd58302d4b
+2025-05-20 21:20:36 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 0196ef0f-ee47-7000-8ddc-333bbf5100f6
+2025-05-20 21:24:55 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-20 21:24:55 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-05-20 21:24:55 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-05-20 21:25:51 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Starting application using Java 21.0.6 on DESKTOP-4HCI31U with PID 18624 (started by Dominik in C:\Users\Dominik\IdeaProjects\TourPlanner)
+2025-05-20 21:25:51 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to 1 default profile: "default"
+2025-05-20 21:25:51 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-20 21:25:51 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 2 JPA repository interfaces.
+2025-05-20 21:25:51 [JavaFX-Launcher] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-20 21:25:51 [JavaFX-Launcher] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-05-20 21:25:51 [JavaFX-Launcher] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-05-20 21:25:51 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-05-20 21:25:52 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-05-20 21:25:52 [JavaFX-Launcher] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2025-05-20 21:25:52 [JavaFX-Launcher] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-05-20 21:25:52 [JavaFX-Launcher] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-20 21:25:52 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours imported from JSON.
+2025-05-20 21:25:52 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-05-20 21:25:52 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Started application in 1.727 seconds (JVM running for 2.485)
+2025-05-20 21:25:53 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-05-20 21:25:53 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-05-20 21:25:54 [JavaFX Application Thread] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-20 21:25:54 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-05-20 21:25:54 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
