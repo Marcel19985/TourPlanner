@@ -4,5 +4,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class SpringBootMain {
-    // Diese Klasse dient nur zum Starten des Spring Contexts.
+    //Diese Klasse dient nur zum Starten des Spring Contexts. Sie wird von der TourPlannerApplication in init() verwendet
 }

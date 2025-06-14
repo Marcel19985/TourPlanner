@@ -11,22 +11,20 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.IOException;
 
-//todo: tag in git erstellen vor intermediate hand in
+//Trennung von UI und Business-Logik: Controller und Services leben als Spring Beans -> in Controllern kann @Autowired verwendet werden
 public class TourPlannerApplication extends Application {
 
     private ConfigurableApplicationContext springContext;
 
     @Override
     public void init() throws Exception {
-        // Starte den Spring-Kontext (hier verwendet SpringBootMain als Konfigurationsklasse)
-        springContext = new SpringApplicationBuilder(SpringBootMain.class).run();
-        // Speichere den Kontext in einer Hilfsklasse, damit du ihn in Controllern abrufen kannst
-        SpringContext.setApplicationContext(springContext);
+        springContext = new SpringApplicationBuilder(SpringBootMain.class).run(); //Starte den Spring-Kontext (hier verwendet SpringBootMain als Konfigurationsklasse)
+        SpringContext.setApplicationContext(springContext); //Speichere den Kontext in einer Hilfsklasse, damit Controller ihn verwenden können
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Lade FXML und verwende den Spring-Kontext, um Controller zu erzeugen
+        //Lade FXML und verwende den Spring-Kontext, um Controller zu erzeugen
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/MainView.fxml"));
         fxmlLoader.setControllerFactory(springContext::getBean);
         Parent root = fxmlLoader.load();
@@ -34,7 +32,7 @@ public class TourPlannerApplication extends Application {
         scene.getStylesheets().add(getClass().getResource("/org/example/tourplanner/stylesheet.css").toExternalForm());
         stage.setTitle("TourPlanner");
         stage.setScene(scene);
-        stage.setMaximized(true);
+        stage.setMaximized(true); //Vollbild
         stage.show();
     }
 

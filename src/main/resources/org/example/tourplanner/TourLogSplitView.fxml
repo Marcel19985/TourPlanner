@@ -18,9 +18,7 @@
     <items>
         <!-- Linke Seite: Liste der TourLogs -->
         <AnchorPane minWidth="200.0" prefWidth="400.0">
-            <ListView fx:id="tourLogListView" AnchorPane.topAnchor="0"
-                      AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
-                      AnchorPane.rightAnchor="0" />
+
             <VBox spacing="5"
                   AnchorPane.topAnchor="0"
                   AnchorPane.bottomAnchor="0"

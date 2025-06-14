@@ -97,6 +97,15 @@ public class Tour {
         this.estimatedTime = estimatedTime;
     }
 
+    public Tour(String name, String description, String start, String destination, String transportType) { //Konstruktor für OpenRouteService
+        this.id = UUIDv7Generator.generateUUIDv7();
+        this.name = name;
+        this.description = description;
+        this.start = start;
+        this.destination = destination;
+        this.transportType = transportType.toLowerCase();
+    }
+
     // Getter & Setter
 
     public UUID getId() { return id; }

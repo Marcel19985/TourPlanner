@@ -16,8 +16,14 @@ public interface TourRepository extends JpaRepository<Tour, UUID> {
     List<Tour> findAllWithLogs();
 
     //Lädt alle TourLogs einer bestimmten Tour
-    @Query("SELECT t FROM Tour t LEFT JOIN FETCH t.tourLogs WHERE t.id = :tourId")
-    List<TourLog> findTourLogsByTourId(UUID tourId);
+    @Query("""
+        SELECT tl
+        FROM Tour t
+        JOIN t.tourLogs tl
+        WHERE t.id = :tourId
+""")
+    List<TourLog> findTourLogsByTourId(@Param("tourId") UUID tourId);
+
 
     // Suche nach Tours, deren Name den Suchbegriff enthält (ignore case) und lade auch die Logs
     @Query("""

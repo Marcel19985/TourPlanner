@@ -21,7 +21,7 @@ public class ImportExportService {
         public ImportExportService() {
             // Registriere das Modul für Java-Zeittypen
             mapper.registerModule(new JavaTimeModule());
-            logger.info("Tours imported from JSON.");
+            logger.info("ImportExportService initialized.");
 
         }
 
@@ -49,6 +49,7 @@ public class ImportExportService {
     }
 
         public List<Tour> importToursFromJson(File jsonFile) throws IOException {
+            logger.info("Tours imported from JSON.");
             return List.of(mapper.readValue(jsonFile, Tour[].class));
         }
     }

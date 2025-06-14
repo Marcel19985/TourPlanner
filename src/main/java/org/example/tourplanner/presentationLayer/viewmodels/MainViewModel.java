@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import org.example.tourplanner.businessLayer.models.Tour;
 
 public class MainViewModel {
-    // Liste von TourViewModel statt Tour-Objekten
+    //Liste von TourViewModel
     private final ObservableList<TourViewModel> tourViewModels = FXCollections.observableArrayList();
 
     public ObservableList<TourViewModel> getTourViewModels() {
