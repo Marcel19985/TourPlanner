@@ -1,5 +1,6 @@
 package org.example.tourplanner.businessLayer.services;
 
+import org.example.tourplanner.businessLayer.models.Tour;
 import org.example.tourplanner.helpers.ConfigLoader;
 import org.example.tourplanner.helpers.LocationNotFoundException;
 import org.json.JSONArray;
@@ -23,16 +24,16 @@ public class OpenRouteServiceClient {
         API_KEY = ConfigLoader.loadConfig("src/main/resources/application.properties").getProperty("ors.api.key");
     }
 
-    public static double[] getRouteDetails(String start, String destination, String transportType) throws IOException, JSONException, LocationNotFoundException {
-        //Koordinaten von Start und Zielort abfragen:
-        String startCoords = getCoordinates(start);
-        String destCoords = getCoordinates(destination);
+    public static Tour getRouteDetails(Tour tour) throws IOException, JSONException, LocationNotFoundException {
 
-        String orsMode = switch (transportType.toLowerCase()) { //Transportmittel bestimmen: kann man eleganter machen; funktion mit ChatGPT generiert
+        String startCoords = getCoordinates(tour.getStart());
+        String destCoords  = getCoordinates(tour.getDestination());
+
+        String orsMode = switch (tour.getTransportType().toLowerCase()) { //Transportmittel bestimmen: kann man eleganter machen; funktion mit ChatGPT generiert
             case "car" -> "driving-car";
             case "bike" -> "cycling-regular";
             case "walk" -> "foot-walking";
-            default -> throw new IllegalArgumentException("Unvalid transport type: " + transportType);
+            default -> throw new IllegalArgumentException("Invalid transport type: " + tour.getTransportType());
         };
 
         //URL für route request zusammenbauen: Beispielrequests siehe hier: https://openrouteservice.org/dev/#/api-docs
@@ -58,7 +59,10 @@ public class OpenRouteServiceClient {
         scanner.close();
         conn.disconnect();
 
-        return parseRouteDetails(jsonResponse); //siehe Methode darunter
+        double[] coordinates = parseRouteDetails(jsonResponse); //siehe Methode darunter
+        tour.setDistance(coordinates[0]); //in km
+        tour.setEstimatedTime(coordinates[1]); //in Minuten
+        return tour;
     }
 
     public static double[] parseRouteDetails(String jsonResponse) throws JSONException {

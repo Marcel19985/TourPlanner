@@ -103,7 +103,7 @@ public class Tour {
         this.description = description;
         this.start = start;
         this.destination = destination;
-        this.transportType = transportType.toLowerCase();
+        this.transportType = transportType;
     }
 
     // Getter & Setter

@@ -127,25 +127,16 @@ public class TourCreationController {
         } else {
             //Erstellungsmodus: Route berechnen
             try {
-                String start = startField.getText();
-                String destination = destinationField.getText();
-                String transportType = transportTypeBox.getValue();
-
-                //Abruf der Routendetails via OpenRouteServiceClient:
-                double[] routeDetails = OpenRouteServiceClient.getRouteDetails(start, destination, transportType); //todo: eventuell nur Tour Objekt übergeben
-                double distance = routeDetails[0];
-                double estimatedTime = routeDetails[1];
-
-                //Erzeuge die neue Tour:
                 Tour newTour = new Tour(
                         tourNameField.getText(),
                         tourDescriptionField.getText(),
-                        start,
-                        destination,
-                        transportType,
-                        distance,
-                        estimatedTime
+                        startField.getText(),
+                        destinationField.getText(),
+                        transportTypeBox.getValue()
                 );
+
+                //Abruf der Routendetails via OpenRouteServiceClient:
+                newTour = OpenRouteServiceClient.getRouteDetails(newTour); //todo: eventuell nur Tour Objekt übergeben DONE
 
                 takeMapScreenshot(newTour, currentStage); //Screenshot erstellen
 
