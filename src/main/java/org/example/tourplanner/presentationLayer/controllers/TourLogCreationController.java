@@ -166,7 +166,7 @@ public class TourLogCreationController {
                 //ggf. überschreiben:
                 Files.copy(selectedImageFile.toPath(),
                         dest.toPath(),
-                        StandardCopyOption.REPLACE_EXISTING);
+                        StandardCopyOption.REPLACE_EXISTING); //wenn man TourLog bearbeitet und ein neues Bild hochlädt, wird das alte überschrieben
             }
             closeWindow();
         } catch (NumberFormatException e) {
