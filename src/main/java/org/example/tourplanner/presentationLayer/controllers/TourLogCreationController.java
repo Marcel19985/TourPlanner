@@ -5,6 +5,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import org.example.tourplanner.businessLayer.models.Tour;
@@ -15,6 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.function.Consumer;
@@ -32,6 +37,11 @@ public class TourLogCreationController {
     @FXML private DatePicker datePicker;
     @FXML private Spinner<Integer> hourSpinner;
     @FXML private Spinner<Integer> minuteSpinner;
+
+    //Für TouLog Bild upload:
+    @FXML private Button uploadImageButton;
+    @FXML private Label imageNameLabel;
+    private File selectedImageFile;
 
     private Tour currentTour;
     private Consumer<TourLog> onTourLogCreatedCallback;
@@ -149,9 +159,35 @@ public class TourLogCreationController {
                     onTourLogCreatedCallback.accept(tourLog);
                 }
             }
+            if (selectedImageFile != null) { //Upload für Bild
+                File dir = new File("target/images/logs");
+                if (!dir.exists()) dir.mkdirs();
+                File dest = new File(dir, tourLog.getId() + ".png");
+                //ggf. überschreiben:
+                Files.copy(selectedImageFile.toPath(),
+                        dest.toPath(),
+                        StandardCopyOption.REPLACE_EXISTING);
+            }
             closeWindow();
         } catch (NumberFormatException e) {
             showAlert("Invalid input for distance or time.");
+        } catch (IOException e) {
+            showAlert("Error saving tour log image: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    //Für Bild upload:
+    @FXML
+    private void onUploadImage() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Select Image for Tour Log");
+        chooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+        File file = chooser.showOpenDialog(uploadImageButton.getScene().getWindow());
+        if (file != null) {
+            selectedImageFile = file;
+            imageNameLabel.setText(file.getName());
         }
     }
 
