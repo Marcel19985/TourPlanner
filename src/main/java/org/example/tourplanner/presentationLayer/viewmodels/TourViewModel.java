@@ -23,10 +23,10 @@ public class TourViewModel {
     private final StringProperty popularity = new SimpleStringProperty();
     private final BooleanProperty childFriendly = new SimpleBooleanProperty();
 
-    // Neue ObservableList für die TourLogViewModels
+    //Neue ObservableList für die TourLogViewModels
     private final ObservableList<TourLogViewModel> tourLogViewModels = FXCollections.observableArrayList();
 
-    // Konstruktor: Initialisiert Properties und erstellt aus den TourLogs
+    //Konstruktor: Initialisiert Properties und erstellt aus den TourLogs
     public TourViewModel(Tour tour) {
         this.tour = tour;
         this.name.set(tour.getName());
@@ -44,7 +44,7 @@ public class TourViewModel {
         }
     }
 
-    // Kopierkonstruktor für Editing-Clones
+    //Kopierkonstruktor für Editing-Clones
     public TourViewModel(TourViewModel other) {
         this.tour = other.tour;
         this.name.set(other.name.get());
@@ -57,7 +57,7 @@ public class TourViewModel {
         this.popularity.set(other.popularity.get());
     }
 
-    // Methode, um Änderungen aus einem Editing-Clone ins Original zu kopieren
+    //Methode, um Änderungen aus einem Editing-Clone ins Original zu kopieren
     public void copyFrom(TourViewModel editingClone) {
         this.name.set(editingClone.name.get());
         this.description.set(editingClone.description.get());
@@ -68,7 +68,7 @@ public class TourViewModel {
         this.estimatedTime.set(editingClone.estimatedTime.get());
         this.popularity.set(editingClone.popularity.get());
 
-        // Aktualisiere auch das zugrunde liegende Tour-Datenmodell
+        //Aktualisiere auch das zugrunde liegende Tour-Datenmodell
         tour.setName(editingClone.name.get());
         tour.setDescription(editingClone.description.get());
         tour.setStart(editingClone.start.get());
@@ -77,7 +77,7 @@ public class TourViewModel {
         // distance und estimatedTime können ebenfalls aktualisiert werden, falls erforderlich
     }
 
-    // Neue Methode: Gibt die ObservableList der TourLogViewModels zurück
+    //Gibt die ObservableList der TourLogViewModels zurück
     public ObservableList<TourLogViewModel> getTourLogViewModels() {
         return tourLogViewModels;
     }
@@ -95,7 +95,7 @@ public class TourViewModel {
         this.childFriendly.set(tour.isChildFriendly());
     }
 
-    // Neue Methode: Fügt einen TourLog hinzu – sowohl im zugrunde liegenden Tour-Modell als auch in der ObservableList
+    //Fügt einen TourLog hinzu – sowohl im zugrunde liegenden Tour-Modell als auch in der ObservableList
     public void addTourLog(TourLog newLog) {
         tour.addTourLog(newLog); // Aktualisiert das Tour-Datenmodell
         tourLogViewModels.add(new TourLogViewModel(newLog)); // Fügt ein neues ViewModel hinzu
@@ -105,7 +105,7 @@ public class TourViewModel {
         return tour;
     }
 
-    // Property-Methoden für das Data Binding
+    //Property-Methoden für das Data Binding
     public StringProperty nameProperty() {return name;}
     public StringProperty descriptionProperty() {
         return description;

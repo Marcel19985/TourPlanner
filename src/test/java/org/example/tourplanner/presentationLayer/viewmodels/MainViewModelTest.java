@@ -1,74 +1,46 @@
 package org.example.tourplanner.presentationLayer.viewmodels;
 
+import org.example.tourplanner.businessLayer.models.Tour;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class MainViewModelTest {
-/*
-    private MainViewModel viewModel;
+
+    private MainViewModel vm;
+    private Tour sampleTour1;
+    private Tour sampleTour2;
 
     @BeforeEach
     void setUp() {
-        viewModel = new MainViewModel();
+        vm = new MainViewModel();
+        //erstellt zwei Dummy-Touren:
+        sampleTour1 = new Tour("A", "Desc1", "X", "Y", "car", 10, 20);
+        sampleTour2 = new Tour("B", "Desc2", "P", "Q", "walk", 5, 15);
     }
 
     @Test
-    void testAddTour() {
-        // Act
-        viewModel.addTour("Test Tour", "Description", "Vienna", "Graz", "Car");
-
-        // Assert
-        ObservableList<Tour> tours = viewModel.getTours();
-        assertEquals(1, tours.size());
-        assertEquals("Test Tour", tours.get(0).getName());
-        assertEquals("Vienna", tours.get(0).getStart());
-        assertEquals("Graz", tours.get(0).getDestination());
-        assertEquals("Car", tours.get(0).getTransportType());
+    void addTour_shouldAddOneViewModel() {
+        assertTrue(vm.getTourViewModels().isEmpty());
+        vm.addTour(sampleTour1);
+        assertEquals(1, vm.getTourViewModels().size());
+        assertEquals("A", vm.getTourViewModels().get(0).nameProperty().get());
     }
 
     @Test
-    void testAddTourLog() {
-        // Arrange
-        TourLog log = new TourLog("TourLog 1", LocalDate.parse("2025-03-10"), "Great trip", "Medium", 300, 180, 5);
+    void deleteTours_shouldRemoveSpecifiedViewModels() {
+        //fügt 2 tours zu TourViewModel hinzu:
+        vm.addTour(sampleTour1);
+        vm.addTour(sampleTour2);
+        List<TourViewModel> all = vm.getTourViewModels();
+        assertEquals(2, all.size());
 
-        // Act
-        viewModel.addTourLog(log);
-
-        // Assert
-        ObservableList<TourLog> logs = viewModel.getTourLogs();
-        assertEquals(1, logs.size());
-        assertEquals("Great trip", logs.get(0).getComment());
+        //lösche nur die erste:
+        vm.deleteTours(List.of(all.get(0)));
+        assertEquals(1, vm.getTourViewModels().size());
+        assertEquals("B", vm.getTourViewModels().get(0).nameProperty().get()); //zweite Tour noch da
     }
-
-    @Test
-    void testSetTourLogsForTour() {
-        // Arrange
-        Tour tour = new Tour("Test Tour", "Description", "Vienna", "Graz", "Car");
-        TourLog log1 = new TourLog("TourLog1", LocalDate.parse("2025-03-10"), "Great trip", "Medium", 300, 180, 5);
-        TourLog log2 = new TourLog("TourLog2", LocalDate.parse("2025-05-19"), "Tiring", "Hard", 350, 240, 3);
-
-        tour.addTourLog(log1);
-        tour.addTourLog(log2);
-
-        viewModel.addTour(tour.getName(), tour.getDescription(), tour.getStart(), tour.getDestination(), tour.getTransportType());
-
-        // Act
-        viewModel.setTourLogsForTour(tour);
-
-        // Assert
-        ObservableList<TourLog> logs = viewModel.getTourLogs();
-        assertEquals(2, logs.size());
-        assertTrue(logs.contains(log1));
-        assertTrue(logs.contains(log2));
-    }
-
-    @Test
-    void testGetToursInitiallyEmpty() {
-        // Assert
-        assertTrue(viewModel.getTours().isEmpty());
-    }
-
-    @Test
-    void testGetTourLogsInitiallyEmpty() {
-        // Assert
-        assertTrue(viewModel.getTourLogs().isEmpty());
-    }
-    */
 }
