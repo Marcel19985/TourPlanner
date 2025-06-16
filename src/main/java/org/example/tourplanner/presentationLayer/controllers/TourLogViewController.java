@@ -254,4 +254,11 @@ public class TourLogViewController {
     public ListView<TourLogViewModel> getTourLogListView() {
         return tourLogListView;
     }
+
+    public void focusLogSearchField() {
+        if (logSearchField != null) {
+            logSearchField.requestFocus();
+        }
+    }
 }
+

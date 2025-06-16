@@ -158,6 +158,11 @@ public class MainViewController {
                         new KeyCodeCombination(KeyCode.DELETE),
                         this::onDelete
                 );
+                // Shortcut für Suche (Strg+F)
+                newScene.getAccelerators().put(
+                        new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN),
+                        this::focusSearchField
+                );
             }
         });
 
@@ -177,6 +182,17 @@ public class MainViewController {
         loadAllTours();
 
     } //Initialize end
+
+    private void focusSearchField() {
+        Tab selectedTab = detailTabPane.getSelectionModel().getSelectedItem();
+        if (selectedTab != null && selectedTab.getText().equals("Tour Details")) {
+            searchField.requestFocus();
+        } else if (selectedTab != null && selectedTab.getText().equals("Tour Logs")) {
+            if (tourLogViewController != null) {
+                tourLogViewController.focusLogSearchField();
+            }
+        }
+    }
 
     @FXML
     private void onSearch() {
