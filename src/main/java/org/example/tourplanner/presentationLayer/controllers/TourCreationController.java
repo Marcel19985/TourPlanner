@@ -69,6 +69,24 @@ public class TourCreationController {
         //Falls Start oder Destination nach Laden der Karte geändert werden, deaktiviere den Save-Button:
         startField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
         destinationField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
+
+        // Tastenkürzel hinzufügen
+        tourNameField.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.getAccelerators().put(
+                        new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.L, javafx.scene.input.KeyCombination.CONTROL_DOWN),
+                        this::onLoadMapClick
+                );
+                newScene.getAccelerators().put(
+                        new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.S, javafx.scene.input.KeyCombination.CONTROL_DOWN),
+                        () -> onSaveButtonClick(null)
+                );
+                newScene.getAccelerators().put(
+                        new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.ESCAPE),
+                        this::onCancelButtonClick
+                );
+            }
+        });
     }
 
     public void setOnTourCreatedCallback(Consumer<Tour> callback) {

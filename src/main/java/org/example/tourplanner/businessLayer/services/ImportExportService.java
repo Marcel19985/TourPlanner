@@ -13,21 +13,22 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ImportExportService {
     private static final Logger logger = LogManager.getLogger(ImportExportService.class);
     private static final String EXPORT_FOLDER = "import_export_json";
-        public ImportExportService() {
-            // Registriere das Modul für Java-Zeittypen
-            mapper.registerModule(new JavaTimeModule());
-            logger.info("ImportExportService initialized.");
+    public ImportExportService() {
+        // Registriere das Modul für Java-Zeittypen
+        mapper.registerModule(new JavaTimeModule());
+        logger.info("ImportExportService initialized.");
 
-        }
+    }
 
-        private final ObjectMapper mapper = new ObjectMapper()
-                .enable(SerializationFeature.INDENT_OUTPUT)
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // ISO-8601 Format verwenden
+    private final ObjectMapper mapper = new ObjectMapper()
+            .enable(SerializationFeature.INDENT_OUTPUT)
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // ISO-8601 Format verwenden
 
     public void exportToursToJson(List<Tour> tours) throws IOException {
         Files.createDirectories(Paths.get(EXPORT_FOLDER));
@@ -38,19 +39,24 @@ public class ImportExportService {
             fileNumber++;
         } while (file.exists());
 
-        // Entferne Duplikate basierend auf der Tour-ID
+        // Optional: Duplikate anhand von Name+Start+Destination+TransportType entfernen
         List<Tour> uniqueTours = tours.stream()
-                .distinct()
-                .toList();
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toMap(
+                                t -> t.getName() + "|" + t.getStart() + "|" + t.getDestination() + "|" + t.getTransportType(),
+                                t -> t,
+                                (t1, t2) -> t1
+                        ),
+                        m -> m.values().stream().toList()
+                ));
 
         mapper.writeValue(file, uniqueTours);
         logger.info("Tours exported to JSON.");
 
     }
 
-        public List<Tour> importToursFromJson(File jsonFile) throws IOException {
-            logger.info("Tours imported from JSON.");
-            return List.of(mapper.readValue(jsonFile, Tour[].class));
-        }
+    public List<Tour> importToursFromJson(File jsonFile) throws IOException {
+        logger.info("Tours imported from JSON.");
+        return List.of(mapper.readValue(jsonFile, Tour[].class));
     }
-
+}

@@ -69,6 +69,25 @@ public class TourLogCreationController {
         totalTimeField.setText("20");
         ratingComboBox.setValue(5);
         datePicker.setValue(LocalDate.now());
+
+        // Tastenkürzel hinzufügen
+        nameLog.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.getAccelerators().put(
+                        new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.U, javafx.scene.input.KeyCombination.CONTROL_DOWN),
+                        this::onUploadImage
+                );
+                newScene.getAccelerators().put(
+                        new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.S, javafx.scene.input.KeyCombination.CONTROL_DOWN),
+                        this::onSaveTourLog
+                );
+                newScene.getAccelerators().put(
+                        new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.ESCAPE),
+                        this::onCancel
+                );
+
+            }
+        });
     }
 
     public void setCurrentTour(Tour currentTour) {
