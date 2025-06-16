@@ -10,13 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class TourTest {
 
     @Test
-    void testPopularityNoLogs() {
+    void testPopularityNoLogs() { //Tour hat keine Popularity zugeordnet wenn es keine Logs gibt
         Tour tour = new Tour("Test", "desc", "start", "dest", "car", 10, 20);
         assertEquals("not rated yet", tour.getPopularity());
     }
 
     @Test
-    void testPopularityWithLogs() {
+    void testPopularityWithLogs() { //2 Tourlogs mit rating 7 und 9 also muss Popularity im Schnitt 8 sein
         Tour tour = new Tour("Test", "desc", "start", "dest", "car", 10, 20);
         tour.addTourLog(new TourLog("Log1", LocalDate.now(), LocalTime.now(), "c", "easy", 1, 1, 7));
         tour.addTourLog(new TourLog("Log2", LocalDate.now(), LocalTime.now(), "c", "easy", 1, 1, 9));
