@@ -145,4 +145,16 @@ public class Tour {
         return "target/images/" + id + ".png";
     }
 
+    public double getAvgTime() {
+        return this.getTourLogs().stream().mapToDouble(TourLog::getTotalTime).average().orElse(0);
+    }
+
+    public double getAvgDistance() {
+        return this.getTourLogs().stream().mapToDouble(TourLog::getTotalDistance).average().orElse(0);
+    }
+
+    public double getAvgRating() {
+        return this.getTourLogs().stream().mapToInt(TourLog::getRating).average().orElse(0);
+    }
+
 }

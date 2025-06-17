@@ -41,9 +41,9 @@ public class ReportService {
         document.add(new Paragraph(new Text("Start: ").setBold()).add(tour.getStart()));
         document.add(new Paragraph(new Text("Destination: ").setBold()).add(tour.getDestination()));
         document.add(new Paragraph(new Text("Transport Type: ").setBold()).add(tour.getTransportType()));
-        document.add(new Paragraph(new Text("Distance: ").setBold()).add(tour.getDistance() + " km"));
-        document.add(new Paragraph(new Text("Estimated Time: ").setBold()).add(tour.getEstimatedTime() + " min"));
-        document.add(new Paragraph(new Text("Popularity: ").setBold()).add(tour.getPopularity()));
+        document.add(new Paragraph(new Text("Distance: ").setBold()).add(String.format("%.2f km", tour.getDistance())));
+        document.add(new Paragraph(new Text("Estimated Time: ").setBold()).add(String.format("%.0f min", tour.getEstimatedTime())));
+        document.add(new Paragraph(new Text("Popularity: ").setBold()).add(tour.getPopularity() + "/10")); //hier gibt bereits der getter eine Nachkommastelle
         document.add(new Paragraph(new Text("Child Friendly: ").setBold())
                 .add(tour.isChildFriendly() ? "Yes" : "No"));
         document.add(new Paragraph("\n"));
@@ -70,7 +70,7 @@ public class ReportService {
         for (TourLog log : tour.getTourLogs()) {
             Paragraph logParagraph = new Paragraph()
                     .setMarginLeft(20) // Einrückung
-                    .add(new Text("- Date: ").setBold()).add(log.getDate() + "\n")
+                    .add(new Text("  Date: ").setBold()).add(log.getDate() + "\n")
                     .add(new Text("  Name: ").setBold()).add(log.getName() + "\n")
                     .add(new Text("  Comment: ").setBold()).add(log.getComment() + "\n")
                     .add(new Text("  Difficulty: ").setBold()).add(log.getDifficulty() + "\n")
@@ -116,9 +116,9 @@ public class ReportService {
                 .toList();
 
         for (Tour tour : uniqueTours) {
-            double avgTime = tour.getTourLogs().stream().mapToDouble(TourLog::getTotalTime).average().orElse(0);
-            double avgDistance = tour.getTourLogs().stream().mapToDouble(TourLog::getTotalDistance).average().orElse(0);
-            double avgRating = tour.getTourLogs().stream().mapToInt(TourLog::getRating).average().orElse(0);
+            double avgTime = tour.getAvgTime();
+            double avgDistance = tour.getAvgDistance();
+            double avgRating = tour.getAvgRating();
 
             // Tour-Infos
             document.add(new Paragraph(new Text("Tour: ").setBold()).add(tour.getName()));
@@ -126,7 +126,7 @@ public class ReportService {
             document.add(new Paragraph(new Text("Start: ").setBold()).add(tour.getStart()));
             document.add(new Paragraph(new Text("Destination: ").setBold()).add(tour.getDestination()));
             document.add(new Paragraph(new Text("Transport Type: ").setBold()).add(tour.getTransportType()));
-            document.add(new Paragraph(new Text("Distance: ").setBold()).add(tour.getDistance() + " km"));
+            document.add(new Paragraph(new Text("Distance: ").setBold()).add(String.format("%.2f km", tour.getDistance())));
 
             // Durchschnittswerte
             Paragraph averages = new Paragraph()
@@ -134,7 +134,12 @@ public class ReportService {
                     .add(new Text("Average Time: ").setBold()).add(avgTime + " min\n")
                     .add(new Text("Average Distance: ").setBold()).add(avgDistance + " km\n")
                     .add(new Text("Average Rating: ").setBold()).add(avgRating + "/10\n");
-            document.add(averages);
+            if(avgTime+avgDistance+avgRating == 0) {
+                document.add(new Paragraph(new Text("No logs have been recorded for this tour.\n")));
+            }
+            else {
+                document.add(averages);
+            }
 
             // Bild hinzufügen
             String imagePath = "target/images/" + tour.getId() + ".png";
