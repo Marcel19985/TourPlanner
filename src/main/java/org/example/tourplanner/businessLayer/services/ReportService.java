@@ -55,7 +55,8 @@ public class ReportService {
             com.itextpdf.layout.element.Image image = new com.itextpdf.layout.element.Image(
                     com.itextpdf.io.image.ImageDataFactory.create(imagePath)
             );
-            image.setAutoScale(true);
+            image.setWidth(200);
+            image.setHeight(150);
             document.add(image);
         } else {
             document.add(new Paragraph("Image not available for this tour."));
@@ -70,11 +71,29 @@ public class ReportService {
             Paragraph logParagraph = new Paragraph()
                     .setMarginLeft(20) // Einrückung
                     .add(new Text("- Date: ").setBold()).add(log.getDate() + "\n")
+                    .add(new Text("  Name: ").setBold()).add(log.getName() + "\n")
                     .add(new Text("  Comment: ").setBold()).add(log.getComment() + "\n")
                     .add(new Text("  Difficulty: ").setBold()).add(log.getDifficulty() + "\n")
                     .add(new Text("  Total Time: ").setBold()).add(log.getTotalTime() + " min\n")
                     .add(new Text("  Rating: ").setBold()).add(log.getRating() + "/10\n");
             document.add(logParagraph);
+
+            // Bild für TourLog anzeigen, falls vorhanden
+            String logImagePath = "target/images/logs/" + log.getId() + ".png";
+            File logImageFile = new File(logImagePath);
+            if (logImageFile.exists()) {
+                // Bild für jeden Log neu laden und einfügen
+                com.itextpdf.layout.element.Image logImage = new com.itextpdf.layout.element.Image(
+                        com.itextpdf.io.image.ImageDataFactory.create(logImageFile.getAbsolutePath())
+                );
+                logImage.setWidth(200);
+                logImage.setHeight(150);
+                document.add(logImage);
+            } else {
+                document.add(new Paragraph("No image for this log."));
+            }
+            // Optional: Abstand zwischen Logs
+            document.add(new Paragraph(" "));
         }
         logger.info("Tour report generated: {}", filePath);
 
@@ -124,7 +143,8 @@ public class ReportService {
                 com.itextpdf.layout.element.Image image = new com.itextpdf.layout.element.Image(
                         com.itextpdf.io.image.ImageDataFactory.create(imagePath)
                 );
-                image.setAutoScale(true);
+                image.setWidth(200);
+                image.setHeight(150);
                 document.add(image);
             } else {
                 document.add(new Paragraph("Image not available for this tour."));

@@ -69,6 +69,24 @@ public class TourCreationController {
         //Falls Start oder Destination nach Laden der Karte geändert werden, deaktiviere den Save-Button:
         startField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
         destinationField.textProperty().addListener((observable, oldValue, newValue) -> checkForRouteChange());
+
+        // Tastenkürzel hinzufügen
+        tourNameField.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.getAccelerators().put(
+                        new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.L, javafx.scene.input.KeyCombination.CONTROL_DOWN),
+                        this::onLoadMapClick
+                );
+                newScene.getAccelerators().put(
+                        new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.S, javafx.scene.input.KeyCombination.CONTROL_DOWN),
+                        () -> onSaveButtonClick(null)
+                );
+                newScene.getAccelerators().put(
+                        new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.ESCAPE),
+                        this::onCancelButtonClick
+                );
+            }
+        });
     }
 
     public void setOnTourCreatedCallback(Consumer<Tour> callback) {
@@ -127,25 +145,16 @@ public class TourCreationController {
         } else {
             //Erstellungsmodus: Route berechnen
             try {
-                String start = startField.getText();
-                String destination = destinationField.getText();
-                String transportType = transportTypeBox.getValue();
-
-                //Abruf der Routendetails via OpenRouteServiceClient:
-                double[] routeDetails = OpenRouteServiceClient.getRouteDetails(start, destination, transportType); //todo: eventuell nur Tour Objekt übergeben
-                double distance = routeDetails[0];
-                double estimatedTime = routeDetails[1];
-
-                //Erzeuge die neue Tour:
                 Tour newTour = new Tour(
                         tourNameField.getText(),
                         tourDescriptionField.getText(),
-                        start,
-                        destination,
-                        transportType,
-                        distance,
-                        estimatedTime
+                        startField.getText(),
+                        destinationField.getText(),
+                        transportTypeBox.getValue()
                 );
+
+                //Abruf der Routendetails via OpenRouteServiceClient:
+                newTour = OpenRouteServiceClient.getRouteDetails(newTour); //todo: eventuell nur Tour Objekt übergeben DONE
 
                 takeMapScreenshot(newTour, currentStage); //Screenshot erstellen
 

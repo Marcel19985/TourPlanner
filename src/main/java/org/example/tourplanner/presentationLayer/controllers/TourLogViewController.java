@@ -4,7 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.tourplanner.businessLayer.models.TourLog;
 import org.example.tourplanner.businessLayer.services.TourLogService;
@@ -12,8 +16,19 @@ import org.example.tourplanner.presentationLayer.viewmodels.TourLogViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 import java.util.UUID;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.io.IOException;
+import javafx.scene.paint.Color;
+import javafx.stage.Screen;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+
 
 @Controller
 public class TourLogViewController {
@@ -28,7 +43,7 @@ public class TourLogViewController {
     @FXML private Label dateLabel;
     @FXML private Label timeLabel;
     @FXML private Label commentLabel;
-
+    @FXML private ImageView logImageView;
     @FXML private TextField logSearchField;
 
     @Autowired
@@ -103,6 +118,35 @@ public class TourLogViewController {
     }
 
     @FXML
+    private void onImageClick() { //Vollbild wenn man TourLog Bild anklickt:
+        if (logImageView.getImage() == null) return;
+
+        // Neues Stage für Vollbild
+        Stage stage = new Stage();
+        ImageView bigView = new ImageView(logImageView.getImage());
+        bigView.setPreserveRatio(true);
+        bigView.setSmooth(true);
+        bigView.setCache(true);
+
+        // Auf Bildschirmgröße skalieren
+        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+        bigView.setFitWidth(bounds.getWidth());
+        bigView.setFitHeight(bounds.getHeight());
+
+        Group root = new Group(bigView);
+        Scene scene = new Scene(root, bounds.getWidth(), bounds.getHeight(), Color.BLACK);
+
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");            // versteckt HINT
+        stage.setFullScreenExitKeyCombination(      // z.B. ESC zum Schließen
+                new KeyCodeCombination(KeyCode.ESCAPE));
+
+        stage.show();
+    }
+
+    @FXML
     private void onClearLogs() {
         logSearchField.clear();
         onSearchLogs(); // term == "" → lädt alle Logs
@@ -154,18 +198,39 @@ public class TourLogViewController {
     public void showTourLogDetails(TourLogViewModel tvm) {
         if (tvm != null) {
             logDetailPane.setVisible(true);
+
+            // Texte setzen
             logNameLabel.setText(tvm.nameProperty().get());
-            dateLabel.setText(tvm.dateProperty().get() != null ? tvm.dateProperty().get().toString() : "No Date");
-            commentLabel.setText(tvm.commentProperty().get());
-            setRatingStars(tvm.ratingProperty().get());
-            totalTimeLabel.setText(String.valueOf(tvm.totalTimeProperty().get()));
-            totalDistanceLabel.setText(String.valueOf(tvm.totalDistanceProperty().get()));
+            dateLabel.setText(tvm.dateProperty().get() != null
+                    ? tvm.dateProperty().get().toString()
+                    : "No Date");
+            timeLabel.setText(tvm.timeProperty().get() != null
+                    ? tvm.timeProperty().get().toString()
+                    : "");
             difficultyLabel.setText(tvm.difficultyProperty().get());
-            timeLabel.setText(tvm.timeProperty().get().toString());
+            totalDistanceLabel.setText(String.valueOf(tvm.totalDistanceProperty().get()));
+            totalTimeLabel.setText(String.valueOf(tvm.totalTimeProperty().get()));
+            setRatingStars(tvm.ratingProperty().get());
+            commentLabel.setText(tvm.commentProperty().get());
+
+            // Bild laden, falls vorhanden
+            File imgFile = new File("target/images/logs/" + tvm.getTourLog().getId() + ".png");
+            if (imgFile.exists()) {
+                try (FileInputStream fis = new FileInputStream(imgFile)) {
+                    logImageView.setImage(new Image(fis));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    logImageView.setImage(null);
+                }
+            } else {
+                logImageView.setImage(null);
+            }
+
         } else {
             logDetailPane.setVisible(false);
         }
     }
+
 
     private void setRatingStars(int rating) {
         StringBuilder stars = new StringBuilder();
@@ -189,4 +254,11 @@ public class TourLogViewController {
     public ListView<TourLogViewModel> getTourLogListView() {
         return tourLogListView;
     }
+
+    public void focusLogSearchField() {
+        if (logSearchField != null) {
+            logSearchField.requestFocus();
+        }
+    }
 }
+

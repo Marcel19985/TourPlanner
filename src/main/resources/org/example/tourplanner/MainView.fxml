@@ -13,13 +13,17 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.layout.Region?>
+
+<!--BorderPane: man kann in top, buttom, left, right und center unterteilen-->
 <BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.tourplanner.presentationLayer.controllers.MainViewController">
 
     <top> <!--Überschrift Tour planner -->
+        <!--
         <VBox alignment="CENTER">
             <Label text="Tour Planner" style="-fx-font-size: 24px;"/>
         </VBox>
+        -->
         <HBox spacing="10" alignment="CENTER_LEFT">
             <Button fx:id="importButton" text="Import JSON" onAction="#onImportJson"/>
             <Button fx:id="exportButton" text="Export JSON" onAction="#onExportJson"/>

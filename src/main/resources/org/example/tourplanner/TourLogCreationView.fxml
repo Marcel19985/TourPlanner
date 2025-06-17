@@ -55,6 +55,8 @@
 
     <!-- Buttons in einer HBox für bessere Anordnung -->
     <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.columnSpan="2">
+        <Button fx:id="uploadImageButton" text="Upload Image" onAction="#onUploadImage"/>
+        <Label fx:id="imageNameLabel" text="No image selected"/>
         <Button text="Save" fx:id="saveButton" onAction="#onSaveTourLog"/>
         <Button text="Cancel" fx:id="cancelButton" onAction="#onCancel"/>
     </HBox>

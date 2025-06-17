@@ -78,20 +78,13 @@ public class Tour {
                                        .average()
                                        .orElse(0);
         return averageRating >= 6;
-        //todo: maybe auch difficulty hinzufügen
+
     }
 
     //Kein-Arg-Konstruktor für JPA
     public Tour() {}
 
-   /* public Tour(String name, String description, String start, String destination, String transportType) { //todo: delete weil vermutlich nicht verwendet wird
-        this.id = UUIDv7Generator.generateUUIDv7();
-        this.name = name;
-        this.description = description;
-        this.start = start;
-        this.destination = destination;
-        this.transportType = transportType;
-    }*/
+
 
     public Tour(String name, String description, String start, String destination, String transportType, double distance, double estimatedTime) {
         this.id = UUIDv7Generator.generateUUIDv7();
@@ -102,6 +95,15 @@ public class Tour {
         this.transportType = transportType;
         this.distance = distance;
         this.estimatedTime = estimatedTime;
+    }
+
+    public Tour(String name, String description, String start, String destination, String transportType) { //Konstruktor für OpenRouteService
+        this.id = UUIDv7Generator.generateUUIDv7();
+        this.name = name;
+        this.description = description;
+        this.start = start;
+        this.destination = destination;
+        this.transportType = transportType;
     }
 
     // Getter & Setter
@@ -138,10 +140,6 @@ public class Tour {
         tourLog.setTour(this);
     }
 
-    public void removeTourLog(TourLog tourLog) {
-        tourLogs.remove(tourLog);
-        tourLog.setTour(null);
-    }
 
     public String getTourImagePath() {
         return "target/images/" + id + ".png";

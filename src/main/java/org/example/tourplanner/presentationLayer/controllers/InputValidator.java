@@ -5,6 +5,9 @@ import java.time.LocalDate;
 
 public class InputValidator {
 
+    // Testmodus-Flag, damit im Test keine Alerts angezeigt werden
+    static boolean testMode = false;
+
     //Validation for Tour inputs
     public static boolean validateTourInputs(TextField nameField, TextField descriptionField, TextField startField, TextField destinationField, ComboBox<String> transportTypeBox) {
         StringBuilder errorMessage = new StringBuilder();
@@ -95,11 +98,11 @@ public class InputValidator {
         }
     }
 
-
-
     private static boolean checkAndShowErrors(StringBuilder errorMessage) {
         if (errorMessage.length() > 0) {
-            showAlert(errorMessage.toString());
+            if (!testMode) {
+                showAlert(errorMessage.toString());
+            }
             return false;
         }
         return true;
