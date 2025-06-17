@@ -86,7 +86,7 @@ public class ReportService {
                 com.itextpdf.layout.element.Image logImage = new com.itextpdf.layout.element.Image(
                         com.itextpdf.io.image.ImageDataFactory.create(logImageFile.getAbsolutePath())
                 );
-                logImage.setWidth(200);
+                logImage.setWidth(220);
                 logImage.setHeight(150);
                 document.add(logImage);
             } else {
@@ -143,7 +143,7 @@ public class ReportService {
                 com.itextpdf.layout.element.Image image = new com.itextpdf.layout.element.Image(
                         com.itextpdf.io.image.ImageDataFactory.create(imagePath)
                 );
-                image.setWidth(200);
+                image.setWidth(220);
                 image.setHeight(150);
                 document.add(image);
             } else {
