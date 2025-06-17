@@ -208,8 +208,8 @@ public class TourLogViewController {
                     ? tvm.timeProperty().get().toString()
                     : "");
             difficultyLabel.setText(tvm.difficultyProperty().get());
-            totalDistanceLabel.setText(String.valueOf(tvm.totalDistanceProperty().get()));
-            totalTimeLabel.setText(String.valueOf(tvm.totalTimeProperty().get()));
+            totalDistanceLabel.setText(String.valueOf(tvm.totalDistanceProperty().get()) + " km");
+            totalTimeLabel.setText(String.valueOf(tvm.totalTimeProperty().get()) + " min");
             setRatingStars(tvm.ratingProperty().get());
             commentLabel.setText(tvm.commentProperty().get());
 
