@@ -42,8 +42,8 @@ public class MainViewController {
     @FXML private BorderPane mainPane;
     @FXML private ListView<TourViewModel> tourListView; //Liste mit TourViewModel
     @FXML private TabPane detailTabPane; //Auswahl zwischen Tour und TourLog Anzeige
-    @FXML private AnchorPane tourDetailsContainer;
-    @FXML private AnchorPane tourLogDetailsContainer;
+    @FXML private AnchorPane tourDetailsContainer; //AnchorPane für Tour Details
+    @FXML private AnchorPane tourLogDetailsContainer; //AnchorPane für Tour Log Details
     @FXML private Button createButton;
     @FXML private Button editButton;
     @FXML private Button deleteButton;
