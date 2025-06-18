@@ -79,7 +79,11 @@ public class TourCreationController {
                 );
                 newScene.getAccelerators().put(
                         new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.S, javafx.scene.input.KeyCombination.CONTROL_DOWN),
-                        () -> onSaveButtonClick(null)
+                        () -> saveButton.fire()
+                );
+                newScene.getAccelerators().put(
+                        new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.C, javafx.scene.input.KeyCombination.CONTROL_DOWN),
+                        this::onCancelButtonClick
                 );
                 newScene.getAccelerators().put(
                         new javafx.scene.input.KeyCodeCombination(javafx.scene.input.KeyCode.ESCAPE),

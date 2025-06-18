@@ -53,7 +53,6 @@ public class TourViewController {
         tourDetailsPane.setVisible(false);
     }
 
-    // todo: Bild dynamischer machen
     public void setViewModel(MainViewModel viewModel) {
         this.viewModel = viewModel;
     }

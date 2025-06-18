@@ -67,7 +67,7 @@ public class MainViewController {
     private ButtonSelectionMediator<TourViewModel> tourMediator;
     private ButtonSelectionMediator<TourLogViewModel> tourLogMediator;
 
-    @Autowired //autowired = es gibt in gesamter Spring application nur eine Instanz von TourService; Gegenteil = prototype
+    @Autowired //autowired = es gibt in gesamter Spring application nur eine Instanz von TourService -> wird bei stateless Objekten verwendet; Gegenteil = prototype
     private TourService tourService;
     @Autowired
     private TourLogService tourLogService;
@@ -80,9 +80,9 @@ public class MainViewController {
         //Binde die Liste an die ViewModel-Liste
         tourListView.setItems(viewModel.getTourViewModels());
         tourListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE); //Mehrfachauswahl für Tours
-        tourListView.setCellFactory(param -> new ListCell<TourViewModel>() { //wird für jede Zelle in der Liste aufgerufen
+        tourListView.setCellFactory(param -> new ListCell<TourViewModel>() { //wird für jede Zelle in der Liste aufgerufen -> setCellFactory: wie jede Zeile aufgebaut werden soll; für jede Zelle wird eine neue Instanz von TourViewModel verwendet
             @Override
-            protected void updateItem(TourViewModel tvm, boolean empty) { //wird aufgerufen, sobald ein Element in der Liste aktualisiert/geladen wird
+            protected void updateItem(TourViewModel tvm, boolean empty) { //wird aufgerufen, sobald ein Element in der Liste aktualisiert/geladen wird; empty signalisiert, ob Zelle gerade was anzeigen soll
                 super.updateItem(tvm, empty);
                 setText(empty || tvm == null ? null : tvm.nameProperty().get());
             }
@@ -92,7 +92,7 @@ public class MainViewController {
         loadTourDetailView();
         loadTourLogDetailView();
 
-        tourListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTVM, newTVM) -> { //Listener für TourList
+        tourListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTVM, newTVM) -> { //Listener für TourList: obs = Observable also Zelle der Liste, oldTVM = vorheriges Element, newTVM = neu ausgewähltes Element
             if (newTVM != null) { //neu ausgewähltes Element
                 tourViewController.setTour(newTVM.getTour()); //Details der Tour werden angezeigt
                 //Tour Log details laden:
@@ -131,7 +131,7 @@ public class MainViewController {
 
         mainPane.setOnMouseClicked(event -> { //Bei Klick außerhalb der Liste, wird keine Tour mehr angezeigt
             Node clickedNode = event.getPickResult().getIntersectedNode();
-            if (clickedNode != null && !tourListView.equals(clickedNode)) {
+            if (clickedNode != null && !tourListView.equals(clickedNode)) { //kein Node geklickt und nicht in der TourListView (weil hier eigene Listener auf Events sind)
                 tourListView.getSelectionModel().clearSelection();
             }
         });
@@ -166,11 +166,12 @@ public class MainViewController {
             }
         });
 
+        //Lädt alle Touren aus Datenbank und wandelt sie in TourViewModelObjekte um und speichert sie im MainViewModel:
         viewModel.getTourViewModels().setAll(
                 tourService.getAllTours() //Lädt alle Touren aus der DB
                         .stream()
                         .distinct()  //Duplikate entfernen
-                        .map(TourViewModel::new)
+                        .map(TourViewModel::new) //wandelt jede Tour in TourViewModel um
                         .toList()
         );
 
