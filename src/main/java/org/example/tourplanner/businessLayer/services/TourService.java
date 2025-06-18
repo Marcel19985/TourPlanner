@@ -69,9 +69,7 @@ public class TourService {
         tourLogRepository.deleteById(tourLogId);
     }
 
-    /**
-     * Search for tours by name (ignore case).
-     */
+    //Suche nach Touren:
     public List<Tour> searchToursByName(String name) {
         logger.info("Searching for tours with name: {}", name);
         return tourRepository.searchByName(name);
@@ -80,8 +78,7 @@ public class TourService {
     public List<Tour> searchTours(String name,
                                   double minPopularity,
                                   boolean onlyChildFriendly) {
-        logger.info("Searching for tours with filters - Name: {}, Min popularity: {}, Only child friendly: {}",
-                name, minPopularity, onlyChildFriendly);
+        logger.info("Searching for tours with filters - Name: {}, Min popularity: {}, Only child friendly: {}", name, minPopularity, onlyChildFriendly);
         List<Tour> base = (name == null || name.isBlank())
                 ? tourRepository.findAllWithLogs()
                 : tourRepository.searchByName(name);

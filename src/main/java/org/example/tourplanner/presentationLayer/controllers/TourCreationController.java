@@ -19,6 +19,8 @@ import org.example.tourplanner.utils.HtmlTemplateLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -49,6 +51,7 @@ public class TourCreationController {
     private TourViewModel originalTourViewModel = null;
     private TourViewModel editingTourViewModel = null;
 
+    private static final Logger logger = LogManager.getLogger(TourCreationController.class);
 
     @Autowired //automatischer Dependency Injection -> Spring sucht nach einer Instanz von TourService und injiziert sie hier (gibt nur eine Instanz davon)
     private TourService tourService;
@@ -170,6 +173,7 @@ public class TourCreationController {
                 }
 
             } catch (Exception e) {
+                logger.error("Error while creating new Tour (OpenRouteService failed or saving)", e);
                 showAlert("An error occurred while retrieving route information: " + e.getMessage());
             }
         }
@@ -183,7 +187,7 @@ public class TourCreationController {
             String destCoords = OpenRouteServiceClient.getCoordinates(destinationField.getText());
 
             if (startCoords == null || destCoords == null) {
-                System.err.println("Fehler: Konnte die Koordinaten nicht abrufen.");
+                System.err.println("Coordinated could not be loaded."); //logging wird eh durch OpenRouteServiceClient.getCoordinates() gemacht
                 saveButton.setDisable(true);
                 return;
             }

@@ -166,6 +166,7 @@ public class MainViewController {
             }
         });
 
+        /* kann man glaub ich löschen weil loadAllTours(); darunter das gleiche macht!
         //Lädt alle Touren aus Datenbank und wandelt sie in TourViewModelObjekte um und speichert sie im MainViewModel:
         viewModel.getTourViewModels().setAll(
                 tourService.getAllTours() //Lädt alle Touren aus der DB
@@ -173,7 +174,7 @@ public class MainViewController {
                         .distinct()  //Duplikate entfernen
                         .map(TourViewModel::new) //wandelt jede Tour in TourViewModel um
                         .toList()
-        );
+        );*/
 
         //Filter für min. popularity filter:
         SpinnerValueFactory<Double> factory =
@@ -184,11 +185,12 @@ public class MainViewController {
 
     } //Initialize end
 
+    //bei strg + f wird as richtige SUchfeld aufgerufen je nachedem of Tours oder Logs ausgewählt sind:
     private void focusSearchField() {
         Tab selectedTab = detailTabPane.getSelectionModel().getSelectedItem();
-        if (selectedTab != null && selectedTab.getText().equals("Tour Details")) {
+        if (selectedTab != null && selectedTab.getText().equals("Tour Details")) { //Fokus wird direkt aufs Suchfeld gesetzt
             searchField.requestFocus();
-        } else if (selectedTab != null && selectedTab.getText().equals("Tour Logs")) {
+        } else if (selectedTab != null && selectedTab.getText().equals("Tour Logs")) { //Suche wird an TourLogViewController weitergegeben
             if (tourLogViewController != null) {
                 tourLogViewController.focusLogSearchField();
             }
@@ -196,7 +198,7 @@ public class MainViewController {
     }
 
     @FXML
-    private void onSearch() {
+    private void onSearch() { //Suche für Tours
         String term = searchField.getText().trim();
         double minPop = minPopularitySpinner.getValue();
         boolean onlyChild = childFriendlyCheckbox.isSelected();
@@ -208,22 +210,21 @@ public class MainViewController {
     }
 
     @FXML
-    private void onClearSearch() {
+    private void onClearSearch() { //Clear button bei search
         searchField.clear();
         childFriendlyCheckbox.setSelected(false);
         minPopularitySpinner.getValueFactory().setValue(0.0);
         loadAllTours();
     }
 
-    private void loadAllTours() { //lädt mithilfe von TourService alle Touren
+    private void loadAllTours() { //Lädt alle Touren aus Datenbank und wandelt sie in TourViewModelObjekte um und speichert sie im MainViewModel:
         viewModel.getTourViewModels().setAll(
-                tourService.getAllTours().stream()
+                tourService.getAllTours().stream() //Lädt alle Touren aus der DB
                         .distinct()
-                        .map(TourViewModel::new)
+                        .map(TourViewModel::new) //wandelt jede Tour in TourViewModel um
                         .toList()
         );
     }
-
 
     private void loadTourDetailView() { //in initialize() aufgerufen
         try {

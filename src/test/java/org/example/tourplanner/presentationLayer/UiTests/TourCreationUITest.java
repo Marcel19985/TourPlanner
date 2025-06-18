@@ -1,5 +1,5 @@
 package org.example.tourplanner.presentationLayer.UiTests;
-/*
+/* Funktioniert seit Spring Implementierung nicht mehr:
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
