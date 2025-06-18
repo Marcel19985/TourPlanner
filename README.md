@@ -3,7 +3,7 @@ Backand and Frontend Java Project
 
 
     !IMPORTANT!
-How to Start the Application in IntelliJ IDEA
+How to Start the APPLICATION in IntelliJ IDEA
 1. Open Run Configurations
     - In the top-right corner of IntelliJ, click on the dropdown next to the green run button and select "Edit Configurations...".
 
@@ -26,7 +26,12 @@ How to Start the Application in IntelliJ IDEA
 7. Add VM Option
     - Click on Modify options → Add VM options, then add:
     - --add-reads org.example.tourplanner=ALL-UNNAMED
-    - 
+   
 8. Save and Run
     - Click Apply and OK, then run the new configuration using the green run button.
+![img_1.png](img_1.png)
 
+How to run the UNIT TESTS in IntelliJ IDEA
+   - run the same configuration as above, but select the "Test" option instead of "Application"
+   - Click on Modify options → Add VM options, then add: --add-opens=javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+![img.png](img.png)

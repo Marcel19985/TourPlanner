@@ -39,7 +39,7 @@ public class ImportExportService {
             fileNumber++;
         } while (file.exists());
 
-        // Optional: Duplikate anhand von Name+Start+Destination+TransportType entfernen
+        //Duplikate anhand von Name+Start+Destination+TransportType entfernen
         List<Tour> uniqueTours = tours.stream()
                 .collect(Collectors.collectingAndThen(
                         Collectors.toMap(
