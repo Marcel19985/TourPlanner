@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface TourRepository extends JpaRepository<Tour, UUID> {
 
     //Lädt alle Touren mit ihren TourLogs (left join = auch Touren ohne TourLogs
-    @Query("SELECT t FROM Tour t LEFT JOIN FETCH t.tourLogs")
+    @Query("SELECT DISTINCT t FROM Tour t LEFT JOIN FETCH t.tourLogs")
     List<Tour> findAllWithLogs();
 
     //Lädt alle TourLogs einer bestimmten Tour
@@ -27,7 +27,7 @@ public interface TourRepository extends JpaRepository<Tour, UUID> {
 
     // Suche nach Tours, deren Name den Suchbegriff enthält (ignore case) und lade auch die Logs
     @Query("""
-       SELECT t 
+       SELECT DISTINCT t 
        FROM Tour t 
        LEFT JOIN FETCH t.tourLogs 
        WHERE LOWER(t.name) LIKE LOWER(CONCAT('%', :name, '%'))
