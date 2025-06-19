@@ -154,9 +154,9 @@ public class TourLogViewController {
 
     public void setTour(UUID tourId) {
         this.currentTourId = tourId;
-        // Suchfeld löschen
+        //Suchfeld löschen
         logSearchField.clear();
-        // Alle Logs neu holen
+        //Alle Logs neu holen
         List<TourLog> allLogs = tourLogService.searchLogsByTour(tourId, "");
         ObservableList<TourLogViewModel> vms = FXCollections.observableArrayList(
                 allLogs.stream()

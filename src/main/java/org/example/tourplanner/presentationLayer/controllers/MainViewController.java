@@ -29,6 +29,8 @@ import org.example.tourplanner.presentationLayer.viewmodels.TourLogViewModel;
 import javafx.collections.FXCollections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,6 +68,8 @@ public class MainViewController {
 
     private ButtonSelectionMediator<TourViewModel> tourMediator;
     private ButtonSelectionMediator<TourLogViewModel> tourLogMediator;
+
+    private static final Logger logger = LogManager.getLogger(TourCreationController.class);
 
     @Autowired //autowired = es gibt in gesamter Spring application nur eine Instanz von TourService -> wird bei stateless Objekten verwendet; Gegenteil = prototype
     private TourService tourService;
@@ -227,6 +231,7 @@ public class MainViewController {
     }
 
     private void loadTourDetailView() { //in initialize() aufgerufen
+        logger.debug("Loading TourDetailView FXML into mainPane");
         try {
             //Für Tour Details (die durch tabPane angezeigt werden können):
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourView.fxml"));
@@ -239,8 +244,10 @@ public class MainViewController {
             AnchorPane.setBottomAnchor(tourView, 0.0);
             AnchorPane.setLeftAnchor(tourView, 0.0);
             AnchorPane.setRightAnchor(tourView, 0.0);
+            logger.info("TourDetailView successfully loaded from /org/example/tourplanner/TourView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
+            logger.error("Error while loading Tour Details: ", e);
         }
     }
 
@@ -259,6 +266,7 @@ public class MainViewController {
             AnchorPane.setRightAnchor(tourLogSplitView, 0.0);
         } catch (IOException e) {
             e.printStackTrace();
+            logger.error("Failed to load TourLogSplitView FXML: /org/example/tourplanner/TourLogSplitView.fxml", e);
         }
     }
 
@@ -279,7 +287,7 @@ public class MainViewController {
             Parent root = loader.load();
             TourCreationController controller = loader.getController();
 
-            controller.setOnTourCreatedCallback(newTour -> { //Tour wird in viewModel gespeichert
+            controller.setOnTourCreatedCallback(newTour -> { //erstellte Tour wird in viewModel gespeichert
                 viewModel.addTour(newTour);
             });
             Stage stage = new Stage();
@@ -287,7 +295,7 @@ public class MainViewController {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //loggings werden in TourCreationController gemacht
         }
     }
 
@@ -303,7 +311,7 @@ public class MainViewController {
         }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tourplanner/TourLogCreationView.fxml"));
-            // Wichtig: Controller über den Spring-Kontext erzeugen
+            //Wichtig: Controller über den Spring-Kontext erzeugen
             loader.setControllerFactory(clazz -> SpringContext.getApplicationContext().getBean(clazz)); //erstellt TourLogCreationController über Spring für Autowired
             Parent root = loader.load();
             TourLogCreationController controller = loader.getController();
@@ -312,14 +320,14 @@ public class MainViewController {
                 //ViewModel updaten, damit TourView/List korrekt bleibt:
                 selectedTVM.addTourLog(tourLog);
                 //Einmal komplett neu laden:
-                tourLogViewController.setTour(selectedTVM.getTour().getId());
+                tourLogViewController.setTour(selectedTVM.getTour().getId()); //TourViewModel übergebem, für das TourLog erstellt wird
             });
             Stage stage = new Stage();
             stage.setTitle("Create Tour Log");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //loggings werden in TourLogCreationController gemacht
         }
     }
 
@@ -349,7 +357,7 @@ public class MainViewController {
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException e) {
-                e.printStackTrace();
+                e.printStackTrace(); //loggings werden in TourCreationController gemacht
             }
 
         } else if (selectedTab != null && selectedTab.getText().equals("Tour Logs")) {
@@ -382,7 +390,7 @@ public class MainViewController {
                 stage.setScene(new Scene(root));
                 stage.show();
             } catch (IOException e) {
-                e.printStackTrace();
+                e.printStackTrace(); //loggings werden in TourLogCreationController gemacht
             }
         }
     }
@@ -427,7 +435,7 @@ public class MainViewController {
             }
             ObservableList<TourLogViewModel> selectedLogVMs = tourLogViewController.getSelectedTourLogViewModels();
             ObservableList<TourLog> selectedLogs = FXCollections.observableArrayList();
-            for (TourLogViewModel vm : selectedLogVMs) {
+            for (TourLogViewModel vm : selectedLogVMs) { //fügt tourLogs aus den ViewModels in die Liste ein
                 selectedLogs.add(vm.getTourLog());
             }
             if (selectedLogs.isEmpty()) {
@@ -444,10 +452,10 @@ public class MainViewController {
             alert.setContentText("This action cannot be undone!");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                selectedTVM.getTourLogViewModels().removeIf(vm -> selectedLogs.contains(vm.getTourLog()));
-                selectedTVM.getTour().getTourLogs().removeAll(selectedLogs);
+                selectedTVM.getTourLogViewModels().removeIf(vm -> selectedLogs.contains(vm.getTourLog())); //entfernt TourLogViewModels aus TourViewModel, wenn das zugrunde liegende TourLog in der Liste ist
+                selectedTVM.getTour().getTourLogs().removeAll(selectedLogs); //entfernt TourLogs aus Tour Objekt
 
-                for (TourLog log : selectedLogs) {
+                for (TourLog log : selectedLogs) { //entfernt TourLogs aus Datenbank
                     tourLogService.deleteTourLogById(log.getId());
                 }
 
@@ -467,6 +475,7 @@ public class MainViewController {
             alert.setTitle("No Tour Selected");
             alert.setHeaderText(null);
             alert.setContentText("Please select a tour to generate the report.");
+            logger.warn("User tried to generate tour report without selecting a tour");
             alert.showAndWait();
             return;
         }
@@ -478,9 +487,11 @@ public class MainViewController {
             alert.setTitle("Report Generated");
             alert.setHeaderText(null);
             alert.setContentText("Tour report generated successfully: " + filePath);
+            logger.info("Tour report generated: {}", filePath);
             alert.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
+            logger.error("Failed to generate tour report for tourId={}", selectedTVM.getTour().getId(), e);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
@@ -509,6 +520,7 @@ public class MainViewController {
             alert.showAndWait();
         }
     }
+
     @FXML
     private void onExportJson() {
         try {
@@ -519,7 +531,9 @@ public class MainViewController {
             alert.setHeaderText(null);
             alert.setContentText("Tours exported to 'import_export_json/tours_export.json'.");
             alert.showAndWait();
+            logger.info("Exported {} tours to JSON", tours.size());
         } catch (IOException e) {
+            logger.error("Failed to export tours to JSON", e);
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Export Failed");
@@ -538,12 +552,14 @@ public class MainViewController {
 
         File selectedFile = fileChooser.showOpenDialog(mainPane.getScene().getWindow());
         if (selectedFile != null) {
+            logger.info("Importing tours from file {}", selectedFile.getAbsolutePath());
             try {
                 List<Tour> importedTours = importExportService.importToursFromJson(selectedFile);
                 for (Tour tour : importedTours) {
                     tourService.addTour(tour); // Fügt die Tour zur Datenbank hinzu
                 }
                 loadAllTours(); //Aktualisiert die UI
+                logger.info("Successfully imported {} tours", importedTours.size());
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Import Successful");
                 alert.setHeaderText(null);
@@ -551,6 +567,7 @@ public class MainViewController {
                 alert.showAndWait();
             } catch (IOException e) {
                 e.printStackTrace();
+                logger.error("Failed to import tours from {}", selectedFile.getName(), e);
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Import Failed");
                 alert.setHeaderText(null);

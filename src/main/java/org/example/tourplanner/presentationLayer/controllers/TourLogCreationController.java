@@ -15,6 +15,8 @@ import org.example.tourplanner.presentationLayer.viewmodels.TourLogViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +53,8 @@ public class TourLogCreationController {
     private TourLogViewModel originalTourLogViewModel = null;
     private TourLogViewModel editingTourLogViewModel = null;
 
+    private static final Logger logger = LogManager.getLogger(TourCreationController.class);
+
 
     @Autowired
     private TourLogService tourLogService;
@@ -59,7 +63,7 @@ public class TourLogCreationController {
     private void initialize() {
         difficultyComboBox.getItems().addAll("Easy", "Medium", "Hard");
         ratingComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 12));
+        hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23, 12)); //Minimalwert = 0, Maximalkwert = 23, Startwert = 12
         minuteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 30));
         //Testwerte: lösche bevor final Abgabe
         nameLog.setText("Test Log");
@@ -70,7 +74,7 @@ public class TourLogCreationController {
         ratingComboBox.setValue(5);
         datePicker.setValue(LocalDate.now());
 
-        // Tastenkürzel hinzufügen
+        //Tastenkürzel hinzufügen:
         nameLog.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 newScene.getAccelerators().put(
@@ -94,10 +98,7 @@ public class TourLogCreationController {
         this.currentTour = currentTour;
     }
 
-    /**
-     * Im Bearbeitungsmodus übergeben wir das bereits vorhandene ViewModel.
-     * Es wird ein Editing-Clone erstellt, an den die UI-Felder gebunden werden.
-     */
+    //Im Bearbeitungsmodus übergeben wir das bereits vorhandene ViewModel. Es wird ein Editing-Clone erstellt, an den die UI-Felder gebunden werden:
     public void setTourLogForEditing(TourLogViewModel original) {
         this.originalTourLogViewModel = original;
         this.editingTourLogViewModel = new TourLogViewModel(original); //Clone erstellen
@@ -120,7 +121,7 @@ public class TourLogCreationController {
         hourSpinner.getValueFactory().valueProperty().bindBidirectional(hour.asObject());
         minuteSpinner.getValueFactory().valueProperty().bindBidirectional(minute.asObject());
 
-        // Binde die zusammengesetzte Zeit wieder zurück ans ViewModel
+        //Binde die zusammengesetzte Zeit wieder zurück ans TourLogViewModel:
         editingTourLogViewModel.timeProperty().bind(
                 Bindings.createObjectBinding(
                         () -> LocalTime.of(hour.get(), minute.get()),
@@ -145,15 +146,15 @@ public class TourLogCreationController {
         try {
             TourLog tourLog;
             if (editingTourLogViewModel != null) {
-                // Bearbeitungsmodus: Änderungen übernehmen
+                //Bearbeitungsmodus: Änderungen übernehmen
                 originalTourLogViewModel.copyFrom(editingTourLogViewModel);
-                // Persistiere das aktualisierte TourLog
-                tourLog = tourLogService.saveTourLog(originalTourLogViewModel.getTourLog()); // Verwende den Service
+                //Persistiere das aktualisierte TourLog
+                tourLog = tourLogService.saveTourLog(originalTourLogViewModel.getTourLog()); //Verwende den Service
                 if (onTourLogUpdatedCallback != null) {
                     onTourLogUpdatedCallback.accept(tourLog);
                 }
             } else {
-                // Erstellungsmodus: Neues TourLog erzeugen
+                //Erstellungsmodus: Neues TourLog erzeugen
                 String name = nameLog.getText();
                 String comment = commentField.getText();
                 String difficulty = difficultyComboBox.getValue();
@@ -190,15 +191,17 @@ public class TourLogCreationController {
             closeWindow();
         } catch (NumberFormatException e) {
             showAlert("Invalid input for distance or time.");
+            logger.error("Invalid input for distance or time: ", e);
         } catch (IOException e) {
             showAlert("Error saving tour log image: " + e.getMessage());
+            logger.error("Error saving tour log image: ", e);
             throw new RuntimeException(e);
         }
     }
 
     //Für Bild upload:
     @FXML
-    private void onUploadImage() {
+    private void onUploadImage() { //Öffnet Verzeichnis und zeigt Bilddateien an
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Select Image for Tour Log");
         chooser.getExtensionFilters().add(
@@ -212,7 +215,7 @@ public class TourLogCreationController {
 
     @FXML
     private void onCancel() {
-        if (editingTourLogViewModel != null) { // Unbind, falls im Bearbeitungsmodus
+        if (editingTourLogViewModel != null) { //Unbind, falls im Bearbeitungsmodus
             unbindFields();
         }
         closeWindow();
@@ -233,6 +236,7 @@ public class TourLogCreationController {
         alert.setTitle("Input Error");
         alert.setHeaderText(null);
         alert.setContentText(message);
+        logger.error("Input Error: ", message);
         alert.showAndWait();
     }
 

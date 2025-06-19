@@ -42,7 +42,7 @@ public class TourLogViewModel {
         this.rating = new SimpleIntegerProperty(other.rating.get());
     }
 
-    // Kopiert die Werte aus dem anderen ViewModel in dieses (z.B. beim Speichern)
+    //Kopiert die Werte aus dem anderen ViewModel in dieses (z.B. beim Speichern)
     public void copyFrom(TourLogViewModel other) {
         this.name.set(other.name.get());
         this.comment.set(other.comment.get());
@@ -55,7 +55,7 @@ public class TourLogViewModel {
         updateTourLog();
     }
 
-    // Überträgt die aktuellen Property-Werte in das zugrunde liegende TourLog-Objekt
+    //Überträgt die aktuellen Property-Werte in das zugrunde liegende TourLog-Objekt
     public void updateTourLog() {
         tourLog.setName(name.get());
         tourLog.setComment(comment.get());
@@ -67,12 +67,12 @@ public class TourLogViewModel {
         tourLog.setRating(rating.get());
     }
 
-    // Getter für den zugrunde liegenden TourLog
+    //Getter für den zugrunde liegenden TourLog
     public TourLog getTourLog() {
         return tourLog;
     }
 
-    // Property-Methoden
+    //Property-Methoden
     public ObjectProperty<LocalDate> dateProperty() { return date; }
     public ObjectProperty<LocalTime> timeProperty() { return time; }
     public StringProperty commentProperty() { return comment; }

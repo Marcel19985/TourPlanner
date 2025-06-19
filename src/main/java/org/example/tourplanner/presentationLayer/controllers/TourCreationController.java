@@ -104,11 +104,7 @@ public class TourCreationController {
         this.onTourUpdatedCallback = callback;
     }
 
-    /**
-     * Wird im Bearbeitungsmodus aufgerufen.
-     * Es wird ein Editing-Clone des übergebenen TourViewModels erstellt,
-     * an den dann die UI-Felder gebunden werden.
-     */
+    //Wird im Bearbeitungsmodus aufgerufen. Es wird ein Editing-Clone des übergebenen TourViewModels erstellt, an den dann die UI-Felder gebunden werden:
     public void setTourForEditing(TourViewModel original) {
         this.originalTourViewModel = original;
         this.editingTourViewModel = new TourViewModel(original); //Editing-Clone erstellen
@@ -187,7 +183,8 @@ public class TourCreationController {
             String destCoords = OpenRouteServiceClient.getCoordinates(destinationField.getText());
 
             if (startCoords == null || destCoords == null) {
-                System.err.println("Coordinated could not be loaded."); //logging wird eh durch OpenRouteServiceClient.getCoordinates() gemacht
+                System.err.println("Coordinated could not be loaded.");
+                logger.error("Coordinates could not be loaded for start or destination.");
                 saveButton.setDisable(true);
                 return;
             }
@@ -205,6 +202,7 @@ public class TourCreationController {
 
         } catch (Exception e) {
             showAlert("An error occurred while retrieving route information: " + e.getMessage());
+            logger.error("An error occurred while retrieving route information: ", e);
         }
     }
 
@@ -218,11 +216,11 @@ public class TourCreationController {
     //Mithilfe von ChatGPT generiert:
     private void takeMapScreenshot(Tour tour, Stage stageToClose) {
         if (!mapView.isVisible()) {
-            System.err.println("Fehler: mapView ist nicht sichtbar!");
+            System.err.println("Error: mapView is not visible!");
             return;
         }
 
-        System.out.println("Erstelle Screenshot...");
+        System.out.println("Create Screenshot...");
 
         WritableImage image = mapView.snapshot(new SnapshotParameters(), null); //Erstelle einen Snapshot der Karte
         BufferedImage bufferedImage = new BufferedImage(
@@ -241,20 +239,22 @@ public class TourCreationController {
         //Verzeichnis target/images erstellen falls nicht existent:
         File dir = new File("target/images");
         if (!dir.exists() && !dir.mkdirs()) {
-            System.err.println("Fehler beim Erstellen des Verzeichnisses 'target/images'.");
+            System.err.println("Error while creating directory 'target/images'.");
+            logger.error("Error while creating directory 'target/images'.");
             return;
         }
 
         File file = new File(dir, tour.getId() + ".png"); //Bild wird als png mit Tour-ID gespeichert
         try {
             ImageIO.write(bufferedImage, "png", file);
-            System.out.println("Screenshot gespeichert: " + file.getAbsolutePath());
+            System.out.println("Screenshot saved: " + file.getAbsolutePath());
         } catch (IOException e) {
-            System.err.println("Fehler beim Speichern des Screenshots: " + e.getMessage());
+            System.err.println("Error while saving Screenshot: " + e.getMessage());
+            logger.error("Error while saving Screenshot: ", e);
         }
 
         // Fenster schließen
-        System.out.println("Schließe Fenster...");
+        System.out.println("Close Window...");
         stageToClose.close();
     }
 
