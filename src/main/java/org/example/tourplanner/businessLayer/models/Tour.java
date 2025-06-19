@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Entity //Tabelle in db
 @Table(name = "tours")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true) //Ignoriert unbekannte Eigenschaften bei der Deserialisierung von JSON
 public class Tour {
 
     @Id //Primärschlüssel
@@ -30,7 +30,7 @@ public class Tour {
     @Column(name = "destination", nullable = false)
     private String destination;
 
-    @Column(name = "transport_type", nullable = false) //ToDo: Enum
+    @Column(name = "transport_type", nullable = false)
     private String transportType;
 
     @Column(nullable = false)
@@ -39,8 +39,8 @@ public class Tour {
     @Column(name = "estimated_time", nullable = false)
     private double estimatedTime;
 
-    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true) //mappedBy gibt an, dass die Tour-Log-Tabelle den Fremdschlüssel Tour enthält
-    @JsonManagedReference //Verhindert zirkuläre Referenzen bei der Serialisierung
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true) //mappedBy gibt an, dass die Tour-Log-Tabelle den Fremdschlüssel Tour enthält; cascade = CascadeType.ALL -> alle Operationen (z.B. persist, remove) werden auf die TourLogs angewendet; orphanRemoval = true -> wenn ein TourLog aus der Liste entfernt wird, wird es auch aus der Datenbank gelöscht; cascade = CascadeType.ALL -> Operationen auf Tour (z.b. persist, remove) werden auf TourLogs angewendet
+    @JsonManagedReference //Verhindert zirkuläre Referenzen bei der Serialisierung: wichtig, da TourLogs in Tour enthalten sind und Tour in TourLog referenziert wird (verhindert StackOverflowError bei der Serialisierung)
     private List<TourLog> tourLogs = new ArrayList<>();
 
     @Transient
@@ -83,8 +83,6 @@ public class Tour {
 
     //Kein-Arg-Konstruktor für JPA
     public Tour() {}
-
-
 
     public Tour(String name, String description, String start, String destination, String transportType, double distance, double estimatedTime) {
         this.id = UUIDv7Generator.generateUUIDv7();

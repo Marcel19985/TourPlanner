@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class TourService {
+public class TourService { //Klasse teilweise mit ChatGPT generiert
 
     private static final Logger logger = LogManager.getLogger(TourService.class);
 
@@ -75,9 +75,7 @@ public class TourService {
         return tourRepository.searchByName(name);
     }
 
-    public List<Tour> searchTours(String name,
-                                  double minPopularity,
-                                  boolean onlyChildFriendly) {
+    public List<Tour> searchTours(String name, double minPopularity, boolean onlyChildFriendly) { //Funktion mit ChatGPT generiert
         logger.info("Searching for tours with filters - Name: {}, Min popularity: {}, Only child friendly: {}", name, minPopularity, onlyChildFriendly);
         List<Tour> base = (name == null || name.isBlank())
                 ? tourRepository.findAllWithLogs()

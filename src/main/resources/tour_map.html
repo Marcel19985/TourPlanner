@@ -44,12 +44,12 @@
                 L.geoJSON(routeGeoJson, {style: {color: 'blue', weight: 4}}).addTo(map);
             } else {
                 console.error('Keine Route gefunden.');
-                alert('Keine Route gefunden.');
+                alert('No Route was found.');
             }
         })
         .catch(error => {
             console.error('Fehler beim Abrufen der Route:', error);
-            alert('Fehler beim Abrufen der Route: ' + error.message);
+            alert('Error while retrieving the route: ' + error.message);
         });
 </script>
 </body>

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ConfigLoader {
-    public static Properties loadConfig(String configFilePath) { //todo: wird derzeit nur für API key verwendet, eventuell in application.properties auslagern
+    public static Properties loadConfig(String configFilePath) {
         Properties properties = new Properties();
         try (FileInputStream input = new FileInputStream(configFilePath)) {
             properties.load(input);

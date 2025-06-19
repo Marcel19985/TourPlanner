@@ -12,16 +12,16 @@ import java.util.UUID;
 @Table(name = "tour_logs")
 public class TourLog {
 
-    @Id
+    @Id //Primärschlüssel
     @Column(name = "id", columnDefinition = "uuid")
     private UUID id;
 
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tour_id", nullable = false)
-    @JsonBackReference //Verhindert zirkuläre Referenzen bei der Serialisierung
+    @ManyToOne(fetch = FetchType.LAZY) //layzy fetching -> Tour wird nur geladen, wenn es benötigt wird (spart ressourcen)
+    @JoinColumn(name = "tour_id", nullable = false) //erzeugt eine Spalte tour_id in der TourLog-Tabelle, die auf die Tour-Tabelle verweist (Fremdschlüssel
+    @JsonBackReference //Verhindert zirkuläre Referenzen bei der Serialisierung: wichtig, da TourLogs in Tour enthalten sind und Tour in TourLog referenziert wird (verhindert StackOverflowError bei der Serialisierung)
     private Tour tour;
 
     @Column(name = "log_date", nullable = false)

@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.tourplanner.businessLayer.models.Tour;
 import org.example.tourplanner.presentationLayer.viewmodels.MainViewModel;
 import javafx.scene.image.ImageView;
@@ -48,6 +50,8 @@ public class TourViewController {
 
     private Tour currentTour;
 
+    private static final Logger logger = LogManager.getLogger(TourViewController.class);
+
     @FXML
     public void initialize() {
         tourDetailsPane.setVisible(false);
@@ -71,10 +75,10 @@ public class TourViewController {
             // Binde die Popularität dynamisch an die Änderungen der TourLogs
             popularityLabel.textProperty().bind(Bindings.createStringBinding(
                 tour::getPopularity,
-                FXCollections.observableList(tour.getTourLogs())
+                FXCollections.observableList(tour.getTourLogs()) //ObservableList wenn sich TourLogs ändern
             ));
 
-            childFriendlyLabel.setText(tour.isChildFriendly() ? "\u2714" : "\u2718");
+            childFriendlyLabel.setText(tour.isChildFriendly() ? "\u2714" : "\u2718"); //✔ oder ✘
             // Lade das Bild für das ImageView
             loadMapImage(tour);
             tourDetailsPane.setVisible(true);
@@ -88,9 +92,9 @@ public class TourViewController {
     }
 
     private void loadMapImage(Tour tour) {
+        // Der Pfad zum gespeicherten Screenshot (z.B. target/images/{tourId}.png)
+        File mapImageFile = new File(tour.getTourImagePath());
         try {
-            // Der Pfad zum gespeicherten Screenshot (z.B. target/images/{tourId}.png)
-            File mapImageFile = new File(tour.getTourImagePath());
 
             if (mapImageFile.exists()) {
                 // Erstelle ein Image aus der Datei
@@ -98,11 +102,13 @@ public class TourViewController {
 
                 // Setze das Bild in das ImageView
                 mapImageView.setImage(mapImage);
+                logger.info("Loaded map image for tour {} from {}", tour.getId(), mapImageFile.getAbsolutePath());
             } else {
-                System.err.println("Bilddatei nicht gefunden: " + mapImageFile.getAbsolutePath());
+                System.err.println("Could not find image : " + mapImageFile.getAbsolutePath());
             }
         } catch (IOException e) {
             e.printStackTrace();
+            logger.warn("Map image not found for tour {}: {}", tour.getId(), mapImageFile.getAbsolutePath());
         }
     }
 

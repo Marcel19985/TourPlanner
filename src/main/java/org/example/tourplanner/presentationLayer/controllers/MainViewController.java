@@ -502,10 +502,13 @@ public class MainViewController {
 
     @FXML
     private void onGenerateSummarizeReport(ActionEvent event) {
+        String filePath = "Reports/summarize-report.pdf";
         try {
-            String filePath = "Reports/summarize-report.pdf";
+            logger.info("Generating summary report, loading all tours from DB…");
             List<Tour> tours = tourService.getAllTours(); // Alle Touren aus der Datenbank laden
+            logger.debug("Loaded {} tours for summary report", tours.size());
             reportService.generateSummaryReportPdf(tours, filePath); // PDF-Report generieren
+            logger.info("Summary report successfully generated at {}", filePath);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Report Generated");
             alert.setHeaderText(null);
@@ -513,6 +516,7 @@ public class MainViewController {
             alert.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
+            logger.error("Failed to generate summary report at {}: {}", filePath, e.getMessage(), e);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
@@ -524,8 +528,11 @@ public class MainViewController {
     @FXML
     private void onExportJson() {
         try {
+            logger.info("Starting JSON export of all tours…");
             List<Tour> tours = tourService.getAllTours();
+            logger.debug("Loaded {} tours from database", tours.size());
             importExportService.exportToursToJson(tours);
+            logger.info("Successfully exported {} tours to JSON", tours.size());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Export Successful");
             alert.setHeaderText(null);

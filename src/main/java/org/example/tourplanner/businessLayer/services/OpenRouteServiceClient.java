@@ -12,10 +12,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-import java.util.Properties;
-import java.io.FileInputStream;
 
-//Folgende Klasse wurde teilweise mit AI generiert
+//Folgende Klasse wurde teilweise mit ChatGPT generiert
 public class OpenRouteServiceClient {
 
     //API key aus config file laden:

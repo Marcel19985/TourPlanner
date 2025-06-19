@@ -16,25 +16,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ImportExportService {
+public class ImportExportService { //Klasse wurde teilweise mit ChatGPT generiert
     private static final Logger logger = LogManager.getLogger(ImportExportService.class);
     private static final String EXPORT_FOLDER = "import_export_json";
     public ImportExportService() {
-        // Registriere das Modul für Java-Zeittypen
+        // Registriere das Modul für Java-Zeittypen: teilt dem ObjectMapper mit, dass er Java-Zeittypen (wie LocalDate, LocalDateTime) korrekt serialisieren und deserialisieren soll
         mapper.registerModule(new JavaTimeModule());
         logger.info("ImportExportService initialized.");
 
     }
 
     private final ObjectMapper mapper = new ObjectMapper()
-            .enable(SerializationFeature.INDENT_OUTPUT)
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // ISO-8601 Format verwenden
+            .enable(SerializationFeature.INDENT_OUTPUT) //JSON schön formatieren
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); //ISO-8601 Format verwenden statt nummerisch (z.B. 2023-10-01T12:00:00Z)
 
     public void exportToursToJson(List<Tour> tours) throws IOException {
         Files.createDirectories(Paths.get(EXPORT_FOLDER));
         int fileNumber = 1;
         File file;
-        do {
+        do { //geht alle files im EXPORT_FOLDER durch und sucht die erste freie Nummer:
             file = new File(EXPORT_FOLDER + "/tours_export_" + fileNumber + ".json");
             fileNumber++;
         } while (file.exists());
@@ -50,13 +50,13 @@ public class ImportExportService {
                         m -> m.values().stream().toList()
                 ));
 
-        mapper.writeValue(file, uniqueTours);
+        mapper.writeValue(file, uniqueTours); //JSON wird serialisiert und in File geschrieben
         logger.info("Tours exported to JSON.");
 
     }
 
     public List<Tour> importToursFromJson(File jsonFile) throws IOException {
         logger.info("Tours imported from JSON.");
-        return List.of(mapper.readValue(jsonFile, Tour[].class));
+        return List.of(mapper.readValue(jsonFile, Tour[].class)); //deserialisiert JSON aus File in Liste von Tour-Objekten
     }
 }

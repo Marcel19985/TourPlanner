@@ -56,19 +56,20 @@ public class TourLogViewController {
     public void initialize() {
         logDetailPane.setVisible(false);
         tourLogListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tourLogListView.setCellFactory(new Callback<>() {
+        tourLogListView.setCellFactory(new Callback<>() { //definiert wie Zelle der liste aussehen soll
             @Override
-            public ListCell<TourLogViewModel> call(ListView<TourLogViewModel> param) {
+            public ListCell<TourLogViewModel> call(ListView<TourLogViewModel> param) { //für jede Zelle wird diese Methode aufgerufen
                 return new ListCell<>() {
                     @Override
                     protected void updateItem(TourLogViewModel tvm, boolean empty) {
                         super.updateItem(tvm, empty);
-                        setText(empty || tvm == null ? null : tvm.nameProperty().get());
+                        setText(empty || tvm == null ? null : tvm.nameProperty().get()); //Wenn Zelle leer, wird kein Text angezeigt, ansonsten der Name des TourLogs
                     }
                 };
             }
         });
 
+        //listener für Auswahländerungen in der Liste:
         tourLogListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTvm, newTvm) -> {
             if (newTvm != null) {
                 showTourLogDetails(newTvm);
@@ -97,17 +98,16 @@ public class TourLogViewController {
         }
     }
 
-    /** Wird aus MainViewController gerufen, wenn sich die Tour ändert: */
-    public void setTourLogItems(UUID tourId,
-                                ObservableList<TourLogViewModel> baseModels) {
+    //Wird aus MainViewController gerufen, wenn andere Tour ausgewählt wird:
+    public void setTourLogItems(UUID tourId, ObservableList<TourLogViewModel> baseModels) {
         this.currentTourId = tourId;
-        tourLogListView.setItems(baseModels);
+        tourLogListView.setItems(baseModels); //Setzt die TourLogViewModels in die ListView
     }
 
     @FXML
     private void onSearchLogs() {
         String term = logSearchField.getText().trim();
-        List<TourLog> filtered = tourLogService.searchLogsByTour(currentTourId, term);
+        List<TourLog> filtered = tourLogService.searchLogsByTour(currentTourId, term); //gibt alle TourLogs zurück, die dem Suchbegriff entsprechen
         ObservableList<TourLogViewModel> vms = FXCollections.observableArrayList(
                 filtered.stream()
                         .map(TourLogViewModel::new)
@@ -118,7 +118,7 @@ public class TourLogViewController {
     }
 
     @FXML
-    private void onImageClick() { //Vollbild wenn man TourLog Bild anklickt:
+    private void onImageClick() { //Vollbild wenn man TourLog Bild anklickt (mit ChatGPT generiert):
         if (logImageView.getImage() == null) return;
 
         // Neues Stage für Vollbild
@@ -156,7 +156,7 @@ public class TourLogViewController {
         this.currentTourId = tourId;
         //Suchfeld löschen
         logSearchField.clear();
-        //Alle Logs neu holen
+        //Alle Logs neu holen:
         List<TourLog> allLogs = tourLogService.searchLogsByTour(tourId, "");
         ObservableList<TourLogViewModel> vms = FXCollections.observableArrayList(
                 allLogs.stream()
@@ -165,14 +165,6 @@ public class TourLogViewController {
         );
         tourLogListView.setItems(vms);
         clearDetails();
-    }
-
-    /**
-     * Statt direkt ein TourLog-Modell zu übergeben, wird hier erwartet, dass
-     * der Aufrufer das ObservableList<TourLogViewModel> aus dem zugehörigen TourViewModel liefert.
-     */
-    public void setTourLogItems(ObservableList<TourLogViewModel> tourLogViewModels) {
-        tourLogListView.setItems(tourLogViewModels);
     }
 
     public TourLogViewModel getSelectedTourLogViewModel() {
@@ -213,7 +205,7 @@ public class TourLogViewController {
             setRatingStars(tvm.ratingProperty().get());
             commentLabel.setText(tvm.commentProperty().get());
 
-            // Bild laden, falls vorhanden
+            //Bild laden, falls vorhanden:
             File imgFile = new File("target/images/logs/" + tvm.getTourLog().getId() + ".png");
             if (imgFile.exists()) {
                 try (FileInputStream fis = new FileInputStream(imgFile)) {

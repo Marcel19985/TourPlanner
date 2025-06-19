@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class TourLogService {
+public class TourLogService { //Klasse teilweise mit ChatGPT generiert
 
     private static final Logger logger = LogManager.getLogger(TourLogService.class);
 
@@ -33,7 +33,7 @@ public class TourLogService {
         tourLogRepository.deleteById(id);
     }
 
-    /** Returns all logs for a tour, or only those filtered by name if term is not empty. */
+    //Gibt nur TourLogs zurück, die dem Suchbegriff entsprechen:
     public List<TourLog> searchLogsByTour(UUID tourId, String term) {
         if (term == null || term.isBlank()) {
             logger.info("Retrieving all logs for tour with ID: {}", tourId);
