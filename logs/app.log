@@ -2870,3 +2870,41 @@ java.io.IOException: An error occoured while requesting information from OpenRou
 2025-06-19 21:22:41 [JavaFX Application Thread] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-06-19 21:22:41 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-06-19 21:22:41 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Adding a new tour: null
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Saving tour: null
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Searching for tours with name: Test
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Saving a tour log: null
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Searching for tours with filters - Name: Test, Min popularity: 6.0, Only child friendly: true
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving logs for tour with ID: 7dceeb5c-fc9e-4c06-88e4-12e15f6a524b
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving tour with ID: 5fa4db7d-3b29-4732-907b-ef443d43e094
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 40c4b4a8-fb59-475c-b4b9-48875f921931
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Searching for tours with filters - Name: null, Min popularity: 7.0, Only child friendly: false
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving tour with ID: 0d93857d-094b-4b6f-85a0-c1f9f9650477
+2025-06-19 21:24:21 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-19 21:24:21 [main] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour log with ID: e02c2db7-4dab-4c6f-8475-a2f8da2687c9
+2025-06-19 21:24:22 [main] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Saving a tour log: TestLog
+2025-06-19 21:24:22 [main] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Searching logs for tour with ID: 97342227-9c7e-4082-90e3-840d8de27f5b and search term: abc
+2025-06-19 21:24:22 [main] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: d61dcd2d-ca67-40df-b1ce-20c08913b5c9
+2025-06-19 21:24:22 [main] WARN  org.example.tourplanner.businessLayer.services.TourLogService - Deleting tour log with ID: a32e61b8-fbef-45d1-afd8-0e72ff9cbd96
+2025-06-19 21:24:22 [main] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving logs for tour with ID: 6c8da5ab-4f86-46de-a402-a018c36fb4a3
+2025-06-19 21:24:22 [main] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: c00e6c8f-6a62-474e-bdfa-1f5ff11060bb
+2025-06-19 21:24:22 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - ImportExportService initialized.
+2025-06-19 21:24:23 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours exported to JSON.
+2025-06-19 21:24:23 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours imported from JSON.
+2025-06-19 21:24:23 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - ImportExportService initialized.
+2025-06-19 21:24:23 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours exported to JSON.
+2025-06-19 21:24:23 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours imported from JSON.
+2025-06-19 21:24:23 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - ImportExportService initialized.
+2025-06-19 21:24:23 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours imported from JSON.
