@@ -35,7 +35,11 @@ public class ReportService {
         document.add(new Paragraph(new Text("Transport Type: ").setBold()).add(tour.getTransportType()));
         document.add(new Paragraph(new Text("Distance: ").setBold()).add(String.format("%.2f km", tour.getDistance())));
         document.add(new Paragraph(new Text("Estimated Time: ").setBold()).add(String.format("%.0f min", tour.getEstimatedTime())));
-        document.add(new Paragraph(new Text("Popularity: ").setBold()).add(tour.getPopularity() + "/10")); //hier gibt bereits der getter eine Nachkommastelle
+        if(tour.getPopularity() == "not rated yet") {
+            document.add(new Paragraph(new Text("Popularity: ").setBold()).add("Not rated yet"));
+        } else {
+            document.add(new Paragraph(new Text("Popularity: ").setBold()).add(tour.getPopularity() + "/10")); //hier gibt bereits der getter eine Nachkommastelle
+        }
         document.add(new Paragraph(new Text("Child Friendly: ").setBold())
                 .add(tour.isChildFriendly() ? "Yes" : "No"));
         document.add(new Paragraph("\n"));
@@ -118,6 +122,7 @@ public class ReportService {
             document.add(new Paragraph(new Text("Destination: ").setBold()).add(tour.getDestination()));
             document.add(new Paragraph(new Text("Transport Type: ").setBold()).add(tour.getTransportType()));
             document.add(new Paragraph(new Text("Distance: ").setBold()).add(String.format("%.2f km", tour.getDistance())));
+            document.add(new Paragraph(new Text("Estimated Time: ").setBold()).add(String.format("%.0f min", tour.getEstimatedTime())));
 
             // Durchschnittswerte
             Paragraph averages = new Paragraph()

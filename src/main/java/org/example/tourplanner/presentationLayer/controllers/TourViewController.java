@@ -70,7 +70,7 @@ public class TourViewController {
             destinationLabel.setText(tour.getDestination());
             transportTypeLabel.setText(tour.getTransportType());
             distanceLabel.setText(String.format("%.2f km", tour.getDistance()));
-            estimatedTimeLabel.setText(String.format("%.2f min", tour.getEstimatedTime()));
+            estimatedTimeLabel.setText(String.format("%.0f min", tour.getEstimatedTime()));
 
             // Binde die Popularität dynamisch an die Änderungen der TourLogs
             popularityLabel.textProperty().bind(Bindings.createStringBinding(

@@ -3985,3 +3985,201 @@ java.io.IOException: An error occoured while requesting information from OpenRou
 2025-06-20 00:01:26 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a20-8eb0-7000-a9a4-69e4a7d690d9
 2025-06-20 00:01:27 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a15-3587-7000-8df8-d76238c0f50d from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a15-3587-7000-8df8-d76238c0f50d.png
 2025-06-20 00:01:27 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:03:35 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-20 00:03:35 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-20 00:03:35 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Adding a new tour: null
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Saving tour: null
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Searching for tours with name: Test
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Saving a tour log: null
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Searching for tours with filters - Name: Test, Min popularity: 6.0, Only child friendly: true
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving logs for tour with ID: 86e14d94-a32d-4ab2-9cd8-267ce7fcc2b4
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving tour with ID: 4979df6b-a47f-4d8d-8ad4-1a7ef26e7170
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: c4844200-8ba5-4423-b849-0a7a4fccd3ab
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Searching for tours with filters - Name: null, Min popularity: 7.0, Only child friendly: false
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving tour with ID: 25dbbd6e-c6c6-40e3-94c5-1b5bec44c71e
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:03:50 [main] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour log with ID: fa95b993-03b6-450a-8547-11325de25a25
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Saving a tour log: TestLog
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Searching logs for tour with ID: 342e395e-e0c7-45d7-ad95-f9892b68e828 and search term: abc
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 536c418d-53df-42a4-9c48-e014a45c9923
+2025-06-20 00:03:50 [main] WARN  org.example.tourplanner.businessLayer.services.TourLogService - Deleting tour log with ID: 2ffd6b38-d1fc-4b85-b7ec-64d6aea26680
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving logs for tour with ID: c931bc0c-20a0-42ce-bd53-ba6e171fdf85
+2025-06-20 00:03:50 [main] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: df50dcc1-7712-4558-8e8f-04bbaaf738af
+2025-06-20 00:03:51 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - ImportExportService initialized.
+2025-06-20 00:03:51 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours exported to JSON.
+2025-06-20 00:03:51 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours imported from JSON.
+2025-06-20 00:03:51 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - ImportExportService initialized.
+2025-06-20 00:03:51 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours exported to JSON.
+2025-06-20 00:03:51 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours imported from JSON.
+2025-06-20 00:03:51 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - ImportExportService initialized.
+2025-06-20 00:03:51 [main] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours imported from JSON.
+2025-06-20 00:04:03 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Starting application using Java 21.0.6 on DESKTOP-2AIN0G2 with PID 12508 (started by marce in C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner)
+2025-06-20 00:04:03 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-20 00:04:04 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-20 00:04:04 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 67 ms. Found 2 JPA repository interfaces.
+2025-06-20 00:04:04 [JavaFX-Launcher] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-20 00:04:05 [JavaFX-Launcher] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-06-20 00:04:05 [JavaFX-Launcher] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-06-20 00:04:05 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-20 00:04:06 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-20 00:04:06 [JavaFX-Launcher] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2025-06-20 00:04:07 [JavaFX-Launcher] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-20 00:04:07 [JavaFX-Launcher] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-20 00:04:07 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - ImportExportService initialized.
+2025-06-20 00:04:08 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:04:08 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Started application in 5.102 seconds (JVM running for 7.443)
+2025-06-20 00:04:08 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - TourDetailView successfully loaded from /org/example/tourplanner/TourView.fxml
+2025-06-20 00:04:08 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-06-20 00:04:19 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Starting JSON export of all tours…
+2025-06-20 00:04:19 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-06-20 00:04:19 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours exported to JSON.
+2025-06-20 00:04:19 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Successfully exported 4 tours to JSON
+2025-06-20 00:04:21 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Exported 4 tours to JSON
+2025-06-20 00:04:22 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a35-f2c8-7000-bbb9-76efa8ce1c15 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a35-f2c8-7000-bbb9-76efa8ce1c15.png
+2025-06-20 00:04:22 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a35-f2c8-7000-bbb9-76efa8ce1c15
+2025-06-20 00:04:22 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a35-f2c8-7000-bbb9-76efa8ce1c15 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a35-f2c8-7000-bbb9-76efa8ce1c15.png
+2025-06-20 00:04:23 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a35-f2c8-7000-bbb9-76efa8ce1c15
+2025-06-20 00:04:24 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:04:24 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 01978a20-8eb0-7000-a9a4-69e4a7d690d9
+2025-06-20 00:04:24 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 01978a21-de82-7000-be47-1de247fe76d6
+2025-06-20 00:04:24 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 01978a35-f2c8-7000-bbb9-76efa8ce1c15
+2025-06-20 00:04:28 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Importing tours from file C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\import_export_json\tours_export_1.json
+2025-06-20 00:04:28 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours imported from JSON.
+2025-06-20 00:04:28 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Adding a new tour: Test Tour4
+2025-06-20 00:04:28 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Adding a new tour: Test Tour 3
+2025-06-20 00:04:28 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Adding a new tour: Test Tour
+2025-06-20 00:04:28 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-06-20 00:04:28 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Successfully imported 3 tours
+2025-06-20 00:04:32 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a15-3587-7000-8df8-d76238c0f50d from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a15-3587-7000-8df8-d76238c0f50d.png
+2025-06-20 00:04:32 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:04:35 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a20-8eb0-7000-a9a4-69e4a7d690d9 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a20-8eb0-7000-a9a4-69e4a7d690d9.png
+2025-06-20 00:04:35 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a20-8eb0-7000-a9a4-69e4a7d690d9
+2025-06-20 00:04:36 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a21-de82-7000-be47-1de247fe76d6 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a21-de82-7000-be47-1de247fe76d6.png
+2025-06-20 00:04:36 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a21-de82-7000-be47-1de247fe76d6
+2025-06-20 00:04:42 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Starting JSON export of all tours…
+2025-06-20 00:04:42 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-06-20 00:04:42 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours exported to JSON.
+2025-06-20 00:04:42 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Successfully exported 3 tours to JSON
+2025-06-20 00:04:44 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Exported 3 tours to JSON
+2025-06-20 00:04:48 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a15-3587-7000-8df8-d76238c0f50d from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a15-3587-7000-8df8-d76238c0f50d.png
+2025-06-20 00:04:48 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:04:48 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a20-8eb0-7000-a9a4-69e4a7d690d9 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a20-8eb0-7000-a9a4-69e4a7d690d9.png
+2025-06-20 00:04:48 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a20-8eb0-7000-a9a4-69e4a7d690d9
+2025-06-20 00:04:49 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a21-de82-7000-be47-1de247fe76d6 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a21-de82-7000-be47-1de247fe76d6.png
+2025-06-20 00:04:49 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a21-de82-7000-be47-1de247fe76d6
+2025-06-20 00:04:51 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a21-de82-7000-be47-1de247fe76d6 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a21-de82-7000-be47-1de247fe76d6.png
+2025-06-20 00:04:51 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a21-de82-7000-be47-1de247fe76d6
+2025-06-20 00:04:54 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:04:54 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 01978a20-8eb0-7000-a9a4-69e4a7d690d9
+2025-06-20 00:04:54 [JavaFX Application Thread] WARN  org.example.tourplanner.businessLayer.services.TourService - Deleting tour with ID: 01978a21-de82-7000-be47-1de247fe76d6
+2025-06-20 00:04:58 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Importing tours from file C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\import_export_json\tours_export_2.json
+2025-06-20 00:04:58 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - Tours imported from JSON.
+2025-06-20 00:04:58 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Adding a new tour: Test Tour4
+2025-06-20 00:04:58 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Adding a new tour: Test Tour 3
+2025-06-20 00:04:58 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Adding a new tour: Test Tour
+2025-06-20 00:04:58 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-06-20 00:04:58 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Successfully imported 3 tours
+2025-06-20 00:05:00 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a15-3587-7000-8df8-d76238c0f50d from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a15-3587-7000-8df8-d76238c0f50d.png
+2025-06-20 00:05:00 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:05:02 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a20-8eb0-7000-a9a4-69e4a7d690d9 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a20-8eb0-7000-a9a4-69e4a7d690d9.png
+2025-06-20 00:05:02 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a20-8eb0-7000-a9a4-69e4a7d690d9
+2025-06-20 00:05:02 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a21-de82-7000-be47-1de247fe76d6 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a21-de82-7000-be47-1de247fe76d6.png
+2025-06-20 00:05:02 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a21-de82-7000-be47-1de247fe76d6
+2025-06-20 00:05:07 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Tour report generated: Reports/tour-report-01978a21-de82-7000-be47-1de247fe76d6.pdf
+2025-06-20 00:05:09 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Generating summary report, loading all tours from DB…
+2025-06-20 00:05:09 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-06-20 00:05:10 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Summary report successfully generated at Reports/summarize-report.pdf
+2025-06-20 00:05:40 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a15-3587-7000-8df8-d76238c0f50d from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a15-3587-7000-8df8-d76238c0f50d.png
+2025-06-20 00:05:40 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:06:14 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a20-8eb0-7000-a9a4-69e4a7d690d9 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a20-8eb0-7000-a9a4-69e4a7d690d9.png
+2025-06-20 00:06:14 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a20-8eb0-7000-a9a4-69e4a7d690d9
+2025-06-20 00:06:49 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a21-de82-7000-be47-1de247fe76d6 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a21-de82-7000-be47-1de247fe76d6.png
+2025-06-20 00:06:49 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a21-de82-7000-be47-1de247fe76d6
+2025-06-20 00:06:51 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a20-8eb0-7000-a9a4-69e4a7d690d9 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a20-8eb0-7000-a9a4-69e4a7d690d9.png
+2025-06-20 00:06:51 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a20-8eb0-7000-a9a4-69e4a7d690d9
+2025-06-20 00:07:20 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a21-de82-7000-be47-1de247fe76d6 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a21-de82-7000-be47-1de247fe76d6.png
+2025-06-20 00:07:20 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a21-de82-7000-be47-1de247fe76d6
+2025-06-20 00:13:06 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-20 00:13:06 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-20 00:13:06 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-20 00:13:18 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Starting application using Java 21.0.6 on DESKTOP-2AIN0G2 with PID 15488 (started by marce in C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner)
+2025-06-20 00:13:18 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-20 00:13:19 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-20 00:13:19 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 71 ms. Found 2 JPA repository interfaces.
+2025-06-20 00:13:19 [JavaFX-Launcher] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-20 00:13:20 [JavaFX-Launcher] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-06-20 00:13:20 [JavaFX-Launcher] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-06-20 00:13:20 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-20 00:13:20 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-20 00:13:20 [JavaFX-Launcher] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2025-06-20 00:13:21 [JavaFX-Launcher] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-20 00:13:21 [JavaFX-Launcher] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-20 00:13:21 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - ImportExportService initialized.
+2025-06-20 00:13:22 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:13:22 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Started application in 4.246 seconds (JVM running for 6.152)
+2025-06-20 00:13:22 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - TourDetailView successfully loaded from /org/example/tourplanner/TourView.fxml
+2025-06-20 00:13:22 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-06-20 00:13:26 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a15-3587-7000-8df8-d76238c0f50d from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a15-3587-7000-8df8-d76238c0f50d.png
+2025-06-20 00:13:26 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:13:29 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a21-de82-7000-be47-1de247fe76d6 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a21-de82-7000-be47-1de247fe76d6.png
+2025-06-20 00:13:29 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a21-de82-7000-be47-1de247fe76d6
+2025-06-20 00:13:31 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Tour report generated: Reports/tour-report-01978a21-de82-7000-be47-1de247fe76d6.pdf
+2025-06-20 00:13:33 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Generating summary report, loading all tours from DB…
+2025-06-20 00:13:33 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-06-20 00:13:34 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Summary report successfully generated at Reports/summarize-report.pdf
+2025-06-20 00:14:35 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a15-3587-7000-8df8-d76238c0f50d from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a15-3587-7000-8df8-d76238c0f50d.png
+2025-06-20 00:14:35 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:14:38 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Tour report generated: Reports/tour-report-01978a15-3587-7000-8df8-d76238c0f50d.pdf
+2025-06-20 00:15:16 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-20 00:15:16 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-20 00:15:16 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-20 00:16:21 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Starting application using Java 21.0.6 on DESKTOP-2AIN0G2 with PID 8560 (started by marce in C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner)
+2025-06-20 00:16:21 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-20 00:16:22 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-20 00:16:22 [JavaFX-Launcher] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 53 ms. Found 2 JPA repository interfaces.
+2025-06-20 00:16:22 [JavaFX-Launcher] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-20 00:16:22 [JavaFX-Launcher] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-06-20 00:16:22 [JavaFX-Launcher] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-06-20 00:16:22 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-20 00:16:23 [JavaFX-Launcher] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-20 00:16:23 [JavaFX-Launcher] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2025-06-20 00:16:24 [JavaFX-Launcher] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-20 00:16:24 [JavaFX-Launcher] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-20 00:16:24 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.ImportExportService - ImportExportService initialized.
+2025-06-20 00:16:24 [JavaFX-Launcher] INFO  org.example.tourplanner.businessLayer.services.TourService - TourService initialized.
+2025-06-20 00:16:24 [JavaFX-Launcher] INFO  org.springframework.boot.SpringApplication - Started application in 3.96 seconds (JVM running for 6.122)
+2025-06-20 00:16:25 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - TourDetailView successfully loaded from /org/example/tourplanner/TourView.fxml
+2025-06-20 00:16:25 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourService - Retrieving all tours with logs.
+2025-06-20 00:16:49 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a15-3587-7000-8df8-d76238c0f50d from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a15-3587-7000-8df8-d76238c0f50d.png
+2025-06-20 00:16:49 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:16:51 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a20-8eb0-7000-a9a4-69e4a7d690d9 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a20-8eb0-7000-a9a4-69e4a7d690d9.png
+2025-06-20 00:16:51 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a20-8eb0-7000-a9a4-69e4a7d690d9
+2025-06-20 00:16:52 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a21-de82-7000-be47-1de247fe76d6 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a21-de82-7000-be47-1de247fe76d6.png
+2025-06-20 00:16:52 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a21-de82-7000-be47-1de247fe76d6
+2025-06-20 00:17:01 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a15-3587-7000-8df8-d76238c0f50d from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a15-3587-7000-8df8-d76238c0f50d.png
+2025-06-20 00:17:01 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:17:05 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a20-8eb0-7000-a9a4-69e4a7d690d9 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a20-8eb0-7000-a9a4-69e4a7d690d9.png
+2025-06-20 00:17:05 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a20-8eb0-7000-a9a4-69e4a7d690d9
+2025-06-20 00:17:05 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a21-de82-7000-be47-1de247fe76d6 from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a21-de82-7000-be47-1de247fe76d6.png
+2025-06-20 00:17:05 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a21-de82-7000-be47-1de247fe76d6
+2025-06-20 00:17:19 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourViewController - Loaded map image for tour 01978a15-3587-7000-8df8-d76238c0f50d from C:\Users\marce\Documents\TourPlanner_LocalRep\TourPlanner\target\images\01978a15-3587-7000-8df8-d76238c0f50d.png
+2025-06-20 00:17:19 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:18:37 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Saving a tour log: Test Log2
+2025-06-20 00:18:37 [JavaFX Application Thread] INFO  org.example.tourplanner.businessLayer.services.TourLogService - Retrieving all logs for tour with ID: 01978a15-3587-7000-8df8-d76238c0f50d
+2025-06-20 00:18:49 [JavaFX Application Thread] INFO  org.example.tourplanner.presentationLayer.controllers.TourCreationController - Tour report generated: Reports/tour-report-01978a15-3587-7000-8df8-d76238c0f50d.pdf
+2025-06-20 00:19:08 [SpringApplicationShutdownHook] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-20 00:19:08 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-20 00:19:08 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
