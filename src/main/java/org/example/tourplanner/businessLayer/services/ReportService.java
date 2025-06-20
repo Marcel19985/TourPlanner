@@ -51,7 +51,7 @@ public class ReportService {
             com.itextpdf.layout.element.Image image = new com.itextpdf.layout.element.Image(
                     com.itextpdf.io.image.ImageDataFactory.create(imagePath)
             );
-            image.setWidth(200);
+            image.setWidth(220);
             image.setHeight(150);
             document.add(image);
         } else {

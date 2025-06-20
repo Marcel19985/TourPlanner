@@ -14,9 +14,11 @@ class ImportExportServiceTest {
     private ImportExportService service;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         service = new ImportExportService();
+        cleanUp();
     }
+
 
     @AfterEach
     void cleanUp() throws IOException {
